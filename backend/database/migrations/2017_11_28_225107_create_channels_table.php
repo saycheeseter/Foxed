@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateForumsTable extends Migration
+class CreateChannelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,12 @@ class CreateForumsTable extends Migration
      */
     public function up()
     {
-        
+        Schema::create('channels', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name', 50);
+            $table->string('slug', 50);
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +28,6 @@ class CreateForumsTable extends Migration
      */
     public function down()
     {
-        
+        Schema::dropIfExists('channels');
     }
 }
