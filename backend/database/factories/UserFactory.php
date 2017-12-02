@@ -24,24 +24,35 @@ $factory->define(App\User::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(App\Forum::class, function ($faker) {
-    return[
-        'user_id' => function (){
-            return factory('App\User')->create()->id;
-        },
-        'title' => $faker->sentence,
-        'body' => $faker->paragraph(random_int(1,10))
-    ];
-});
 
 $factory->define(App\Reply::class, function ($faker) {
     return[
-        'forum_id' => function (){
-            return factory('App\Forum')->create()->id;
+        'thread_id' => function (){
+            return factory('App\Thread')->create()->id;
         },
         'user_id' => function (){
             return factory('App\User')->create()->id;
         },
-        'body' => $faker->paragraph(random_int(1,5))
+        'body' => $faker->paragraph
+    ];
+});
+$factory->define(App\Thread::class, function($faker) {
+    return [
+        'user_id' => function() {
+            return factory('App\User')->create()->id;
+        },
+        'channel_id' => function () {
+            return factory('App\Channel')->create()->id;
+        },
+        'title' => $faker->sentence,
+        'body' => $faker->paragraph
+    ];
+});
+
+$factory->define(App\Channel::class, function($faker) {
+    $name = $faker->word;
+    return [
+        'name' => $name,
+        'slug' => $name
     ];
 });

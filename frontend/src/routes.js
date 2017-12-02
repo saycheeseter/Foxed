@@ -11,86 +11,127 @@ import Create from './components/forum/Ask.vue'
 import Edit from './components/forum/EditThread.vue'
 import Class from './components/class-section/Classroom.vue'
 import Evaluation from './components/class-section/Evaluation.vue'
+import Forum from './views/forums.vue'
+import ForumCategory from './views/forum-topics.vue'
+import sampleThread from './views/sample-thread.vue'
+import createThread from './views/create-thread.vue'
 
 Vue.use(VueRouter)
-
+window.axios = require('axios');
 const router = new VueRouter({
-    routes : [
-        {
-            path : "/login",
-            component : Login,
-            meta : {
+    routes: [{
+            path: "/login",
+            component: Login,
+            meta: {
                 forVisitors: true
             }
         },
         {
-            path : "/register",
-            component : Register,
-            meta : {
+            path: "/register",
+            component: Register,
+            meta: {
                 forVisitors: true
             }
         },
         {
-            path:"/feed",
+            path: "/feed",
             component: Feed,
-            meta : {
+            meta: {
+                forAuth: true
+            }
+        },
+        // {
+        //     path: "/community/create",
+        //     component: createThread,
+        //     meta: {
+        //         forAuth: true
+        //     }
+        // },
+        {
+
+            path: "/community",
+            component: Forum,
+            meta: {
+                forAuth: false
+            }
+        },
+
+        {
+
+            path: "/community/:slug",
+            component: ForumCategory,
+            meta: {
+                forAuth: false
+            }
+        },
+        {
+
+            path: "/community/:slug/create",
+            component: createThread,
+            meta: {
                 forAuth: true
             }
         },
         {
-            path:"/replies",
+            path: '/community/:slug/:id',
+            component: sampleThread,
+            meta: {
+                forAuth: true
+            }
+        },
+        {
+            path: "/replies",
             component: Thread,
-            meta : {
+            meta: {
                 forAuth: true
             }
         },
         {
-            path:"/feed/create",
+            path: "/feed/create",
             component: Create,
-            meta : {
+            meta: {
                 forAuth: true
             }
         },
         {
-            path:"/feed/:thread/edit",
+            path: "/feed/:thread/edit",
             component: Edit,
-            meta : {
+            meta: {
                 forAuth: true
             }
         },
         {
-            path:"/profile",
+            path: "/profile",
             component: Profile,
-            meta : {
+            meta: {
                 forAuth: true
             }
         },
         {
-            path:"/class",
+            path: "/class",
             component: Class,
-            meta : {
+            meta: {
                 forAuth: true
             }
         },
         {
-            path:"/editor",
+            path: "/editor",
             component: Editor,
-            meta : {
+            meta: {
                 forAuth: true
             }
-        }
-        ,
+        },
         {
-            path:"/evaluation",
+            path: "/evaluation",
             component: Evaluation,
-            meta : {
+            meta: {
                 forAuth: true
             }
         }
     ],
     // linkActiveClass:'active' 
     // ^ for active classes
-    
+
     // mode: 'history 
     // ^to remove the hashtag
 })

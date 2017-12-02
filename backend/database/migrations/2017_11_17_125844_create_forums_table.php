@@ -13,14 +13,7 @@ class CreateForumsTable extends Migration
      */
     public function up()
     {
-        Schema::create('forums', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id');
-            $table->string('title');
-            $table->string('image')->nullable();
-            $table->text('body');
-            $table->timestamps();
-        });
+        
     }
 
     /**
@@ -30,6 +23,6 @@ class CreateForumsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('forums');
+        
     }
 }
