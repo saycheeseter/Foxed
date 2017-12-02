@@ -1,6 +1,6 @@
 <template>
       <div>
-        <thread v-for="thread in forums" @delete-thread="deleteThread(thread)" :authenticatedUser="authenticatedUser" :thread="thread"></thread>
+        <!-- <thread v-for="thread in forums" @delete-thread="deleteThread(thread)" :authenticatedUser="authenticatedUser" :thread="thread"></thread> -->
     </div>
 </template>
 

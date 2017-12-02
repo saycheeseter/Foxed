@@ -1,0 +1,34 @@
+.router-link-active {}
+
+.block-full-height {
+    min-height: 80vh;
+}
+
+.full-block__post {
+    width: 100%;
+    background-color: #fcfcfc;
+    border: 1px solid darken(#fcfcfc, 10%);
+}
+
+.forum-post__title {
+    font-size: 24px;
+}
+
+.picture-placeholder {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+body {
+    padding-top: 80px;
+}
+
+.section-fixed {
+    position: fixed;
+    width: 100%;
+}
+
+.btn {
+    cursor: pointer;
+}
