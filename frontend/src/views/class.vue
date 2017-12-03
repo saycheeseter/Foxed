@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <nav-list></nav-list>
+    <!-- <nav-list></nav-list> -->
     <div class="container-fluid">
       <div class="row justify-content-sm-center">
         <div class="col-10">
@@ -9,7 +9,7 @@
               <div class="block-full-height d-flex justify-content-center align-items-start ">
 
                 <div class="text-left mt-5">
-                  <a href="">AN401</a>
+                  <a href="">HI</a>
                   <hr>
                   <a class="btn btn-success text-center mb-2" type="submit">Code Play</a>
                   <br>
@@ -52,23 +52,14 @@
 </template>
 
 <script>
-  import Navigation from '../components/navigation.vue';
+ // import Navigation from '../components/navigation.vue';
   import classFeedBlock from '../components/class-feed-block.vue';
   import relatedTopics from '../components/related-topics.vue';
   import hotTopics from '../components/hot-topics.vue';
   export default {
     data() {
       return {
-        items: [{
-            title: 'AN401'
-          },
-          {
-            title: 'ANIMPORT'
-          },
-          {
-            title: 'WEBFOLIO'
-          }
-        ]
+       class: {}
       }
     },
     components: {
@@ -76,6 +67,12 @@
       'class-feed-block': classFeedBlock,
       'hot-topics': hotTopics,
       'related-topics': relatedTopics
+    },
+    created() {
+      this.$http.get(`api/classroom/${this.$route.params.id}`)
+          .then(
+            data
+          => this.class = data.body);
     }
   }
 </script>

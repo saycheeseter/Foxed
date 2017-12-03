@@ -15,6 +15,7 @@ import Forum from './views/forums.vue'
 import ForumCategory from './views/forum-topics.vue'
 import sampleThread from './views/sample-thread.vue'
 import createThread from './views/create-thread.vue'
+import Home from './views/home.vue'
 
 Vue.use(VueRouter)
 window.axios = require('axios');
@@ -101,14 +102,14 @@ const router = new VueRouter({
             }
         },
         {
-            path: "/profile",
+            path: "/:name/works",
             component: Profile,
             meta: {
                 forAuth: true
             }
         },
         {
-            path: "/class",
+            path: "/class/:id",
             component: Class,
             meta: {
                 forAuth: true
@@ -124,6 +125,13 @@ const router = new VueRouter({
         {
             path: "/evaluation",
             component: Evaluation,
+            meta: {
+                forAuth: true
+            }
+        },
+        {
+            path: "/",
+            component: Home,
             meta: {
                 forAuth: true
             }

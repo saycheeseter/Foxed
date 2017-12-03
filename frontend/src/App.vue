@@ -1,5 +1,5 @@
 <template>
-  <div class="container" id="app">
+  <div class="container-fluid" id="app">
     <navbar></navbar>
     <router-view :key="$route.path"></router-view>
   </div>
