@@ -36,6 +36,7 @@ $factory->define(App\Reply::class, function ($faker) {
         'body' => $faker->paragraph
     ];
 });
+
 $factory->define(App\Thread::class, function($faker) {
     return [
         'user_id' => function() {
@@ -48,7 +49,62 @@ $factory->define(App\Thread::class, function($faker) {
         'body' => $faker->paragraph
     ];
 });
+$factory->define(App\Classroom::class, function($faker) {
+    return [
+        'user_id' => function() {
+            return factory('App\User')->create()->id;
+        },
 
+        'name' => $faker->sentence,
+        'body' => $faker->paragraph
+    ];
+});
+
+$factory->define(App\Activity::class, function ($faker) {
+    return[
+        'classroom_id' => function (){
+            return factory('App\Classroom')->create()->id;
+        },
+        'user_id' => function (){
+            return factory('App\User')->create()->id;
+        },
+        'body' => $faker->paragraph
+    ];
+});
+$factory->define(App\Reply::class, function ($faker) {
+    return[
+        'classroom_id' => function (){
+            return factory('App\Thread')->create()->id;
+        },
+        'user_id' => function (){
+            return factory('App\User')->create()->id;
+        },
+        'body' => $faker->paragraph
+    ];
+});
+
+$factory->define(App\Score::class, function ($faker) {
+    return[
+        'activity_id' => function (){
+            return factory('App\Activity')->create()->id;
+        },
+        'user_id' => function (){
+            return factory('App\User')->create()->id;
+        },
+        'body' => $faker->paragraph
+    ];
+});
+$factory->define(App\UserGroup::class, function ($faker) {
+    return[
+        'class_id' => function (){
+            return factory('App\Activity')->create()->id;
+        },
+        'user_id' => function (){
+            return factory('App\User')->create()->id;
+        },
+        'body' => $faker->paragraph
+    ];
+});
 $factory->define(App\Channel::class, function($faker) {
     $name = $faker->word;
     return [

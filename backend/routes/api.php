@@ -31,6 +31,9 @@ Route::get('/test', function() {
  Route::middleware('auth:api')->group(function () {
    // Route::resource('forums','ForumsController'); 
     Route::resource('replies','RepliesController');
+    Route::get('/classroom', 'ClassroomController@index');
+   
+    Route::get('/enrolledClass', 'UserGroupController@index');
     Route::post('/community/{channel}/{thread}/replies', 'RepliesController@store');
     Route::post('/community', 'ThreadController@store');
     Route::post('/community/{channel}', 'ThreadController@storeThreadOnChannel');
@@ -44,11 +47,15 @@ Route::get('/test', function() {
 //Route::get('/community', 'ThreadController@index');
 //Route::get('/community/{thread}', 'ThreadController@show');
 
-
+Route::get('/classroom/{classroom}', 'ClassroomController@show');
 Route::get('/community', 'ThreadController@index');
 Route::get('/community?by={name}', 'ThreadController@index');
 Route::get('/channels', 'ThreadController@showChannels');
 Route::get('/community/{channel}/{thread}', 'ThreadController@show');
 Route::get('/community/create', 'ThreadController@create');
 Route::get('/community/{channel}', 'ThreadController@index');
+
+Route::get('/{user}/works/', 'ProfilesController@show');
+
+
 //Route::resource('threads', 'ThreadsController');

@@ -21,19 +21,7 @@ class ThreadController extends Controller
     public function index(Channel $channel, Thread $threads)
     {
         //
-        if ($channel->exists) {
-            //$channelId = Channel::where('slug', $channelSlug)->first()->id;
-           // $threads = Thread::where('channel_id', $channelId)->latest()->get();
-           $threads = $channel->threads()->latest();
-          
-        } else {
-            $threads = Thread::latest();
-           
-            
-        }
-        
-        
-        $threads = $threads->get()->load('channel', 'owner', 'replies');
+       $threads = $this->getThreads($channel);
         return $threads;
     }
     public function showChannels(Channel $channel) {
@@ -133,5 +121,21 @@ class ThreadController extends Controller
     public function destroy(Thread $thread)
     {
         //
+    }
+
+    protected function getThreads(Channel $channel) {
+        if ($channel->exists) {
+            //$channelId = Channel::where('slug', $channelSlug)->first()->id;
+           // $threads = Thread::where('channel_id', $channelId)->latest()->get();
+           $threads = $channel->threads()->latest();
+          
+        } else {
+            $threads = Thread::latest();
+           
+            
+        }
+        
+        
+        $threads = $threads->get()->load('channel', 'owner', 'replies');
     }
 }
