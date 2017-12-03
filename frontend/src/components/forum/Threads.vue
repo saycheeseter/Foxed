@@ -21,8 +21,7 @@ import swal from 'sweetalert'
         },
         components: {
             'thread' : Threads
-        }
-        ,
+        },
         created () {
             this.$http.get('api/forums')
             .then(response => {

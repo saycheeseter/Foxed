@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <nav-list></nav-list>
+    <!-- <nav-list></nav-list> -->
     <div class="container-fluid">
       <div class="row justify-content-sm-center">
         <div class="col-10">
@@ -18,11 +18,7 @@
                   <hr>
                   <a class="btn btn-success" type="submit">Join a Class</a>
                   <p class="text-left mt-2">Classes</p>
-                  <ul class="text-left" v-for="item in items">
-                    <router-link class="nav-item" tag="li" to="/class">
-                      <a class="nav-link" href="">{{item.title}}</a>
-                    </router-link>
-                  </ul>
+                 <classroom></classroom>
                 </div>
 
               </div>
@@ -47,28 +43,21 @@
 </template>
 
 <script>
-  import Navigation from '../components/navigation.vue';
-  import feedBlock from '../components/feed-block.vue';
-  import hotTopics from '../components/hot-topics.vue';
+  //import Navigation from '../components/navigation.vue';
+  import feedBlock from '../components/community/feed-block.vue';
+  import Classroom from '../components/community/enrolled-class.vue';
+  import hotTopics from '../components/community/hot-topics.vue';
   export default {
     data() {
       return {
-        items: [{
-            title: 'AN401'
-          },
-          {
-            title: 'ANIMPORT'
-          },
-          {
-            title: 'WEBFOLIO'
-          }
-        ]
-      }
+
+        }
     },
     components: {
-      'nav-list': Navigation,
+      // 'nav-list': Navigation,
       'feed-block': feedBlock,
-      'hot-topics': hotTopics
+      'hot-topics': hotTopics,
+      'classroom': Classroom
     }
   }
 </script>

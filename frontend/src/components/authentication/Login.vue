@@ -38,7 +38,7 @@
             login (){
                 var data = {
                     client_id : 2,
-                    client_secret :'J9dVbE3sdL5nidU5cGqOqFx1DGdOgPLJFFUMADxc',
+                    client_secret :'hcQNJBR9ZW5pjU3atPDXtTCWuJmTrpXdvJx5i3bu',
                     grant_type: 'password',
                     username: this.email,
                     password: this.password
@@ -47,7 +47,7 @@
                 this.$http.post("oauth/token", data)
                     .then(response => {
                         this.$auth.setToken(response.body.access_token, response.body.expires_in + Date.now())
-                        this.$router.push("/feed")
+                        this.$router.push("/")
                         console.log(response)
                     })
             }

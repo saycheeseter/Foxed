@@ -6,7 +6,7 @@
           <div class="row">
             <div class="col-12 d-flex justify-content-center ">
               <img class="picture m-5" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg" alt="">
-                <h1>{{authenticatedUser.name}}</h1>
+              <h1>{{profile.name}}</h1>
             </div>
             <div class="col-12 d-flex justify-content-center mb-5">
               <i class="fa fa-print" aria-hidden="true"></i>
@@ -61,20 +61,18 @@
   export default {
     data() {
       return {
-        items: [{
-            title: 'AN401'
-          },
-          {
-            title: 'ANIMPORT'
-          },
-          {
-            title: 'WEBFOLIO'
-          }
-        ],
+        profile: {},
         authenticatedUser: this.$auth.getAuthenticatedUser()
       }
+    },
+    created() {
+      this.$http.get(`api/${this.$route.params.name}/works`)
+        .then(
+          data => this.profile = data.body);
     }
+
   }
+
 </script>
 
 <style scoped>
@@ -96,17 +94,20 @@
     height: 200px;
     border-radius: 50%;
   }
+
   i {
     margin: 0 10px;
     font-size: 24px;
     color: #a2a2a2;
   }
+
   ul {
     list-style: none;
     padding: 0;
-    
   }
+
   li {
-      margin: 0;
-    }
+    margin: 0;
+  }
+
 </style>
