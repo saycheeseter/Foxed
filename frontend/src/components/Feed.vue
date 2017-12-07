@@ -1,14 +1,14 @@
 <template>
     <div>
-        <h1>Feed</h1>
+        <h1>Main view</h1>
         <forums-view></forums-view>
     </div>
 </template>
 <script>
-    import Threads from './forum/Threads.vue'
+    import Forum from '../views/forums.vue'
     export default {
         components :{
-            'forums-view' : Threads
+            'forums-view' : Forum
         }
     }
 </script>

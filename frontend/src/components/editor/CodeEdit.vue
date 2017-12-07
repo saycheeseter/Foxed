@@ -24,8 +24,9 @@
 </div>
     <router-link class="nav-item" to="/evaluation"> <a class="nav-link" href="">Save and Submit</a> </router-link>
 	<input type="text" v-model="codes.title">
-	<button class="btn btn-info" @click="submitCodes">save</button>
+	<button class="btn btn-info" @click="update">save</button>
 	<button class="btn btn-info" @click="tryCodes">try</button>
+    <button class="btn btn-danger" @click="deleteCodes">thrash</button>
 	<!-- <input type="text" v-model="codes.html"> -->
 </section>
 </template>
@@ -50,25 +51,15 @@ export default {
     },
   
   methods: {
-      getCode (){
-          this.$http.get('api/forums/')
+		update () {
+          this.$http.put('api/codes/' + this.$route.params.id, this.codes)
           .then(response => {
-            //   this.codes = response.body[0]
-            //   console.log(response.body[0])
+              console.log(response)
+                    swal("Succesfully Updated!", {
+                icon: "success",
+                });
           })
-	  },
-		submitCodes () {
-			  // this.codes = x;
-			  this.$http.post('api/codes/', this.codes)
-                .then(response => {
-                    console.log(response)
-                            swal("Succesfully created!", {
-                        icon: "success",
-                        });   swal("Succesfully created!", {
-                        icon: "success",
-                        });
-                })
-		},
+      },
 		tryCodes () {
 			// var html_box = document.querySelector('#html textarea');
 			// // var cm_opt = {
@@ -85,8 +76,32 @@ export default {
 			this.codes.js = x.js
 			console.log(this.codes.js)
 			// console.log(x.html)
-			console.log(this.codes)
-		}
+            console.log(this.codes)
+            
+        },
+        deleteCodes () {
+            swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this imaginary file!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            })
+            .then((willDelete) => {
+            if (willDelete) {
+                this.$http.delete('api/codes/' + this.$route.params.id)
+                .then(response => {
+                    swal("CodePlay deleted!", {
+                icon: "success",
+                });
+                })
+                
+            } else {
+                swal("CodePlay not deleted");
+            }
+            });
+            
+        }
   },
   mounted: function() {
 	
@@ -131,20 +146,19 @@ export default {
 		iframe_doc.close();
 	};
 
+	
 	var cm_opt = {
 		mode: 'text/html',
 		gutter: true,
 		lineNumbers: true,
-        theme:"twilight",
-        extraKeys:{"Tab":"autocomplete"},
-        autoCloseTags:true,
-        
+		theme:"twilight",
+		
 		onChange: function () {
 			console.log('1')
 			render();
 		}
 	};
-
+	
 	var html_box = document.querySelector('#html textarea');
 	var html_editor = CodeMirror.fromTextArea(html_box, cm_opt);
 	html_editor.on("change", function(html_editor, change) {
@@ -171,11 +185,20 @@ export default {
 	
 	
     // css_editor.setValue('body { color: red; }');
-		html_editor.setValue("");
-		css_editor.setValue("");
-		js_editor.setValue("");
 
-
+    this.$http.get('api/codes/'+ this.$route.params.id)
+          .then(response => {
+						//   this.codes = response.body[10]
+					// this.codes=response.body[1];
+              html_editor.setValue(response.body.html);
+							css_editor.setValue(response.body.css);
+							js_editor.setValue(response.body.js);
+							console.log(response)
+              // html_editor.setValue(" ");
+							// css_editor.setValue(" ");
+							// js_editor.setValue(" ");
+							// console.log(responses)
+          })
 
 
 	// var cms = document.querySelectorAll('.CodeMirror');

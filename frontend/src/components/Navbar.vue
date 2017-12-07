@@ -39,9 +39,9 @@
     <router-link tag="li" to="/profile" v-if="isAuth">
       <a>Profile</a>
     </router-link>
-    <router-link tag="li" to="/logout" v-if="isAuth">
-      <a>logout</a>
-    </router-link>
+    <span v-if="isAuth">
+      <a @click="logout">logout</a>
+    </span>
 
   </nav>
 </template>
@@ -69,6 +69,10 @@
             this.$auth.setAuthenticatedUser(response.body)
             console.log(this.$auth.getAuthenticatedUser())
           })
+      },
+      logout (){
+        this.$auth.destroyToken()
+        this.$router.push("/")
       }
 
     }

@@ -6,15 +6,14 @@
           <div class="row">
             <div class="col-12 d-flex justify-content-center ">
               <img class="picture m-5" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg" alt="">
-              <h1>{{profile.name}}</h1>
+              <!-- <h1>{{profile.name}}</h1> -->
+              
             </div>
             <div class="col-12 d-flex justify-content-center mb-5">
               <i class="fa fa-print" aria-hidden="true"></i>
               <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
             </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-              <img src="https://news.siteintelgroup.com/blog/components/com_easyblog/themes/wireframe/images/placeholder-image.png" alt="">
-            </div>
+            <code-works></code-works>
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
               <img src="https://news.siteintelgroup.com/blog/components/com_easyblog/themes/wireframe/images/placeholder-image.png" alt="">
             </div>
@@ -58,17 +57,21 @@
 </template>
 
 <script>
+  import Works from '../components/editor/Codeworks.vue';
   export default {
     data() {
       return {
-        profile: {},
+       // profile: {},
         authenticatedUser: this.$auth.getAuthenticatedUser()
       }
     },
     created() {
-      this.$http.get(`api/${this.$route.params.name}/works`)
-        .then(
-          data => this.profile = data.body);
+      // this.$http.get(`api/${this.$route.params.name}/works`)
+      //   .then(
+      //     data => this.profile = data.body);
+    },
+    components: {
+      'code-works': Works
     }
 
   }

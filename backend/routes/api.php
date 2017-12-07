@@ -37,6 +37,8 @@ Route::get('/test', function() {
     Route::post('/community/{channel}/{thread}/replies', 'RepliesController@store');
     Route::post('/community', 'ThreadController@store');
     Route::post('/community/{channel}', 'ThreadController@storeThreadOnChannel');
+    Route::resource('codes','CodeController');
+   
 });
 
 // Route::middleware('auth:api')->get('/user', function () {
@@ -46,6 +48,7 @@ Route::get('/test', function() {
 
 //Route::get('/community', 'ThreadController@index');
 //Route::get('/community/{thread}', 'ThreadController@show');
+Route::post('/register', 'Auth\RegisterController@create');
 
 Route::get('/classroom/{classroom}', 'ClassroomController@show');
 Route::get('/community', 'ThreadController@index');
@@ -54,7 +57,7 @@ Route::get('/channels', 'ThreadController@showChannels');
 Route::get('/community/{channel}/{thread}', 'ThreadController@show');
 Route::get('/community/create', 'ThreadController@create');
 Route::get('/community/{channel}', 'ThreadController@index');
-
+Route::get('/{user}/codes/', 'CodeController@showCodes');
 Route::get('/{user}/works/', 'ProfilesController@show');
 
 

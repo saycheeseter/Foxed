@@ -22,6 +22,20 @@ class ThreadController extends Controller
     {
         //
        $threads = $this->getThreads($channel);
+       
+       if ($channel->exists) {
+        //$channelId = Channel::where('slug', $channelSlug)->first()->id;
+       // $threads = Thread::where('channel_id', $channelId)->latest()->get();
+       $threads = $channel->threads()->latest();
+      
+    } else {
+        $threads = Thread::latest();
+       
+        
+    }
+    
+    
+    $threads = $threads->get()->load('channel', 'owner', 'replies');
         return $threads;
     }
     public function showChannels(Channel $channel) {
