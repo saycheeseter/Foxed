@@ -1,6 +1,7 @@
 <template>
 <div>
-  <welcome-nav-list></welcome-nav-list>
+  <!-- <welcome-nav-list></welcome-nav-list> -->
+  <login></login>
   <div class="container-fluid">
     <div class="row justify-content-sm-center">
       <div class="col-9">
@@ -31,10 +32,12 @@
 </template>
 
 <script>
-import welcomeNavigation from '../components/welcome-navigation.vue'
+// import welcomeNavigation from '../components/welcome-navigation.vue'
+import Login from '../components/authentication/Login.vue';
   export default {
     components: {
-      'welcome-nav-list': welcomeNavigation
+      // 'welcome-nav-list': welcomeNavigation
+      'login': Login
     }
 
   }
@@ -44,4 +47,5 @@ import welcomeNavigation from '../components/welcome-navigation.vue'
   form input {
     width: 100%;
   }
+
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="row">
+    <div class="row login-block d-flex justify-content-end">
         <div class="col-md-6 col-md-offset-3">
             <div class="card">
                 <div class="card-body">
@@ -28,6 +28,7 @@
 
 <script>
     export default {
+        name: 'login',
         data () {
             return {
                 email: '',
@@ -54,7 +55,19 @@
         }
     }
 </script>
-<style>
-
+<style scoped lang="scss">
+    .login-block {
+        transform: scale(0.7);
+        position: absolute;
+        right: 8%;
+        bottom: 0;
+        z-index: 99;
+       input {
+           width: 100%;
+       }
+       .card {
+           width: 500px;
+       }
+    }
 </style>
 

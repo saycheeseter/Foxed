@@ -4,10 +4,9 @@
     <div class="container-fluid">
       <div class="row justify-content-sm-center">
         <div class="col-10">
-          <div class="row">
+          <div class="row no-gutters">
             <div class="col-2">
               <div class="block-full-height d-flex justify-content-center align-items-start ">
-
                 <div class="text-center">
                   <br>
                   <div class="picture"></div>
@@ -18,9 +17,8 @@
                   <hr>
                   <a class="btn btn-success" type="submit">Join a Class</a>
                   <p class="text-left mt-2">Classes</p>
-                 <classroom></classroom>
+                  <classroom></classroom>
                 </div>
-
               </div>
             </div>
             <div class="col-6">
@@ -31,7 +29,7 @@
             <div class="col-4">
               <div class="block-full-height d-flex justify-content-center align-items-start">
 
-                <hot-topics></hot-topics>
+                <forum-category></forum-category>
 
               </div>
             </div>
@@ -46,20 +44,22 @@
   //import Navigation from '../components/navigation.vue';
   import feedBlock from '../components/community/feed-block.vue';
   import Classroom from '../components/community/enrolled-class.vue';
-  import hotTopics from '../components/community/hot-topics.vue';
-  export default {
+  import forumCategories from '../components/community/forum-category.vue';
+  
+export default {
     data() {
       return {
 
-        }
+      }
     },
     components: {
       // 'nav-list': Navigation,
       'feed-block': feedBlock,
-      'hot-topics': hotTopics,
+      'forum-category': forumCategories,
       'classroom': Classroom
-    }
+    },
   }
+
 </script>
 
 <style scoped lang="scss">
@@ -73,8 +73,8 @@
 
   .picture {
     background-color: #efefef;
-    padding: 65px 30px;
-    border-radius: 50%;
+    padding: 20px;
+    border-radius: 50px;
   }
 
   ul {
@@ -84,4 +84,5 @@
       margin: 0;
     }
   }
+
 </style>
