@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Channel;
 use App\Thread;
+use App\Filters\ThreadFilters;
+use App\Filters;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -11,22 +13,39 @@ use Auth;
 class ThreadController extends Controller
 {
     public function __contruct() {
-        $this->middleware('auth')->only('store');
+        $this->middleware('auth')->except('index', 'show');
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Channel $channel, Thread $threads)
+    public function index(Channel $channel, Thread $threads, ThreadFilters $filters)
     {
         //
-       $threads = $this->getThreads($channel);
-        return $threads;
+    //    $threads = $this->getThreads($channel);
+       //$threads = (new ThreadsQuery)->get();
+      // 
+       if ($channel->exists) {
+        //$channelId = Channel::where('slug', $channelSlug)->first()->id;
+       // $threads = Thread::where('channel_id', $channelId)->latest()->get();
+       $threads = $channel->threads()->latest();
+      
+    } else {
+        //$threads = Thread::latest()->filter($filters);  
+    }
+    //$threads = Thread::filter($filters);
+    
+    $threads = $threads->get()->load('channel', 'owner', 'replies');
+    return $threads;
     }
     public function showChannels(Channel $channel) {
         $channel = Channel::latest()->get()->load('threads');
         return $channel;
+    }
+    public function showOwnThreads(Channel $channel, User $user) {
+       
+        return [$profileUser = $user, 'threads' => $user->threads()->latest()->get()];
     }
 
     /**
@@ -45,33 +64,37 @@ class ThreadController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        $this->validate($request, [
-            'title' => 'required',
-            'body' => 'required',
-            'channel_id' => 'required|exists:channels,id'
-        ]);
-        Thread::Create([
-            'user_id' => Auth::id(),
-            'title' => request('title'),
-            'channel_id' => 23,
-            'body' => request('body')
-        ]);
+        // request()->validate([
+        //     'title' => 'required',
+        //     'body' => 'required',
+        //     'channel_id' => 'required|exists:channels,id'
+        // ]);
+        // Thread::Create([
+        //     'user_id' => Auth::id(),
+        //     'title' => request('title'),
+        //     'channel_id' => 23,
+        //     'body' => request('body')
+        // ]);
       
     }
     public function storeThreadOnChannel(Request $request, Channel $channel) {
-        $this->validate($request, [
+        request()->validate([
             'title' => 'required',
             'body' => 'required',
             'channel_id' => 'required|exists:channels,id'
-        ]);
+        ]); 
         Thread::Create([
             'user_id' => Auth::id(),
             'title' => request('title'),
             'channel_id' => request('channel_id') ,
             'body' => request('body')
         ]);
+    }
+    
+    public function getThisChannel(Request $request, Channel $channel, Thread $thread) {
+        return $channel;
     }
 
     /**
@@ -107,9 +130,17 @@ class ThreadController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Thread $thread)
+    public function update($channel, Thread $thread)
     {
-        //
+        //authorization
+        //validation
+        //update the thread
+        $this->authorize('update', $thread);
+        $thread->update(request()->validate([
+            'title' => 'required',
+            'body' => 'required'
+        ]));
+        return $thread;
     }
 
     /**
@@ -118,24 +149,20 @@ class ThreadController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Thread $thread)
+    public function destroy($channel,Thread $thread)
     {
-        //
-    }
+        $this->authorize('update', $thread);
+        $thread->replies()->delete();
+        $thread->delete();
 
-    protected function getThreads(Channel $channel) {
-        if ($channel->exists) {
-            //$channelId = Channel::where('slug', $channelSlug)->first()->id;
-           // $threads = Thread::where('channel_id', $channelId)->latest()->get();
-           $threads = $channel->threads()->latest();
-          
-        } else {
-            $threads = Thread::latest();
-           
-            
+        if ($thread->user_id != Auth::id()) {
+            abort(401, 'You do not have permission to do this.');
         }
         
+        return response([], 204);
+    }
+
+    protected function getThreads(Channel $channel, User $user) {
         
-        $threads = $threads->get()->load('channel', 'owner', 'replies');
     }
 }

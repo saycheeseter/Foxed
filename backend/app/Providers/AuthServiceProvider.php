@@ -14,7 +14,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
+        'App\Thread' => 'App\Policies\ThreadPolicy',
+        'App\Reply' => 'App\Policies\ThreadPolicy',
     ];
 
     /**
@@ -27,5 +28,15 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Passport::routes();
+
+        Gate::before(function ($user){
+            if($user->name === 'aloquindo') return true;
+        });
+    }
+
+    public function register() {
+        if($this->app->isLocal()) {
+            $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
+        }
     }
 }
