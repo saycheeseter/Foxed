@@ -6,15 +6,24 @@
         <div class="col-12">
           <div class="row">
             <div class="col-12">
-              <div class="forum-post">
+              <div class="forum-post ">
 
-                <div class="forum-post__form">
+                <div class="forum-post__form ">
+                  <h2>Create a Discussion</h2>
                   <form @submit.prevent="addThread">
 
-                    <div class="form-group">
-                      <textarea name="title" id="title" cols="100" rows="1" width="100%" v-model="createThread.title" placeholder="Title"></textarea>
-                      <textarea name="body" id="body" cols="100" rows="5" width="100%" v-model="createThread.body" placeholder="Have something to say?"></textarea>
-                      <button type="submit" class="btn btn-default">Publish</button>
+                    <div class="form-group mt-2 full-block__post p-3">
+                      <h5>Title</h5>
+
+                      <input class="form-control mb-2" name="title" id="title" cols="100" rows="1" width="100%" v-model="createThread.title" placeholder="Awesome title"
+                        required>
+                      <hr>
+                      <h5>Body</h5>
+                      
+                      <wysiwyg name="body" v-model="createThread.body"></wysiwyg>
+                      
+                      <!-- <textarea class="form-control mb-2" name="body" id="body" cols="100" rows="5" width="100%" v-model="createThread.body" placeholder="Have something to say?" required></textarea> -->
+                      <button type="submit" class="btn btn-primary">Publish</button>
                     </div>
                   </form>
                 </div>
@@ -37,6 +46,7 @@
   import classFeedBlock from '../components/community/class-feed-block.vue';
   import hotTopics from '../components/community/hot-topics.vue';
   import swal from 'sweetalert';
+  import Wysiwyg from '../components/community/wysiwyg.vue'
   // import forumReplies from '../components/forum-replies.vue';
   //import Thread from '../models/thread';
 
@@ -45,7 +55,8 @@
     components: {
       //'nav-list': Navigation,
       'class-feed-block': classFeedBlock,
-      'hot-topics': hotTopics
+      'hot-topics': hotTopics,
+      'wysiwyg': Wysiwyg
       // 'forum-replies': forumReplies
     },
     // props: [
@@ -64,19 +75,21 @@
     },
     methods: {
       addThread() {
-        this.$http.post(`api/community/${this.$route.params.slug}`, this.createThread).then(function (response) { // do something 
+        this.$http.post(`api/community/${this.$route.params.slug}`,
+          this.createThread).then(function (response) { // do something 
           // console.log("Success");
+          this.$router.push(`/community/${this.$route.params.slug}`);
           swal("Discussion posted!", {
             icon: "success",
           });
-          this.$router.push(`/community/${this.$route.params.slug}`);
+
         });
       }
     },
     created() {
-      this.$http.get(`api/community/${this.$route.params.slug}`)
+      this.$http.get(`api/currentChannel/${this.$route.params.slug}`)
         .then(function (data) {
-    this.createThread.channel_id = data.body[0].channel_id;
+          this.createThread.channel_id = data.body.id;
         })
     }
     // },

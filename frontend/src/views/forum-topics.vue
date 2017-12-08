@@ -7,9 +7,8 @@
           <div class="row">
             <div class="col-12">
               <div class="forum-post">
-                <a class="btn btn-success" type="submit">Start Discussion</a>
-            
-               <!-- <forum-category></forum-category> -->
+
+                <!-- <forum-category></forum-category> -->
                 <hot-topics></hot-topics>
               </div>
             </div>
@@ -28,15 +27,15 @@
   import hotTopics from '../components/community/hot-topics.vue';
   import forumCategories from '../components/community/forum-category.vue';
   export default {
-    
+
     components: {
       //'nav-list': Navigation,
       'class-feed-block': classFeedBlock,
       'hot-topics': hotTopics,
       'forum-category': forumCategories
     }
-    
   }
+
 </script>
 
 <style scoped lang="scss">
@@ -61,4 +60,5 @@
       margin: 0;
     }
   }
+
 </style>

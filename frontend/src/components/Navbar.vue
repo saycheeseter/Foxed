@@ -1,10 +1,11 @@
 <template>
   <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+     <div class="container">
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
       aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="#">FF</a>
 
     <router-link tag="li" to="/login" v-if="! isAuth">
       <a>login</a>
@@ -17,7 +18,7 @@
         aria-expanded="false">
         Channels
       </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+      <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
 
         <div>
           <div v-for="channel in channels">
@@ -28,13 +29,14 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
-    <router-link tag="li" to="/feed" v-if="isAuth">
-      <a>feed</a>
+   
+    <router-link tag="li" to="/" v-if="isAuth">
+      <a>Home</a>
     </router-link>
-    <router-link tag="li" to="/class" v-if="isAuth">
-      <a>class</a>
+    <router-link tag="li" to="/community" v-if="isAuth">
+      <a>Community</a>
     </router-link>
     <router-link tag="li" to="/profile" v-if="isAuth">
       <a>Profile</a>
@@ -42,7 +44,7 @@
     <router-link tag="li" to="/logout" v-if="isAuth">
       <a>logout</a>
     </router-link>
-
+</div>
   </nav>
 </template>
 
@@ -76,9 +78,16 @@
 
 </script>
 
-<style>
+<style scope lang="scss">
   .router-link-active {
     color: red;
+  }
+  .navbar {
+    background-color: #2a2a2a;
+    a, li {
+      color: #dfdfdf;
+      list-style: none;
+    }
   }
 
 </style>

@@ -11,50 +11,57 @@ Vue.use(VueResource)
 Vue.use(Auth)
 Vue.use(VeeValidate)
 
+
+
+
 Vue.http.options.root = 'http://localhost:8000'
 Vue.http.headers.common['Authorization'] = 'Bearer ' + Vue.auth.getToken();
 
+
+Vue.component('wysiwyg', require('./components/community/wysiwyg.vue'));
+Vue.component('replies', require('./components/community/replies.vue'));
+
+
+
+
 Vue.http.interceptors.push((request, next) => {
-  next(response => {
-    if(response.status == 404){
-      swal("Succesfully Updated!", {
-        title: 'Error ' + response.status,
-        text: response.body.error,
-        icon: "error",
-        });
-    }
-    else if(response.status == 500)
-    swal("Succesfully Updated!", {
-      title: 'Error ' + response.status,
-      text: "There's a problem in the server",
-      icon: "error",
-      });
-  })
+    next(response => {
+        if (response.status == 404) {
+            swal("Succesfully Updated!", {
+                title: 'Error ' + response.status,
+                text: response.body.error,
+                icon: "error",
+            });
+        } else if (response.status == 500)
+            swal("Succesfully Updated!", {
+                title: 'Error ' + response.status,
+                text: "There's a problem in the server",
+                icon: "error",
+            });
+    })
 })
 
 Router.beforeEach(
-    (to,from,next) => {
-      if(to.matched.some(record => record.meta.forVisitors)) {
-        if(Vue.auth.isAuthenticated()) {
-          next({
-            path: '/feed'
-          })
-        }else next()
-      }
-      else if(to.matched.some(record => record.meta.forAuth)) {
-        if( !Vue.auth.isAuthenticated()) {
-          next({
-            path: '/login'
-          })
-        }else next()
-      }
-      else next()
+    (to, from, next) => {
+        if (to.matched.some(record => record.meta.forVisitors)) {
+            if (Vue.auth.isAuthenticated()) {
+                next({
+                    path: '/feed'
+                })
+            } else next()
+        } else if (to.matched.some(record => record.meta.forAuth)) {
+            if (!Vue.auth.isAuthenticated()) {
+                next({
+                    path: '/login'
+                })
+            } else next()
+        } else next()
     }
 )
 
 
 new Vue({
-  el: '#app',
-  render: h => h(App),
-  router: Router 
+    el: '#app',
+    render: h => h(App),
+    router: Router
 })

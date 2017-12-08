@@ -15,14 +15,18 @@ import Forum from './views/forums.vue'
 import ForumCategory from './views/forum-topics.vue'
 import sampleThread from './views/sample-thread.vue'
 import createThread from './views/create-thread.vue'
+import CreateCategory from './views/create-category.vue'
 import Home from './views/home.vue'
+import MyThread from './views/myThread.vue'
+import Welcome from './views/welcome.vue'
+
 
 Vue.use(VueRouter)
 window.axios = require('axios');
 const router = new VueRouter({
     routes: [{
             path: "/login",
-            component: Login,
+            component: Welcome,
             meta: {
                 forVisitors: true
             }
@@ -56,6 +60,14 @@ const router = new VueRouter({
                 forAuth: false
             }
         },
+        {
+
+            path: "/community/create",
+            component: CreateCategory,
+            meta: {
+                forAuth: true
+            }
+        },
 
         {
 
@@ -73,11 +85,12 @@ const router = new VueRouter({
                 forAuth: true
             }
         },
+
         {
             path: '/community/:slug/:id',
             component: sampleThread,
             meta: {
-                forAuth: true
+                forAuth: false
             }
         },
         {
@@ -109,6 +122,13 @@ const router = new VueRouter({
             }
         },
         {
+            path: "/:name/threads",
+            component: MyThread,
+            meta: {
+                forAuth: true
+            }
+        },
+        {
             path: "/class/:id",
             component: Class,
             meta: {
@@ -116,7 +136,14 @@ const router = new VueRouter({
             }
         },
         {
-            path: "/editor",
+            path: "/:name/editor",
+            component: Editor,
+            meta: {
+                forAuth: true
+            }
+        },
+        {
+            path: "/:id/editor",
             component: Editor,
             meta: {
                 forAuth: true

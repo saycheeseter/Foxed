@@ -7,8 +7,9 @@
           <div class="row">
             <div class="col-12">
               <div class="forum-post">
-                <a class="btn btn-success" type="submit">Start Discussion</a>
-            
+                <router-link to="/community/create">
+                <a class="btn mt-2" type="submit">Create a room</a>
+              </router-link>
                <forum-category></forum-category>
                 <!-- <hot-topics></hot-topics> -->
               </div>
