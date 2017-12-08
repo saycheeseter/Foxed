@@ -73,9 +73,6 @@ $factory->define(App\Activity::class, function ($faker) {
 });
 $factory->define(App\Reply::class, function ($faker) {
     return[
-        'classroom_id' => function (){
-            return factory('App\Thread')->create()->id;
-        },
         'user_id' => function (){
             return factory('App\User')->create()->id;
         },

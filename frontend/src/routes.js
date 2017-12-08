@@ -6,6 +6,7 @@ import Register from './components/authentication/Register.vue'
 import Feed from './components/Feed.vue'
 import Profile from './components/Profile.vue'
 import Editor from './components/editor/Editor.vue'
+import EditEditor from './components/editor/CodeEdit.vue'
 import Thread from './components/forum/Thread.vue'
 import Create from './components/forum/Ask.vue'
 import Edit from './components/forum/EditThread.vue'
@@ -115,7 +116,7 @@ const router = new VueRouter({
             }
         },
         {
-            path: "/:name/works",
+            path: "/:name/codes",
             component: Profile,
             meta: {
                 forAuth: true
@@ -124,6 +125,13 @@ const router = new VueRouter({
         {
             path: "/:name/threads",
             component: MyThread,
+            meta: {
+                forAuth: true
+            }
+        },
+        {
+            path: "/works/:id/edit",
+            component: EditEditor,
             meta: {
                 forAuth: true
             }
