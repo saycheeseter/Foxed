@@ -35,7 +35,7 @@
                             placeholder="Confirm Password">
                             <p class="help-block" v-for="error in theErrors.password_confirmation"> {{error}}</p>
                     </div>
-                    <button @click="register(user)" class="btn btn-success pull-right">
+                    <button @click="register()" class="btn btn-success pull-right">
                         Register
                     </button>
                 </div>
@@ -66,8 +66,8 @@ export default {
         }
     },
     methods: {
-        register(user){
-            this.$http.post('api/register/', user)
+        register(){
+            this.$http.post('api/register/', this.user)
                 .then(response => {
                     console.log(response)
                 })
