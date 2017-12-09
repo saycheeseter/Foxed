@@ -44,7 +44,7 @@
     <span v-if="isAuth">
       <a @click="logout">logout</a>
     </span>
-
+     </div>
   </nav>
 </template>
 

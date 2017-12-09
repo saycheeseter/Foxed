@@ -44,7 +44,9 @@ Route::get('/test', function() {
     Route::patch('/community/{channel}/{thread}', 'ThreadController@update');
     Route::delete('/community/{channel}/{thread}', 'ThreadController@destroy');
     Route::resource('codes','CodeController');
-   
+    Route::resource('activity','ActivityController');
+    Route::post('classroom/create','ClassroomController@create');
+    Route::get('/activities/{id}/show/', 'ActivityController@showActivities');
 });
 
 // Route::middleware('auth:api')->get('/user', function () {

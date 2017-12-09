@@ -52,5 +52,5 @@ class CodeController extends Controller
     }
     public function showCodes(User $user){
         return [$profileUser = $user, 'codes' => $user->project()->latest()->get()];
-    } 
+    }
 }

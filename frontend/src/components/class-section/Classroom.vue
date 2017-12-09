@@ -8,7 +8,7 @@
             <div class="col-2">
               <div class="block-full-height d-flex justify-content-center align-items-start ">
 
-                <div class="text-left mt-5">
+                <div  class="text-left mt-5">
                   <a href="">{{data.name}}</a>
                   <hr>
                   <a class="btn btn-success text-center mb-2" type="submit">Code Play</a>
@@ -20,14 +20,21 @@
                   <a href="">Members</a>
                   <br>
                   <a href="">Files</a>
-                </div>
 
+                  <div v-show="authenticatedUser.prof">
+                    <router-link to="/activity/create">Create Activity</router-link>
+                  </div>
+                </div>
+                
               </div>
             </div>
             <div class="col-6">
               <div class="block-full-height d-flex justify-content-center align-items-start">
-                <class-feed-block></class-feed-block>
+                <create-activity v-show="authenticatedUser.prof"></create-activity>
+                <!-- <class-feed-block></class-feed-block> -->
+                
               </div>
+              <view-activities></view-activities>
             </div>
             <div class="col-4">
               <div class="block-full-height">
@@ -35,7 +42,7 @@
                 <div class="row mt-3">
                   <p class="ml-2">Some discussions related to your group</p>
                   <hr>
-                  <related-topics></related-topics>
+                  <!-- <related-topics></related-topics> -->
                 </div>
                 <hr>
                 <div class="row">
@@ -58,16 +65,21 @@
   import classFeedBlock from '../community/class-feed-block.vue';
  // import relatedTopics from '../components/community/related-topics.vue';
   import hotTopics from '../community/hot-topics.vue';
+  import Activities from './Activities.vue';
+  import CreateAct from './CreateActivity.vue';
   export default {
     data() {
       return {
-        data: {}
+        data: {},
+        authenticatedUser: this.$auth.getAuthenticatedUser()
       }
     },
     components: {
       //'nav-list': Navigation,
       'class-feed-block': classFeedBlock,
       'hot-topics': hotTopics,
+      'view-activities': Activities,
+      'create-activity' : CreateAct
       //'related-topics': relatedTopics
     },
     created() {

@@ -12,6 +12,10 @@ import Create from './components/forum/Ask.vue'
 import Edit from './components/forum/EditThread.vue'
 import Class from './components/class-section/Classroom.vue'
 import Evaluation from './components/class-section/Evaluation.vue'
+import CreateActivity from './components/class-section/CreateActivity.vue'
+import ViewActivity from './components/class-section/ViewActivity.vue'
+import Activity from './components/class-section/Activities.vue'
+import CreateClassroom from './components/class-section/CreateClassroom'
 import Forum from './views/forums.vue'
 import ForumCategory from './views/forum-topics.vue'
 import sampleThread from './views/sample-thread.vue'
@@ -42,6 +46,34 @@ const router = new VueRouter({
         {
             path: "/feed",
             component: Feed,
+            meta: {
+                forAuth: true
+            }
+        },
+        {
+            path: "/activity",
+            component: Activity,
+            meta: {
+                forAuth: true
+            }
+        },
+        {
+            path: "/activity/create",
+            component: CreateActivity,
+            meta: {
+                forAuth: true
+            }
+        },
+        {
+            path: "/activity/:activity",
+            component: ViewActivity,
+            meta: {
+                forAuth: true
+            }
+        },
+        {
+            path: "/class/create",
+            component: CreateClassroom,
             meta: {
                 forAuth: true
             }
