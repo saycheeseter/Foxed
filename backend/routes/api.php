@@ -39,11 +39,13 @@ Route::get('/test', function() {
     Route::delete('/replies/{reply}', 'RepliesController@destroy');
    // Route::post('/community', 'ThreadController@store');
     Route::post('/community/{channel}', 'ThreadController@storeThreadOnChannel');
-   
     Route::get('/currentChannel/{channel}', 'ThreadController@getThisChannel');
     Route::patch('/community/{channel}/{thread}', 'ThreadController@update');
     Route::delete('/community/{channel}/{thread}', 'ThreadController@destroy');
+    Route::get('/classroom/{classroom}', 'ClassroomController@show');
     Route::resource('codes','CodeController');
+
+    Route::post('/classroom/{classroom}', 'UserGroupController@membership');
    
 });
 
@@ -56,7 +58,7 @@ Route::get('/test', function() {
 //Route::get('/community/{thread}', 'ThreadController@show');
 Route::post('/register', 'Auth\RegisterController@create');
 
-Route::get('/classroom/{classroom}', 'ClassroomController@show');
+
 Route::get('/community', 'ThreadController@index');
 Route::get('/{user}/threads', 'ProfilesController@showOwnThreads');
 Route::get('/community?by={name}', 'ThreadController@index');

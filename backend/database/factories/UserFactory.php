@@ -105,6 +105,9 @@ $factory->define(App\UserGroup::class, function ($faker) {
 $factory->define(App\Channel::class, function($faker) {
     $name = $faker->word;
     return [
+        'user_id' => function (){
+            return factory('App\User')->create()->id;
+        },
         'name' => $name,
         'slug' => $name
     ];
