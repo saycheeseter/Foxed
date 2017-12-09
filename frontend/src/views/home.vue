@@ -15,7 +15,7 @@
                   </router-link>
 
                   <hr>
-                  <a class="btn btn-success" type="submit">Join a Class</a>
+                  <join-class></join-class>
                   <p class="text-left mt-2">Classes</p>
                   <classroom></classroom>
                 </div>
@@ -45,6 +45,7 @@
   import feedBlock from '../components/community/feed-block.vue';
   import Classroom from '../components/community/enrolled-class.vue';
   import forumCategories from '../components/community/forum-category.vue';
+  import JoinClass from '../components/community/join-class.vue';
   
 export default {
     data() {
@@ -56,7 +57,8 @@ export default {
       // 'nav-list': Navigation,
       'feed-block': feedBlock,
       'forum-category': forumCategories,
-      'classroom': Classroom
+      'classroom': Classroom,
+      'join-class': JoinClass
     },
   }
 

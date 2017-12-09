@@ -60,6 +60,7 @@ class ClassroomController extends Controller
     public function show(Classroom $classroom)
     {
         //
+        
         $classroom->with('members');
         $classroom->members->load('user');
         return $classroom;

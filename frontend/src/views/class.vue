@@ -72,7 +72,7 @@
       this.$http.get(`api/classroom/${this.$route.params.id}`)
           .then(
             data
-          => this.class = data.body);
+          => this.class = data.body.classroom);
     }
   }
 </script>
