@@ -7,6 +7,7 @@
           <div v-if="isMember">
             <div class="row">
 
+
               <div class="col-2">
                 <div class="block-full-height d-flex justify-content-center align-items-start ">
 
@@ -39,6 +40,7 @@
                     <hr>
                     <related-topics></related-topics>
                   </div>
+
                   <hr>
                   <div class="row">
                     <p class=" ml-3">Popular discussions</p>
@@ -65,11 +67,15 @@
   import classFeedBlock from '../community/class-feed-block.vue';
   // import relatedTopics from '../components/community/related-topics.vue';
   import hotTopics from '../community/hot-topics.vue';
+  import Activities from './Activities.vue';
+  import CreateAct from './CreateActivity.vue';
   export default {
     data() {
       return {
+
         classDetails: {},
         isMember: false,
+
         authenticatedUser: this.$auth.getAuthenticatedUser()
       }
     },
@@ -77,6 +83,8 @@
       //'nav-list': Navigation,
       'class-feed-block': classFeedBlock,
       'hot-topics': hotTopics,
+      'view-activities': Activities,
+      'create-activity' : CreateAct
       //'related-topics': relatedTopics
     },
     created() {

@@ -45,8 +45,14 @@ Route::get('/test', function() {
     Route::get('/classroom/{classroom}', 'ClassroomController@show');
     Route::resource('codes','CodeController');
 
+
     Route::post('/classroom/{classroom}', 'UserGroupController@membership');
    
+
+    Route::resource('activity','ActivityController');
+    Route::post('classroom/create','ClassroomController@create');
+    Route::get('/activities/{id}/show/', 'ActivityController@showActivities');
+
 });
 
 // Route::middleware('auth:api')->get('/user', function () {

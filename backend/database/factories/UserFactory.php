@@ -109,6 +109,9 @@ $factory->define(App\Channel::class, function($faker) {
             return factory('App\User')->create()->id;
         },
         'name' => $name,
-        'slug' => $name
+        'slug' => $name,
+        'user_id' => function (){
+            return factory('App\User')->create()->id;
+        }
     ];
 });

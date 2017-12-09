@@ -30,21 +30,23 @@
           </div>
         </div>
       </div> -->
-      </div>
 
-      <router-link tag="li" to="/" v-if="isAuth">
-        <a>Home</a>
-      </router-link>
-      <router-link tag="li" to="/community" v-if="isAuth">
-        <a>Community</a>
-      </router-link>
-      <router-link tag="li" to="/profile" v-if="isAuth">
-        <a>Profile</a>
-      </router-link>
-      <span v-if="isAuth">
-        <a @click="logout">logout</a>
-      </span>
     </div>
+   
+    <router-link tag="li" to="/" v-if="isAuth">
+      <a>Home</a>
+    </router-link>
+    <router-link tag="li" to="/community" v-if="isAuth">
+      <a>Community</a>
+    </router-link>
+    <router-link tag="li" to="/profile" v-if="isAuth">
+      <a>Profile</a>
+    </router-link>
+    <span v-if="isAuth">
+      <a @click="logout">logout</a>
+    </span>
+     </div>
+
   </nav>
 </template>
 

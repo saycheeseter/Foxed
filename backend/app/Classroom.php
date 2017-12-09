@@ -35,5 +35,7 @@ class Classroom extends Model
     public function files() {
         return $this->hasMany(UserGroup::class);
     }
-   
+    public function classPosts(){
+        return $this->hasMany(Activity::class);
+    }
 }

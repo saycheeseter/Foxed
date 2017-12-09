@@ -32,7 +32,12 @@ class ClassroomController extends Controller
      */
     public function create()
     {
-        //
+        Classroom::create([
+            'user_id' => Auth::id(),
+            'name' => request('name'),
+            'body' => request('body'),
+        ]);
+
     }
 
     /**
@@ -60,6 +65,7 @@ class ClassroomController extends Controller
         $classroom->members->load('user');
         return $classroom;
     }
+    
     
 
     /**
