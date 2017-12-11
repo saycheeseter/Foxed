@@ -1,4 +1,5 @@
 <template>
+
   <div class="">
     <div class="card pl-5 pr-5 pt-3 pb-3">
       <div class="card-body">
@@ -30,6 +31,7 @@
 </template>
 
 <script>
+
   import swal from 'sweetalert'
   export default {
     data() {
@@ -45,10 +47,12 @@
           email: [],
           password: [],
           password_confirmation: []
+
         }
       }
     },
     methods: {
+
       register() {
         this.$http.post('api/register/', this.user)
           .then(response => {
@@ -68,6 +72,7 @@
             }
           })
       }
+
     }
   }
 

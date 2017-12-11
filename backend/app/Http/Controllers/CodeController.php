@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\User;
 use App\Code;
+use App\Filters\ThreadFilters;
+use App\Filters;
 use Auth;
 
 class CodeController extends Controller
@@ -35,12 +37,23 @@ class CodeController extends Controller
 
         return response()->json(['error' => 'resource not found'],404);
     }
-    public function update(Request $request, $id){
-        $code = Code::find($id);
+    
+    public function update(Code $code){
+        $this->authorize('update', $code);
+        
+        // $code = Code::find($code);
+        // $code->update(request()->all());
+        $code->update(request()->validate([
+            'title' => 'required',
+            'html' => 'required',
+            'css' => 'required',
+            'js' => 'required',
+        ]));
 
-        $code->update($request->all());
+        // $code->update($request->all());
         return response()->json($code);
     }
+
     public function destroy($id){
         try {
             Code::destroy($id);

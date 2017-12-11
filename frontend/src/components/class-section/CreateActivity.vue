@@ -5,7 +5,7 @@
         <div class="panel-body">
           <form @submit.prevent="create">
             <div class="form-group">
-              <label>Title</label>
+              <label>Image</label>
               <input type="file" class="form-control" @change="imageChanged">
             </div>
             <div class="form-group">
@@ -55,7 +55,7 @@
         console.log(this.activity);
       },
       create() {
-        this.$validator.validateAll().then(() => {
+        // this.$validator.validateAll().then(() => {
           this.$http.post("api/activity", this.activity).then(response => {
             console.log(response);
             swal("Succesfully created!", {
@@ -63,7 +63,7 @@
             });
             // this.$router.push("/feed");
           });
-        });
+        // });
       },
       authenticatedUser() {
         return this.$auth.getAuthenticatedUser();

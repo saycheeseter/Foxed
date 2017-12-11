@@ -6,16 +6,20 @@
           <div class="row">
             <div class="col-12 d-flex justify-content-center ">
               <img class="picture m-5" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg" alt="">
-              <!-- <h1>{{profile.name}}</h1> -->
-              
+              <h1>{{authenticatedUser.name}}</h1>
+              <br>
+              <router-link class="btn btn-default" :to="'/'+ authenticatedUser.name + '/editor'">new code</router-link>
             </div>
             <div class="col-12 d-flex justify-content-center mb-5">
               <i class="fa fa-print" aria-hidden="true"></i>
               <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
             </div>
-            <code-works></code-works>
+            <div class="col-12 d-flex justify-content-center mb-5">
+              
+            </div>
+            <code-works class="col-xl-3 col-lg-4 col-md-6 mb-4"></code-works>
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-              <img src="https://news.siteintelgroup.com/blog/components/com_easyblog/themes/wireframe/images/placeholder-image.png" alt="">
+              
             </div>
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
               <img src="https://news.siteintelgroup.com/blog/components/com_easyblog/themes/wireframe/images/placeholder-image.png" alt="">
@@ -63,10 +67,11 @@
     data() {
       return {
        // profile: {},
-        authenticatedUser: this.$auth.getAuthenticatedUser()
+        authenticatedUser: []
       }
     },
     created() {
+      this.authenticatedUser = this.$auth.getAuthenticatedUser()
       // this.$http.get(`api/${this.$route.params.name}/works`)
       //   .then(
       //     data => this.profile = data.body);

@@ -40,7 +40,7 @@
     methods: {
       create() {
         this.$validator.validateAll().then(() => {
-          this.$http.post("api/classroom/create", this.classroom).then(response => {
+          this.$http.post("api/classroom/create/a", this.classroom).then(response => {
             console.log(response);
             swal("Succesfully created!", {
               icon: "success"

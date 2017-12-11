@@ -31,6 +31,7 @@
 
     </div>-->
 
+
        
       </div>
 
@@ -46,7 +47,9 @@
     },
     data() {
       return {
+
         isAuth: null
+
       }
     },
     created() {
@@ -59,6 +62,7 @@
           .then(response => {
             
             this.$auth.setAuthenticatedUser(response.body)
+            this.user = this.$auth.getAuthenticatedUser()
             console.log(this.$auth.getAuthenticatedUser())
           })
       },

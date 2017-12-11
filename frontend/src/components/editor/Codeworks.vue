@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+  <div >
       <div class="card" v-for="code in codes.codes">
         <div class="card-body">
           <h4 class="card-title">{{ code.title }}</h4>
@@ -10,10 +9,12 @@
         <hr>
         <p v-if="code.user_id == authenticatedUser.id">
           <!-- <a class="btn btn-danger" role="button" @click="$emit('delete-code')"> delete </a> -->
-          <router-link class="btn btn-secondary" :to="'/works/' + code.id + '/edit'">edit</router-link>
+          <router-link class="btn btn-secondary" :to="'codes/' + code.id">edit</router-link>
+        </p>
+        <p v-else>
+          <router-link class="btn btn-secondary" :to="'codes/' + code.id">view</router-link>
         </p>
       </div>
-    </div>
   </div>
 </template>
 <script>

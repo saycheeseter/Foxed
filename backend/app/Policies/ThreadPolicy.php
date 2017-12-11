@@ -5,7 +5,11 @@ namespace App\Policies;
 use App\User;
 use App\Thread;
 use App\Reply;
+
 use App\UserGroup;
+
+use App\Code;
+
 use Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -58,10 +62,17 @@ class ThreadPolicy
         //
         return $reply->user_id == Auth::id();
     }
+
     public function showClassroom(User $user, Classroom $classroom, UserGroup $usergroup)
     {
         //
         return $classroom->members->user_id == Auth::id() ;
+
+    public function updateCode(User $user, Code $code)
+    {
+        //
+        return $code->user_id == Auth::id();
+
     }
 
     /**

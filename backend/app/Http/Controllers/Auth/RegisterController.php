@@ -21,6 +21,7 @@ class RegisterController extends Controller
             'name' => $request['name'],
             'email' => $request['email'],
             'password' => bcrypt($request['password']),
+            'prof' => $request['prof'],
         ]);
         return response()->json([
             'success' => true,

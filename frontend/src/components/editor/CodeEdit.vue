@@ -1,5 +1,11 @@
 <template>
 <section>
+	<div v-if="id.user_id == authenticatedUser.id">
+		<input type="text" v-model="codes.title">
+		<button class="btn btn-info" @click="update">save</button>
+		<button class="btn btn-danger" @click="deleteCodes">thrash</button>
+	</div>
+	
   <div id="wrap">
 
   <section id="code_editors" class="cm-s-twilight" >
@@ -22,11 +28,8 @@
   </section>
   
 </div>
-    <router-link class="nav-item" to="/evaluation"> <a class="nav-link" href="">Save and Submit</a> </router-link>
-	<input type="text" v-model="codes.title">
-	<button class="btn btn-info" @click="update">save</button>
-	<button class="btn btn-info" @click="tryCodes">try</button>
-    <button class="btn btn-danger" @click="deleteCodes">thrash</button>
+    <!-- <router-link class="nav-item" to="/evaluation"> <a class="nav-link" href="">Save and Submit</a> </router-link> -->
+	
 	<!-- <input type="text" v-model="codes.html"> -->
 </section>
 </template>
@@ -41,7 +44,8 @@ export default {
 				html:"",
 				css:"",
 				js: ""
-			}
+			},
+			id: ""
 		}
 	},
     created (){
@@ -52,6 +56,9 @@ export default {
   
   methods: {
 		update () {
+			this.codes.html = x.html
+			this.codes.css = x.css
+			this.codes.js = x.js
           this.$http.put('api/codes/' + this.$route.params.id, this.codes)
           .then(response => {
               console.log(response)
@@ -60,25 +67,6 @@ export default {
                 });
           })
       },
-		tryCodes () {
-			// var html_box = document.querySelector('#html textarea');
-			// // var cm_opt = {
-			// // 	mode: 'text/html'
-			// // }
-			// // var html_editor = CodeMirror.fromTextArea(html_box, cm_opt);
-			// var html = html_editor.getValue();
-			// this.codes = x;
-			// this.codes = 
-			this.codes.html = x.html
-			console.log(this.codes.html)
-			this.codes.css = x.css
-			console.log(this.codes.css)
-			this.codes.js = x.js
-			console.log(this.codes.js)
-			// console.log(x.html)
-            console.log(this.codes)
-            
-        },
         deleteCodes () {
             swal({
             title: "Are you sure?",
@@ -103,6 +91,11 @@ export default {
             
         }
   },
+    computed: {
+        authenticatedUser() {
+        return this.$auth.getAuthenticatedUser()
+        }
+    },
   mounted: function() {
 	
 	var base_tpl =
@@ -194,6 +187,9 @@ export default {
 							css_editor.setValue(response.body.css);
 							js_editor.setValue(response.body.js);
 							console.log(response)
+							this.codes.title = response.body.title;
+							this.id = response.body.user_id;
+							console.log(response.body.user_id)
               // html_editor.setValue(" ");
 							// css_editor.setValue(" ");
 							// js_editor.setValue(" ");

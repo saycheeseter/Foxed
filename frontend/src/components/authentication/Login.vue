@@ -30,6 +30,7 @@
 </template>
 
 <script>
+
   export default {
     props: ['isAuth'],
     name: 'login',
@@ -44,6 +45,7 @@
       login() {
         var data = {
           client_id: 2,
+
 
           client_secret: 'Vgnq5Vbmfa6zaGXQ9Od9uQXMyUehdMhNhQJOJ0Q3',
 
