@@ -1,17 +1,17 @@
 <template>
-  <div class="home">
+  <div class="home mt-5">
     <!-- <nav-list></nav-list> -->
     <div class="container-fluid">
       <div class="row justify-content-sm-center">
         <div class="col-10">
-          <div class="row no-gutters">
+          <div class="row no-gutters mt-5">
             <div class="col-2">
               <div class="block-full-height d-flex justify-content-center align-items-start ">
-                <div class="text-center">
+                <div class="text-left">
                   <br>
-                  <div class="picture"></div>
+                  <div class="picture mb-2"></div>
                   <router-link class="nav-item" to="/profile">
-                    <a class="nav-link" href="">Hi, User!</a>
+                    <a class="" href="">Hi, User!</a>
                   </router-link>
 
                   <hr>
@@ -23,14 +23,12 @@
             </div>
             <div class="col-6">
               <div class="block-full-height d-flex justify-content-center align-items-start">
-                <feed-block></feed-block>
+                <p>No posts yet.</p>
               </div>
             </div>
             <div class="col-4">
               <div class="block-full-height d-flex justify-content-center align-items-start">
-
                 <forum-category></forum-category>
-
               </div>
             </div>
           </div>
@@ -46,8 +44,9 @@
   import Classroom from '../components/community/enrolled-class.vue';
   import forumCategories from '../components/community/forum-category.vue';
   import JoinClass from '../components/community/join-class.vue';
-  
-export default {
+
+  export default {
+    
     data() {
       return {
 
@@ -77,6 +76,9 @@ export default {
     background-color: #efefef;
     padding: 20px;
     border-radius: 50px;
+    width: 200px;
+
+    max-width: 100%;
   }
 
   ul {

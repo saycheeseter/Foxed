@@ -34,7 +34,7 @@ Route::get('/test', function() {
    Route::patch('/replies/{reply}', 'RepliesController@update');
     Route::resource('replies','RepliesController');
     Route::get('/classroom', 'ClassroomController@index');
-    Route::get('/enrolledClass', 'UserGroupController@index');
+    Route::get('/enrolledClass', 'ClassroomController@index');
     Route::post('/community/{channel}/{thread}/replies', 'RepliesController@store');
     Route::delete('/replies/{reply}', 'RepliesController@destroy');
    // Route::post('/community', 'ThreadController@store');
@@ -42,12 +42,12 @@ Route::get('/test', function() {
     Route::get('/currentChannel/{channel}', 'ThreadController@getThisChannel');
     Route::patch('/community/{channel}/{thread}', 'ThreadController@update');
     Route::delete('/community/{channel}/{thread}', 'ThreadController@destroy');
-    Route::get('/classroom/{classroom}', 'ClassroomController@show');
+   
     Route::resource('codes','CodeController');
 
-
-    Route::post('/classroom/{classroom}', 'UserGroupController@membership');
-   
+     
+    Route::post('/classroom/{classroom}/join', 'UserGroupController@membership');
+    Route::get('/classroom/{classroom}', 'ClassroomController@show');
 
     Route::resource('activity','ActivityController');
     Route::post('classroom/create','ClassroomController@create');

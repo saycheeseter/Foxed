@@ -8,6 +8,10 @@ class Classroom extends Model
 {
     //
     protected $guarded = [];
+    protected $appends = ['isMember', 'isOwner'];
+    protected $hidden = [
+        'isMember', 'isOwner'
+    ];
     public function subscribe($userId = null) {
         $this->subscriptions()->create([
             'user_id' => $userId ?: auth()->id()
@@ -21,8 +25,19 @@ class Classroom extends Model
     public function subscriptions() {
         return $this->hasMany(UserGroup::class);
     }
-    
-
+    public function getIsMemberAttribute() {
+        return $this->subscriptions()
+            ->where('user_id', auth()->id())
+            ->exists();
+    }
+    public function getIsOwnerAttribute() {
+        return $this
+            ->where('user_id', auth()->id())
+            ->exists();
+    }
+    public function owner() {
+        return $this->belongsTo(User::class);
+    }
     public function members() {
         return $this->hasMany(UserGroup::class);
     }

@@ -14,7 +14,8 @@
 
                         <div class="form-group mt-2">
                           <textarea class="form-control mb-2" name="title" id="title" cols="100" rows="1" width="100%" v-model="createCategory.name" placeholder="Category name"></textarea>
-                          <textarea class="form-control mb-2" name="body" id="body" cols="100" rows="5" width="100%" v-model="createCategory.slug" placeholder="Assign unique key to your new category. (Can only be assigned once.)"></textarea>
+                          <textarea class="form-control mb-2" name="body" id="body" cols="100" rows="1" width="100%" v-model="createCategory.slug" placeholder="Assign unique key to your new category. (Can only be assigned once.)"></textarea>
+                          <textarea class="form-control mb-2" name="body" id="body" cols="100" rows="5" width="100%" v-model="createCategory.description" placeholder="A brief description about your topic."></textarea>
                           <button type="submit" class="btn btn-default">Publish</button>
                         </div>
                       </form>

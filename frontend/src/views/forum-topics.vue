@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="forum-topics  mt-5">
     <nav-list></nav-list>
     <div class="container-fluid">
       <div class="row no-gutters justify-content-sm-center">

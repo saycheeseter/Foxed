@@ -17,7 +17,8 @@ class ChannelController extends Controller
         Channel::Create([
             'user_id' => Auth::id(),
             'name' => request('name'),
-            'slug' => request('slug')
+            'slug' => request('slug'),
+            'description' => request('description')
         ]);
         }
     

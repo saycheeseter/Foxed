@@ -1,12 +1,17 @@
 <template>
-  <div>
-    <div class="forum-post__header full-block__post p-1 " v-for="room in classes" v-bind:key="room">
-      <a class="forum-post__title">
-        <router-link class="nav-item" :to="`/class/${room.classroom.id}`">
-          <a class="nav-link" href="">{{room.classroom.name}}</a>
+  <div class="enrolled-class">
+    <div v-if="classes.length > 0">
+    <div class="forum-post__header text-left font--light" v-for="room in classes" v-bind:key="room">
+      
+        <router-link class="nav-item" :to="`/class/${room.id}`">
+          <a class="content__sub-title" href="">{{room.name}}</a>
         </router-link>
-      </a>
+     
       <hr>
+    </div>
+    </div>
+    <div v-else>
+      <p>You have 0 enrolled class.</p>
     </div>
   </div>
 </template>

@@ -17,14 +17,14 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password',
     ];
-
+    protected $appends = ['isProf'];
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'email',
+        'password', 'remember_token', 'email', 'isProf'
     ];
 
     public function getRouteKeyName() {
@@ -33,8 +33,16 @@ class User extends Authenticatable
     public function threads() {
         return $this->hasMany(Thread::class)->latest();
     }
-    public function classes() {
+    public function getIsProfAttribute() {
+        return $this->prof()
+            ->where('user_id', auth()->id())
+            ->exists();
+    }
+    public function prof() {
         return $this->hasMany(Classroom::class)->latest();
+    }
+    public function classes() {
+        return $this->belongsTo(Classroom::class)->latest();
     }
     public function project() {
         return $this->hasMany(Code::class)->latest();

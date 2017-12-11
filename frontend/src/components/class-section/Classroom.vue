@@ -1,9 +1,9 @@
 <template>
-  <div class="home">
+  <div class="classroom mt-5">
     <!-- <nav-list></nav-list> -->
-    <div class="container-fluid">
-      <div class="row justify-content-sm-center">
-        <div class="col-11">
+    <div class="container-fluid ">
+      <div class="row justify-content-sm-center mt-5">
+        <div class="col-10">
           <div v-if="isMember">
             <div class="row">
 
@@ -12,17 +12,17 @@
                 <div class="block-full-height d-flex justify-content-center align-items-start ">
 
                   <div class="text-left mt-5">
-                    <a href="">{{classDetails.name}}</a>
+                    <a href=""><h3 class="classroom__title">{{classDetails.name}}</h3></a>
                     <hr>
                     <a class="btn btn-success text-center mb-2" type="submit">Code Play</a>
                     <br>
-                    <a href="">Announcements</a>
+                    <a href="" class="content__sub-title">Announcements</a>
                     <br>
-                    <a href="">Assignments</a>
+                    <a href="" class="content__sub-title">Assignments</a>
                     <br>
-                    <a href="">Members</a>
+                    <a href="" class="content__sub-title">Members</a>
                     <br>
-                    <a href="">Files</a>
+                    <a href="" class="content__sub-title">Files</a>
                   </div>
 
                 </div>
@@ -75,37 +75,39 @@
 
         classDetails: {},
         isMember: false,
-
         authenticatedUser: this.$auth.getAuthenticatedUser()
       }
+    },
+    mounted() {
+      this.getData();
     },
     components: {
       //'nav-list': Navigation,
       'class-feed-block': classFeedBlock,
       'hot-topics': hotTopics,
       'view-activities': Activities,
-      'create-activity' : CreateAct
+      'create-activity': CreateAct
       //'related-topics': relatedTopics
+    },
+
+
+    methods: {
+      getData() {
+       
+        
+          
+      }
     },
     created() {
       this.$http.get(`api/classroom/${this.$route.params.id}`)
-        .then(
-          data => {
-            for (var i = 0; i < data.body.members.length; i++) {
-              if (data.body.members[i].user_id == this.authenticatedUser.id) {
+          .then(
+            data => {
+              this.classDetails = data.body;
+              if(data.body.isOwner == true || data.body.isMember == true) {
                 this.isMember = true;
-                console.log("Im a member");
-              } else {
-                console.log("Not a member");
               }
 
-            }
-            this.classDetails = data.body;
-
-
-
-          }
-        );
+            });
     }
   }
 

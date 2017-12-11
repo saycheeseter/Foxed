@@ -18,6 +18,7 @@ class CreateChannelsTable extends Migration
             $table->unsignedInteger('user_id');
             $table->string('name', 50);
             $table->string('slug', 50);
+            $table->string('description', 50);
             $table->timestamps();
         });
     }

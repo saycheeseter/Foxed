@@ -1,38 +1,37 @@
 <template>
-  <div>
-    <b-btn v-b-modal.modalPrevent>Join A Class</b-btn>
+  <div class="join-class">
+    <b-btn class="form__button--register-dark" v-b-modal.modalPrevent>Join A Class</b-btn>
     <!-- Main UI -->
     <!-- Modal Component -->
-    <b-modal id="modalPrevent"
-             ref="modal"
-             title="Submit your name"
-             @ok="subscribe">
+    <b-modal id="modalPrevent" ref="modal" title="Enter class code" @ok="subscribe">
       <form @submit.stop.prevent="subscribe">
-        <b-form-input type="text"
-                      placeholder="Enter class name"
-                      v-model="classCode"></b-form-input>
+        <b-form-input type="number" placeholder="#" v-model="classCode"></b-form-input>
       </form>
     </b-modal>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'join-class',
-  data () {
-    return {
-      modalShow: false,
-      classCode: ''
-    }
-  },
-  methods: {
+  export default {
+    name: 'join-class',
+    data() {
+      return {
+        modalShow: false,
+        classCode: ''
+      }
+    },
+    methods: {
 
-    subscribe() {
-      this.$http.post(`api/classroom/${this.classCode}`) ;
-        // .then(response => {
-        //   console.log('success')
-        // });
+      subscribe() {
+        this.$http.post(`api/classroom/${this.classCode}/join`)
+          .then(response => {
+            swal("Success!", {
+              icon: "success",
+            });
+            this.$router.push(`/class/${this.classCode}`)
+          });
+      }
     }
   }
-}
+
 </script>

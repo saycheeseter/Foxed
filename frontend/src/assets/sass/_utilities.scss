@@ -1,0 +1,44 @@
+[v-cloak] {
+    display: none;
+}
+
+.font--bold {
+    font-weight: 900;
+}
+
+.font--medium {
+    font-weight: 400;
+}
+
+.font--light {
+    font-weight: 300;
+}
+
+.card-body {
+    background-color: $white;
+}
+
+.content {
+    max-width: 650px;
+}
+
+.content__sub-title {
+    font-size: 20px;
+    line-height: 35px;
+    word-spacing: 1px;
+    color: darken($white, 28%);
+}
+
+.block-full-height {
+    min-height: 100vh;
+}
+
+.block-half-height {
+    min-height: 45vh;
+}
+
+.full-block__post {
+    width: 100%;
+    background-color: $white;
+    border: 1px solid darken($white, 10%);
+}

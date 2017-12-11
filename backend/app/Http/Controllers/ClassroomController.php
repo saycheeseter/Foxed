@@ -14,13 +14,16 @@ class ClassroomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(User $user)
+    public function index(User $user, Classroom $classrooms)
     {
         //
-        $classroom = Classroom::with(['joins' => function ($query) {
-            $query->where('user_id', Auth::id());
-        }])->get();
-        return $classroom;
+        if($user->prof == true)  {
+            $classrooms = Classroom::all()->where('isOwner', true);
+            return $classrooms;
+        }
+            $classrooms = Classroom::all()->where('isMember', true );
+        
+        return $classrooms;
        
         //return ['classrooms' => $user->classes()->latest()->get()->load('owner')];
     }
@@ -57,13 +60,14 @@ class ClassroomController extends Controller
      * @param  \App\Classroom  $classroom
      * @return \Illuminate\Http\Response
      */
-    public function show(Classroom $classroom)
+    public function show(Classroom $classroom, User $user)
     {
         //
-        
+       if($classroom->isMember || $classroom->isOwner) {
         $classroom->with('members');
         $classroom->members->load('user');
         return $classroom;
+       }
     }
     
     

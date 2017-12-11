@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Classroom;
 use App\UserGroup;
+use App\User;
 use Auth;
 class UserGroupController extends Controller {
   public function __construct() {
@@ -18,8 +19,11 @@ class UserGroupController extends Controller {
  
   return $classroom;
   }
-  public function membership(Classroom $classroom) {
-    $classroom->subscribe();
+  public function membership(User $user, Classroom $classroom) {
+    if(!$user->isProf == true) {
+      $classroom->subscribe();
+    }
+    
   }
 
 
