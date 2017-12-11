@@ -42,15 +42,16 @@ Route::get('/test', function() {
     Route::get('/currentChannel/{channel}', 'ThreadController@getThisChannel');
     Route::patch('/community/{channel}/{thread}', 'ThreadController@update');
     Route::delete('/community/{channel}/{thread}', 'ThreadController@destroy');
-    Route::get('/classroom/{classroom}', 'ClassroomController@show');
     Route::resource('codes','CodeController');
-
-
+    Route::patch('/codes/{code}','CodeController@update');
+    
     Route::post('/classroom/{classroom}', 'UserGroupController@membership');
+    Route::post('/classroom/create/a','ClassroomController@create');
+    Route::get('/classroom/{classroom}', 'ClassroomController@show');
+
    
 
     Route::resource('activity','ActivityController');
-    Route::post('classroom/create','ClassroomController@create');
     Route::get('/activities/{id}/show/', 'ActivityController@showActivities');
 
 });

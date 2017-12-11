@@ -22,9 +22,8 @@
   </section>
   
 </div>
-    <router-link class="nav-item" to="/evaluation"> <a class="nav-link" href="">Save and Submit</a> </router-link>
-	<input type="text" v-model="codes.title">
-	<button class="btn btn-info" @click="submitCodes">save</button>
+    <!-- <router-link class="nav-item" to="/evaluation"> <a class="nav-link" href="">Save and Submit</a> </router-link> -->
+	
 	<!-- <input type="text" v-model="codes.html"> -->
 </section>
 </template>
@@ -42,36 +41,6 @@ export default {
 			}
 		}
 	},
-    created (){
-		// this.getCode();
-		// this.submitCodes();
-
-    },
-  
-  methods: {
-      getCode (){
-          this.$http.get('api/forums/')
-          .then(response => {
-            //   this.codes = response.body[0]
-            //   console.log(response.body[0])
-          })
-	  },
-		submitCodes () {
-				// this.codes = x;
-					this.codes.html = x.html
-					this.codes.css = x.css
-					this.codes.js = x.js
-				  this.$http.post('api/codes/', this.codes)
-                .then(response => {
-                    console.log(response)
-                            swal("Succesfully created!", {
-                        icon: "success",
-                        });   swal("Succesfully created!", {
-                        icon: "success",
-                        });
-                })
-		},
-  },
   mounted: function() {
 	
 	var base_tpl =
@@ -115,20 +84,19 @@ export default {
 		iframe_doc.close();
 	};
 
+	
 	var cm_opt = {
 		mode: 'text/html',
 		gutter: true,
 		lineNumbers: true,
-        theme:"twilight",
-        extraKeys:{"Tab":"autocomplete"},
-        autoCloseTags:true,
-        
+		theme:"twilight",
+		
 		onChange: function () {
 			console.log('1')
 			render();
 		}
 	};
-
+	
 	var html_box = document.querySelector('#html textarea');
 	var html_editor = CodeMirror.fromTextArea(html_box, cm_opt);
 	html_editor.on("change", function(html_editor, change) {
@@ -155,11 +123,21 @@ export default {
 	
 	
     // css_editor.setValue('body { color: red; }');
-		html_editor.setValue("");
-		css_editor.setValue("");
-		js_editor.setValue("");
 
-
+    this.$http.get('api/codes/'+ this.$route.params.id)
+          .then(response => {
+						//   this.codes = response.body[10]
+					// this.codes=response.body[1];
+              html_editor.setValue(response.body.html);
+							css_editor.setValue(response.body.css);
+							js_editor.setValue(response.body.js);
+							console.log(response)
+							this.codes.title = response.body.title;
+              // html_editor.setValue(" ");
+							// css_editor.setValue(" ");
+							// js_editor.setValue(" ");
+							// console.log(responses)
+          })
 
 
 	// var cms = document.querySelectorAll('.CodeMirror');

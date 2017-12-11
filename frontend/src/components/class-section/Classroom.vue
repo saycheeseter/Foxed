@@ -23,14 +23,25 @@
                     <a href="">Members</a>
                     <br>
                     <a href="">Files</a>
+                    <hr>
+                    <div>
+                      <h5>Members:</h5>
+                      <ul>
+                        <li v-for="member in classDetails.members">
+                          <a href="" v-for="profile in member"> {{profile.name}} </a>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
 
                 </div>
               </div>
               <div class="col-6">
                 <div class="block-full-height d-flex justify-content-center align-items-start">
-                  <class-feed-block></class-feed-block>
+                  <!-- <class-feed-block></class-feed-block> -->
+                  <create-activity v-show="authenticatedUser.prof"></create-activity>
                 </div>
+                <view-activities></view-activities>
               </div>
               <div class="col-4">
                 <div class="block-full-height">

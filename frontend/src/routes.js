@@ -7,6 +7,7 @@ import Feed from './components/Feed.vue'
 import Profile from './components/Profile.vue'
 import Editor from './components/editor/Editor.vue'
 import EditEditor from './components/editor/CodeEdit.vue'
+import ViewEditor from './components/editor/CodeView.vue'
 import Thread from './components/forum/Thread.vue'
 import Create from './components/forum/Ask.vue'
 import Edit from './components/forum/EditThread.vue'
@@ -162,12 +163,19 @@ const router = new VueRouter({
             }
         },
         {
-            path: "/works/:id/edit",
+            path: "/:name/codes/:id",
             component: EditEditor,
             meta: {
                 forAuth: true
             }
         },
+        // {
+        //     path: "/works/:id",
+        //     component: ViewEditor,
+        //     meta: {
+        //         forAuth: true
+        //     }
+        // },
         {
             path: "/class/:id",
             component: Class,

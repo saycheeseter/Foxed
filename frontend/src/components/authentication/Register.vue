@@ -35,6 +35,9 @@
                             placeholder="Confirm Password">
                             <p class="help-block" v-for="error in theErrors.password_confirmation"> {{error}}</p>
                     </div>
+                    <div>
+                        <input type="checkbox" id="faculty" >Faculty<br>
+                    </div>
                     <button @click="register()" class="btn btn-success pull-right">
                         Register
                     </button>
@@ -52,10 +55,11 @@ export default {
     data () {
         return {
             user: {
-                name: null,
-                email: null,
-                password: null,
-                password_confirmation:null
+                name: '',
+                email: '',
+                password: '',
+                password_confirmation:'',
+                prof:0
             },
             theErrors: {
                 name: [],
@@ -67,9 +71,14 @@ export default {
     },
     methods: {
         register(){
+            var faculty = document.getElementById("faculty").checked;
+            if(faculty)
+                this.user.prof = 1
+            console.log(this.user)
             this.$http.post('api/register/', this.user)
                 .then(response => {
                     console.log(response)
+                    this.$router.push('/login')
                 })
                 .catch(error =>{
                     let data = error.body.errors

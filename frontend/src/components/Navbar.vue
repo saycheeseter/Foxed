@@ -39,7 +39,7 @@
     <router-link tag="li" to="/community" v-if="isAuth">
       <a>Community</a>
     </router-link>
-    <router-link tag="li" to="/profile" v-if="isAuth">
+    <router-link tag="li" :to="'/'+user.name+'/codes'" v-if="isAuth">
       <a>Profile</a>
     </router-link>
     <span v-if="isAuth">
@@ -55,7 +55,8 @@
     data() {
       return {
         isAuth: null,
-        channels: {}
+        channels: {},
+        user:[]
       }
     },
     created() {
@@ -71,6 +72,7 @@
         this.$http.get('api/user')
           .then(response => {
             this.$auth.setAuthenticatedUser(response.body)
+            this.user = this.$auth.getAuthenticatedUser()
             console.log(this.$auth.getAuthenticatedUser())
           })
       },
