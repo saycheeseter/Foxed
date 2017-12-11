@@ -59,6 +59,11 @@
         user:[]
       }
     },
+    // computed: {
+    //     authenticatedUser() {
+    //     return this.$auth.getAuthenticatedUser()
+    //     }
+    // },
     created() {
       this.isAuth = this.$auth.isAuthenticated()
       this.setAuthenticatedUser()
@@ -66,6 +71,12 @@
         .then(response => {
           this.channels = response.body
         })
+      
+    },
+    watch:{
+      $route:function(){
+      this.isAuth = this.$auth.isAuthenticated()
+      }
     },
     methods: {
       setAuthenticatedUser() {
@@ -74,10 +85,12 @@
             this.$auth.setAuthenticatedUser(response.body)
             this.user = this.$auth.getAuthenticatedUser()
             console.log(this.$auth.getAuthenticatedUser())
+
           })
       },
       logout() {
         this.$auth.destroyToken()
+        // location.reload()
         this.$router.push("/")
       }
 

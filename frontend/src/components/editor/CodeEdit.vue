@@ -1,11 +1,7 @@
 <template>
 <section>
-	<div v-if="id.user_id == authenticatedUser.id">
-		<input type="text" v-model="codes.title">
-		<button class="btn btn-info" @click="update">save</button>
-		<button class="btn btn-danger" @click="deleteCodes">thrash</button>
-	</div>
 	
+	<h1>{{codes.title}}</h1>
   <div id="wrap">
 
   <section id="code_editors" class="cm-s-twilight" >
@@ -25,8 +21,13 @@
   
   <section id="output">
     <iframe></iframe>
+		
   </section>
-  
+  <div v-show="authenticatedUser.id == id">
+		<input type="text" v-model="codes.title">
+		<button class="btn btn-info" @click="update">save</button>
+		<button class="btn btn-danger" @click="deleteCodes">thrash</button>
+	</div>
 </div>
     <!-- <router-link class="nav-item" to="/evaluation"> <a class="nav-link" href="">Save and Submit</a> </router-link> -->
 	
@@ -45,7 +46,7 @@ export default {
 				css:"",
 				js: ""
 			},
-			id: ""
+		id:""
 		}
 	},
     created (){
@@ -181,15 +182,22 @@ export default {
 
     this.$http.get('api/codes/'+ this.$route.params.id)
           .then(response => {
+						console.log(response)
 						//   this.codes = response.body[10]
 					// this.codes=response.body[1];
-              html_editor.setValue(response.body.html);
-							css_editor.setValue(response.body.css);
-							js_editor.setValue(response.body.js);
-							console.log(response)
+							response.body.html ? html_editor.setValue(response.body.html):html_editor.setValue("");
+							response.body.css ? css_editor.setValue(response.body.css):css_editor.setValue("");
+							response.body.js ? js_editor.setValue(response.body.js):js_editor.setValue("");
+
+              // html_editor.setValue(response.body.html);
+							// css_editor.setValue(response.body.css);
+							// js_editor.setValue(response.body.js);
+							
 							this.codes.title = response.body.title;
 							this.id = response.body.user_id;
-							console.log(response.body.user_id)
+							// alert(response.body.user_id)
+							// console.log("this.codes.title")
+							// alert('asd')
               // html_editor.setValue(" ");
 							// css_editor.setValue(" ");
 							// js_editor.setValue(" ");

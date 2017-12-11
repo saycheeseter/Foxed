@@ -42,13 +42,13 @@ class CodeController extends Controller
         $this->authorize('update', $code);
         
         // $code = Code::find($code);
-        // $code->update(request()->all());
-        $code->update(request()->validate([
-            'title' => 'required',
-            'html' => 'required',
-            'css' => 'required',
-            'js' => 'required',
-        ]));
+        $code->update(request()->all());
+        // $code->update(request()->validate([
+        //     'title' => 'required',
+        //     'html' => 'required',
+        //     'css' => 'required',
+        //     'js' => 'required',
+        // ]));
 
         // $code->update($request->all());
         return response()->json($code);

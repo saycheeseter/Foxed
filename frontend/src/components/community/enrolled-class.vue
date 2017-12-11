@@ -21,7 +21,11 @@
       }
     },
     mounted() {
-      // this.init()
+      this.$http.get('api/enrolledClass')
+        .then(response => {
+          this.classes = response.body
+          console.log(response.body)
+        })
     },
     methods: {
       // init() {
@@ -31,11 +35,7 @@
       // }
     },
     created() {
-      this.$http.get('api/enrolledClass')
-        .then(response => {
-          this.classes = response.body
-          console.log(response.body)
-        })
+      
 
 
       //   axios.get('/threads' )
