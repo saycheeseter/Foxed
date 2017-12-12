@@ -1,10 +1,10 @@
 <template>
-  <div class="home">
+  <div class="specific-thread">
     <!-- <nav-list></nav-list> -->
-    <div class="container-fluid">
-      <div class="row no-gutters justify-content-sm-center">
+    <div class="container">
+      <div class="row no-gutters justify-content-sm-center ">
         <div class="col-12">
-          <div class="row">
+          <div class="row mt-2">
             <div class="col-12">
               <div class="forum-post">
                 <!-- <div v-for="thread in threads" v-bind:thread="thread" :key="thread.id"> -->
@@ -54,7 +54,7 @@
                       <hr> 
                       <div class="forum__topic-content" v-html="attriThread.body"></div>
                       <hr>
-                      <div class="panel-footer level d-flex">
+                      <div class="panel-footer level d-flex" v-if="authenticatedUser.id == attriThread.user_id">
                         <button class=" btn btn-xs mr-2" @click="editingThread = true">Edit</button>
                         <form @submit.prevent="deleteThread">
                           <button type="submit" class="btn btn-danger">Delete</button>
@@ -94,7 +94,7 @@
                         <div class="forum__topic-content" v-else v-html="body"></div>
 
                         <hr>
-                        <div class="level d-flex panel-footer">
+                        <div class="level d-flex panel-footer" v-if="authenticatedUser.id == reply.user_id">
                           <button class=" btn btn-xs mr-2" @click="editing = true">Edit</button>
                           <button class=" btn btn-xs btn-danger mr-2" @click="destroy">Delete</button>
                         </div>
@@ -155,9 +155,9 @@
       }
     },
     computed: {
-      // authenticatedUser() {
-      //   return this.$auth.getAuthenticatedUser()
-      // }
+      authenticatedUser() {
+        return this.$auth.getAuthenticatedUser()
+      }
     },
     methods: {
       add(reply) {
@@ -184,7 +184,12 @@
       //     this.replies = data.body.replies
       //     console.log(data.body.replies);
       //   });
-    }
+    },
+    computed: {
+        authenticatedUser() {
+        return this.$auth.getAuthenticatedUser()
+        }
+    },
     // },
     // authenticatedUser() {
     //     return this.$auth.getAuthenticatedUser()

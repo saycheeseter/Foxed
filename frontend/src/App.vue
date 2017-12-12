@@ -2,7 +2,7 @@
   <div class="" id="app">
     <navbar></navbar>
     <div class="">
-    <router-view :key="$route.path"></router-view>
+    <router-view class="mt-5" :key="$route.path"></router-view>
     </div>
   </div>
 </template>

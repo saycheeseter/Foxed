@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Classroom;
 use App\User;
 use Illuminate\Http\Request;
+use App\Filters\ThreadFilters;
+use App\Filters;
 use Auth;
 
 class ClassroomController extends Controller
@@ -14,13 +16,16 @@ class ClassroomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(User $user)
+    public function index(User $user, Classroom $classrooms)
     {
         //
-        $classroom = Classroom::with(['joins' => function ($query) {
-            $query->where('user_id', Auth::id());
-        }])->get();
-        return $classroom;
+        if($classrooms->isOwner == true)  {
+            $classroom = Classroom::all()->where('user_id', Auth::id());
+            return $classroom;
+        } 
+            $classroom = Classroom::all()->where('isMember', true);
+            return $classroom;
+        
        
         //return ['classrooms' => $user->classes()->latest()->get()->load('owner')];
     }
@@ -30,13 +35,15 @@ class ClassroomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(User $user, Classroom $classroom)
     {
-        Classroom::create([
+       if($user->prof == true) 
+        $classroom->create([
             'user_id' => Auth::id(),
             'name' => request('name'),
             'body' => request('body'),
         ]);
+        
 
     }
 
@@ -60,11 +67,12 @@ class ClassroomController extends Controller
     public function show(Classroom $classroom)
     {
         //
-        
+        if($classroom->isMember || $classroom->isOwner) {
         $classroom->with('members');
         $classroom->members->load('user');
         return $classroom;
     }
+}
     
     
 

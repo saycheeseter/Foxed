@@ -1,28 +1,28 @@
 <template>
-  <div class="home">
+  <div class="classroom mt-5">
     <!-- <nav-list></nav-list> -->
     <div class="container-fluid">
-      <div class="row justify-content-sm-center">
-        <div class="col-11">
+      <div class="row justify-content-sm-center mt-5">
+        <div class="col-10">
           <div v-if="isMember">
             <div class="row">
-
-
-              <div class="col-2">
+              <div class="col-2 mt-5">
                 <div class="block-full-height d-flex justify-content-center align-items-start ">
 
-                  <div class="text-left mt-5">
-                    <a href="">{{classDetails.name}}</a>
+                  <div class="text-left">
+                    <a href="">
+                      <h3 class="classroom__title">{{classDetails.name}}</h3>
+                    </a>
                     <hr>
                     <a class="btn btn-success text-center mb-2" type="submit">Code Play</a>
                     <br>
-                    <a href="">Announcements</a>
+                    <a class="content__sub-title" href="">Announcements</a>
                     <br>
-                    <a href="">Assignments</a>
+                    <a class="content__sub-title" href="">Assignments</a>
                     <br>
-                    <a href="">Members</a>
+                    <a class="content__sub-title" href="">Members</a>
                     <br>
-                    <a href="">Files</a>
+                    <a class="content__sub-title" href="">Files</a>
                     <hr>
                     <div>
                       <h5>Members:</h5>
@@ -36,27 +36,19 @@
 
                 </div>
               </div>
-              <div class="col-6">
+              <div class="col-7 mt-5">
                 <div class="block-full-height d-flex justify-content-center align-items-start">
                   <!-- <class-feed-block></class-feed-block> -->
                   <create-activity v-show="authenticatedUser.prof"></create-activity>
                 </div>
                 <view-activities></view-activities>
               </div>
-              <div class="col-4">
+              <div class="col-3 mt-5">
                 <div class="block-full-height">
-                  <hr>
-                  <div class="row mt-3">
-                    <p class="ml-2">Some discussions related to your group</p>
-                    <hr>
-                    <related-topics></related-topics>
-                  </div>
-
-                  <hr>
                   <div class="row">
                     <p class=" ml-3">Popular discussions</p>
                     <hr>
-                    <hot-topics></hot-topics>
+                    <forum-category></forum-category>
                   </div>
                 </div>
               </div>
@@ -77,7 +69,7 @@
   // import Navigation from '../components/navigation.vue';
   import classFeedBlock from '../community/class-feed-block.vue';
   // import relatedTopics from '../components/community/related-topics.vue';
-  import hotTopics from '../community/hot-topics.vue';
+  import forumCategories from '../community/forum-category.vue';
   import Activities from './Activities.vue';
   import CreateAct from './CreateActivity.vue';
   export default {
@@ -86,37 +78,37 @@
 
         classDetails: {},
         isMember: false,
-
         authenticatedUser: this.$auth.getAuthenticatedUser()
       }
     },
     components: {
       //'nav-list': Navigation,
       'class-feed-block': classFeedBlock,
-      'hot-topics': hotTopics,
+      'forum-category': forumCategories,
       'view-activities': Activities,
-      'create-activity' : CreateAct
+      'create-activity': CreateAct
       //'related-topics': relatedTopics
     },
-    created() {
-      this.$http.get(`api/classroom/${this.$route.params.id}`)
-        .then(
-          data => {
-            for (var i = 0; i < data.body.members.length; i++) {
-              if (data.body.members[i].user_id == this.authenticatedUser.id) {
+    mounted() {
+      this.getData();
+    },
+    methods: {
+      getData() {
+        this.$http.get(`api/classroom/${this.$route.params.id}`)
+          .then(
+            data => {
+              this.classDetails = data.body;
+              if (data.body.isMember == true || data.body.isOwner == true) {
                 this.isMember = true;
-                console.log("Im a member");
-              } else {
-                console.log("Not a member");
               }
-
             }
-            this.classDetails = data.body;
+          );
 
 
+      }
+    },
+    created() {
 
-          }
-        );
     }
   }
 

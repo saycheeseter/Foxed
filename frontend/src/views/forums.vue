@@ -1,16 +1,19 @@
 <template>
-  <div class="home">
+  <div class="forums mt-5">
     <nav-list></nav-list>
     <div class="container-fluid">
       <div class="row no-gutters justify-content-sm-center">
-        <div class="col-12">
-          <div class="row">
+        <div class="col-10">
+          <div class="row mt-5">
             <div class="col-12">
               <div class="forum-post">
                 <router-link to="/community/create">
-                <a class="btn mt-2" type="submit">Create a room</a>
-              </router-link>
-               <forum-category></forum-category>
+                  <button class="btn form__button--positive-dark mt-2 ml-1 mr-1" type="submit">Create a room</button>
+                </router-link>
+                <router-link to="/community/create">
+                  <button class="btn form__button--passive-dark mt-2" type="submit">View posted topics</button>
+                </router-link>
+                <forum-category></forum-category>
                 <!-- <hot-topics></hot-topics> -->
               </div>
             </div>
@@ -29,15 +32,16 @@
   import hotTopics from '../components/community/hot-topics.vue';
   import forumCategories from '../components/community/forum-category.vue';
   export default {
-    
+
     components: {
       //'nav-list': Navigation,
       'class-feed-block': classFeedBlock,
       'hot-topics': hotTopics,
       'forum-category': forumCategories
     }
-    
+
   }
+
 </script>
 
 <style scoped lang="scss">
@@ -62,4 +66,5 @@
       margin: 0;
     }
   }
+
 </style>

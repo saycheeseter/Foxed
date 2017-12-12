@@ -1,24 +1,21 @@
 <template>
-  <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-    <div class="container">
+  <nav class="navbar navbar__logged-in fixed-top navbar-toggleable-md navbar-light bg-faded">
+    <div class="container d-flex align-items-center mt-2 mb-2">
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand" href="#">FF</a>
-
-      <router-link tag="li" to="/login" v-if="! isAuth">
+      <a class="navbar-brand" href="#"><span class="font--bold">Foxed</span><span class="font--light">Folio</span></a>
+      <login v-if="! isAuth"></login>
+      <!-- <router-link tag="li" to="/login" v-if="! isAuth">
         <a>login</a>
-      </router-link>
-      <router-link tag="li" to="/register" v-if="! isAuth">
-        <a>Register</a>
-      </router-link>
-      <div class="dropdown">
+      </router-link> -->
+      <!-- <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true"
           aria-expanded="false">
           Channels
         </button>
-        <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+         <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
 
         <div>
           <div v-for="channel in channels">
@@ -29,34 +26,41 @@
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
+
+    </div> -->
+      <div class="ml-2 mr-2 form-group m-auto d-flex align-items-center justify-content-around nav-links" v-if="isAuth">
+        <input type="text" class="form-control" placeholder="Search">
+        <router-link class="ml-2 mr-2" tag="li" to="/">
+          <a>Home</a>
+        </router-link>
+        <router-link class="ml-2 mr-2" tag="li" to="/community">
+          <a>Community</a>
+        </router-link>
+        <router-link class="ml-2 mr-2" tag="li" :to="'/'+user.name+'/codes'">
+          <a>Profile</a>
+        </router-link>
+        <span class="ml-2 mr-2 form__button--positive-dark btn" tag="li">
+          <a @click="logout">Logout</a>
+        </span>
+      </div>
 
     </div>
-   
-    <router-link tag="li" to="/" v-if="isAuth">
-      <a>Home</a>
-    </router-link>
-    <router-link tag="li" to="/community" v-if="isAuth">
-      <a>Community</a>
-    </router-link>
-    <router-link tag="li" :to="'/'+user.name+'/codes'" v-if="isAuth">
-      <a>Profile</a>
-    </router-link>
-    <span v-if="isAuth">
-      <a @click="logout">logout</a>
-    </span>
-     </div>
 
   </nav>
 </template>
 
 <script>
+  import Login from './authentication/Login.vue';
   export default {
+    components: {
+      'login': Login
+    },
     data() {
       return {
         isAuth: null,
         channels: {},
-        user:[]
+        user: []
       }
     },
     // computed: {
@@ -71,11 +75,11 @@
         .then(response => {
           this.channels = response.body
         })
-      
+
     },
-    watch:{
-      $route:function(){
-      this.isAuth = this.$auth.isAuthenticated()
+    watch: {
+      $route: function () {
+        this.isAuth = this.$auth.isAuthenticated()
       }
     },
     methods: {
@@ -89,9 +93,11 @@
           })
       },
       logout() {
+        
         this.$auth.destroyToken()
-        // location.reload()
         this.$router.push("/")
+        // location.reload()
+        
       }
 
     }
@@ -100,17 +106,31 @@
 </script>
 
 <style scope lang="scss">
+.navbar {
+  color: #fcfcfc;
+  width: 100%;
+  .navlinks {
+    color: #fff;
+  }
+  .navbar-brand {
+    color: #fcfcfc;
+    &:hover {
+      color: #fcfcfc;
+      &>.font--bold {
+      color: darken(#e76814, 4%);
+    }
+    } 
+    
+  }
+}
+.navbar__logged-in {
+ background-color: lighten(#000, 8%);
+}
   .router-link-active {
     color: red;
   }
 
-  .navbar {
-    background-color: #2a2a2a;
-    a,
-    li {
-      color: #dfdfdf;
-      list-style: none;
-    }
-  }
+  
 
 </style>
+

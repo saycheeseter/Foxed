@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- <welcome-nav-list></welcome-nav-list> -->
-    <login></login>
+   
     <div class="welcome">
       <div class="container-fluid">
         <div class="row justify-content-sm-center ">
@@ -56,12 +56,11 @@
 
 <script>
   // import welcomeNavigation from '../components/welcome-navigation.vue'
-  import Login from '../components/authentication/Login.vue';
+ 
   import Register from '../components/authentication/Register.vue';
   export default {
     components: {
       // 'welcome-nav-list': welcomeNavigation
-      'login': Login,
       'register': Register
     }
 

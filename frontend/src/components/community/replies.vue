@@ -46,7 +46,12 @@ import Wysiwyg from "./wysiwyg.vue";
     },
     created() {
 
-    }
+    },
+    computed: {
+        authenticatedUser() {
+        return this.$auth.getAuthenticatedUser()
+        }
+    },
   }
 
 </script>

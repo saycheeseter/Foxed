@@ -1,12 +1,17 @@
 <template>
-  <div>
-    <div class="forum-post__header full-block__post p-1 " v-for="room in classes" v-bind:key="room">
-      <a class="forum-post__title">
-        <router-link class="nav-item" :to="`/class/${room.classroom.id}`">
-          <a class="nav-link" href="">{{room.classroom.name}}</a>
+  <div class="enrolled-class">
+    <div v-if="classes">
+    <div class="forum-post__header text-left font--light" v-for="room in classes" v-bind:key="room">
+      
+        <router-link class="nav-item" :to="`/class/${room.id}`">
+          <a class="content__sub-title" href="">{{room.name}}</a>
         </router-link>
-      </a>
+     
       <hr>
+    </div>
+    </div>
+    <div v-else>
+      <p>You have 0 enrolled class.</p>
     </div>
   </div>
 </template>
@@ -17,13 +22,16 @@
     name: 'classroom',
     data() {
       return {
-        classes: {}
+        classes: {},
+        hasClass: false
       }
     },
     mounted() {
       this.$http.get('api/enrolledClass')
         .then(response => {
           this.classes = response.body
+          if(response.body.length > 0)
+            this.hasClass = true;
           console.log(response.body)
         })
     },
