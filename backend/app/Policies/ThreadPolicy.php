@@ -62,7 +62,7 @@ class ThreadPolicy
     public function createClass(User $user, Classroom $classroom)
     {
         //
-        return $user->prof == true;
+        return Auth::user()->prof == 1;
     }
     public function updateCode(User $user, Code $code)
     {

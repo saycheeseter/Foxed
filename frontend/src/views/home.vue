@@ -64,7 +64,7 @@
       'join-class': JoinClass,
       'create-class': CreateClass
     },
-    created() {
+    mounted() {
       this.user.prof = false;
       this.$http.get(`api/user`)
         .then(response => {

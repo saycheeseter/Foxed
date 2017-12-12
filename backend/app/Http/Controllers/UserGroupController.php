@@ -20,9 +20,9 @@ class UserGroupController extends Controller {
   return $classroom;
   }
   public function membership(User $user, Classroom $classroom) {
-    if(!$user->prof) {
+    
       $classroom->subscribe();
-    }
+    
   }
 
 

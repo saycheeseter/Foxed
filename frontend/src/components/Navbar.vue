@@ -80,6 +80,7 @@
     watch: {
       $route: function () {
         this.isAuth = this.$auth.isAuthenticated()
+        this.setAuthenticatedUser()
       }
     },
     methods: {

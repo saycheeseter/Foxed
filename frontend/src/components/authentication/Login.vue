@@ -6,7 +6,7 @@
 
       <input v-model="password" class="form-control mr-2 content__input" type="password" placeholder="Password">
 
-      <button @click="login" class="btn pull-right form__button--submit font--medium">
+      <button @click="login" class="btn pull-right form__button--submit font--light">
         Login
       </button>
 
@@ -29,7 +29,7 @@
       login() {
         var data = {
           client_id: 2,
-          client_secret: 'o7NjUjyec4w5U1qpChOOR8o2ZRC5b8PxlGPWP106',
+          client_secret: 'd5ofe197ZVdQ8TSUNvZZGQavfwI2DY5GMsz1y0JL',
           grant_type: 'password',
           username: this.email,
           password: this.password
@@ -39,9 +39,14 @@
           .then(response => {
             // location.reload()
             this.$auth.setToken(response.body.access_token, response.body.expires_in + Date.now())
+            location.reload();
             this.$router.push("/")
+            
             console.log(response)
           })
+      },
+      fetchData() {
+        
       }
     }
   }
