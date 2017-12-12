@@ -8,16 +8,13 @@ import Wysiwyg from './wysiwyg.vue';
     name: 'thread',
     data() {
       return {
-        editingThread: false,
+       
         editThread: {
           body: this.attriThread.body,
           title: this.attriThread.title
-        }
-
-
-
+        },
+         editingThread: false,
       }
-
     },
     methods: {
       deleteThread() {
@@ -35,6 +32,9 @@ import Wysiwyg from './wysiwyg.vue';
           });
          
           });
+      },
+      editThread() {
+        this.editingThread = true;
       },
       update() {
         this.$http.patch(`api/community/${this.$route.params.slug}/${this.$route.params.id}`, this.editThread)
@@ -57,7 +57,13 @@ import Wysiwyg from './wysiwyg.vue';
     },
     created() {
 
-    }
+    },
+    computed: {
+        authenticatedUser() {
+        return this.$auth.getAuthenticatedUser()
+        }
+    },
+    
   }
 
 </script>

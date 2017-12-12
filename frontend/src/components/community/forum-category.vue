@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="forum-post__header full-block__post m-2 ml-0 mr-0 p-3" v-for="category in categories" v-bind:key="category">
+  <div class="forum-category mt-5">
+    <div class="forum-post__header full-block__post m-2 ml-1 mr-1 p-3" v-for="category in categories" v-bind:key="category">
       <a class="forum-post__title mb-5">
         <router-link class="nav-item" :to="`/community/${category.slug}`">
           <a class="nav-link forum__title" href="">{{category.name}}</a>

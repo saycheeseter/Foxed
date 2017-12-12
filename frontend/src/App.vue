@@ -1,8 +1,8 @@
 <template>
   <div class="" id="app">
     <navbar></navbar>
-    <div class="container-fluid">
-    <router-view :key="$route.path"></router-view>
+    <div class="">
+    <router-view class="mt-5" :key="$route.path"></router-view>
     </div>
   </div>
 </template>

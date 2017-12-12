@@ -6,6 +6,7 @@ use App\User;
 use App\Thread;
 use App\Reply;
 use App\Code;
+use App\Classroom;
 use Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -57,6 +58,11 @@ class ThreadPolicy
     {
         //
         return $reply->user_id == Auth::id();
+    }
+    public function createClass(User $user, Classroom $classroom)
+    {
+        //
+        return $user->prof == true;
     }
     public function updateCode(User $user, Code $code)
     {

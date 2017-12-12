@@ -1,27 +1,46 @@
 <template>
-  <div class="home">
+  <div class="create-category ">
     <!-- <nav-list></nav-list> -->
     <div class="container-fluid">
       <div class="row no-gutters justify-content-sm-center">
-        <div class="col-12">
-          <div class="row">
-            <div class="col-12">
-              <div class="forum-post">
+        <div class="col-10">
+          <div class="row mt-2">
+            <div class="col-6 block-full-height d-flex align-items-center">
+              <div class="card ">
+                <div class="card-body p-5">
+                  <div class="forum-post">
+                    <div class="forum-post__form">
 
-                <div class="forum-post__form">
-                  <p>This is how we call you: foxedfolio.com/community/<span v-bind:class="createCategory.slug | removespace">{{createCategory.slug | removespace}}</span></p>
+                      <p class="mb-2 font--medium text-center">This is how we'll call you:
+                        <div class="url pt-2 pb-2">
+                          <span class="https font--light ssl  pl-2 pt-2 pb-2">
+                            <i class="fa fa-lock mr-2" aria-hidden="true"></i>FoxedFolio Devs<span class="font--light pl-1 divider">|</span></span>
+                          
+                          <span class="https font--light"> https://</span>foxedfolio.com/community/
+                          <span class="font--medium endpoint" v-bind:class="createCategory.slug | removespace">{{createCategory.slug | removespace}}</span>
+                        </div>
+                      </p>
+
                       <form @submit.prevent="addCategory">
 
-                        <div class="form-group mt-2">
-                          <textarea class="form-control mb-2" name="title" id="title" cols="100" rows="1" width="100%" v-model="createCategory.name" placeholder="Category name"></textarea>
-                          <textarea class="form-control mb-2" name="body" id="body" cols="100" rows="5" width="100%" v-model="createCategory.slug" placeholder="Assign unique key to your new category. (Can only be assigned once.)"></textarea>
-                          <button type="submit" class="btn btn-default">Publish</button>
+                        <div class="form-group mt-2 ">
+                          <input class="form-control content__input--dark mb-2" name="title" id="title" cols="100" rows="1" width="100%" v-model="createCategory.name"
+                            placeholder="Category name">
+                          <input class="form-control content__input--dark mb-2" name="body" id="body" cols="100" rows="1" width="100%" v-model="createCategory.slug"
+                            placeholder="Assign unique key to your new category. (Can only be assigned once.)">
+                          <textarea class="form-control content__input--dark mb-2" name="body" id="body" cols="100" rows="3" width="100%" v-model="createCategory.description"
+                            placeholder="A brief description about your topic."></textarea>
+                          <button type="submit" class="btn form__button--register-dark">Publish</button>
                         </div>
                       </form>
+                    </div>
+                  </div>
                 </div>
-
-
               </div>
+
+            </div>
+            <div class="col-6">
+              Did you know?
             </div>
           </div>
           <div class="col">
@@ -69,13 +88,13 @@
           return str.replace(/\s+/g, '');
         }
       }
-  },
-  methods: {
-    removeSpace() {
-      if(this.createCategory.slug) {
+    },
+    methods: {
+      removeSpace() {
+        if (this.createCategory.slug) {
           this.createCategory.slug = this.createCategory.slug.replace(/\s+/g, '');
         }
-    },
+      },
       addCategory() {
         this.removeSpace();
         this.$http.post(`api/community/create`, this.createCategory).then(function (response) { // do something 
@@ -93,10 +112,10 @@
       //     this.createThread.channel_id = data.body.id;
       //   })
     }
-  // },
-  // authenticatedUser() {
-  //     return this.$auth.getAuthenticatedUser()
-  //   }
+    // },
+    // authenticatedUser() {
+    //     return this.$auth.getAuthenticatedUser()
+    //   }
   }
 
 </script>

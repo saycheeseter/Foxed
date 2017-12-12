@@ -1,15 +1,17 @@
 <template>
-  <div class="home">
+  <div class="home ">
     <!-- <nav-list></nav-list> -->
     <div class="container-fluid">
-      <div class="row no-gutters justify-content-sm-center">
-        <div class="col-12">
-          <div class="row">
-            <div class="col-12">
+      <div class="row no-gutters justify-content-sm-center ">
+        <div class="col-10">
+          <div class="row mt-2">
+            <div class="col-12 ">
               <div class="forum-post ">
-
-                <div class="forum-post__form ">
-                  <h2>Create a Discussion</h2>
+                <div class="forum-post__form block-full-height d-flex flex-column align-items-around justify-content-around">
+                  <div>
+                    <h2 class="content__title text-center font--bold">Create a Discussion</h2>
+                    <p class="content__sub-title text-center">Explore and learn from other developers around you.</p>
+                  </div>
                   <form @submit.prevent="addThread">
 
                     <div class="form-group mt-2 full-block__post p-3">
@@ -19,11 +21,11 @@
                         required>
                       <hr>
                       <h5>Body</h5>
-                      
+
                       <wysiwyg name="body" v-model="createThread.body"></wysiwyg>
-                      
+
                       <!-- <textarea class="form-control mb-2" name="body" id="body" cols="100" rows="5" width="100%" v-model="createThread.body" placeholder="Have something to say?" required></textarea> -->
-                      <button type="submit" class="btn btn-primary">Publish</button>
+                      <button type="submit" class="btn form__button--positive-dark">Publish</button>
                     </div>
                   </form>
                 </div>

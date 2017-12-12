@@ -1,20 +1,13 @@
-$white: #fcfcfc;
-$font-color-primary: #494949;
+@import 'variables';
+@import 'utilities';
+@import 'layouts/layout';
+@import 'pages/pages';
+@import 'components/components';
 body {
-    color: $font-color-primary !important;
+    font-family: 'Lato', sans-serif;
 }
 
 .router-link-active {}
-
-.block-full-height {
-    min-height: 80vh;
-}
-
-.full-block__post {
-    width: 100%;
-    background-color: $white;
-    border: 1px solid darken($white, 10%);
-}
 
 .forum-post__title {
     font-size: 24px;
@@ -61,8 +54,4 @@ body {
     color: darken($white, 48%);
     border-radius: 10px;
     font-size: 18px;
-}
-
-[v-cloak] {
-    display: none;
 }

@@ -1,34 +1,41 @@
 <template v-cloak>
-  <div>
+  <div class="topics mt-2">
 
-    <div v-if="threads.length > 0">
-      <router-link :to="`/community/${endpoint}/create`">
-        <a class="btn mt-2" type="submit">Start Discussion</a>
-      </router-link>
-      <div v-for="thread in threads">
+    <div class="container-fluid" v-if="threads.length > 0">
+      <div class="row no-gutters justify-content-sm-center">
+        <div class="col-10">
+          <div class="row mt-5">
+            <div class="col-12">
+              <router-link :to="`/community/${endpoint}/create`">
+                <button class="btn form__button--positive-dark ml-2 mt-2" type="submit">Start Discussion</button>
+              </router-link>
+              <div v-for="thread in threads">
+                <div class="forum-post__header m-2 ml-0 p-3">
+                  <router-link class="nav-item forum-post__title" :to="`/community/${thread.channel.slug}/${thread.id}`">
+                    <h1 class="content__title font--bold mb-5">{{thread.title}} </h1>
+                  </router-link>
 
-        <div class="forum-post__header full-block__post m-2 ml-0 p-3">
 
-          <a class="forum-post__title mb-5">
-            <router-link class="nav-item forum-post__title" :to="`/community/${thread.channel.slug}/${thread.id}`">
-              {{thread.title}}
-            </router-link>
-          </a>
-
-          <div class=" d-flex flex-row justify-content-start  align-items-center mt-3">
-            <img class="picture-placeholder mr-3" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
-              alt="">
-            <router-link class="nav-item" :to="`/${thread.owner.name}/threads`">
-              <a class="mb-0" href="">{{thread.owner.name}} </a>
-            </router-link>said {{thread.created_at}}
-            <!-- <p class="mb-0 ml-1"> posted this 2 minutes ago</p> -->
+                  <div class=" d-flex flex-row justify-content-start  align-items-center mt-3">
+                    <img class="picture-placeholder mr-3" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
+                      alt="">
+                    <router-link class="nav-item" :to="`/${thread.owner.name}/threads`">
+                      <a class="mb-0" href="">{{thread.owner.name}} </a>
+                    </router-link>
+                    <span class="ml-1">said {{thread.created_at}}</span>
+                    <!-- <p class="mb-0 ml-1"> posted this 2 minutes ago</p> -->
+                  </div>
+                  <hr>
+                  <div v-html="thread.body"></div>
+                  <hr> Replies: {{thread.replies.length}}
+                </div>
+              </div>
+            </div>
           </div>
-          <hr> 
-          <div v-html="thread.body"></div>
-          <hr> Replies: {{thread.replies.length}}
         </div>
       </div>
     </div>
+
     <div class="d-flex flex-column block-full-height" v-else>
       <div class="m-auto text-center">
         <router-link class="" :to="`/community/${endpoint}/create`">
@@ -81,7 +88,11 @@
 
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
+  a {
+    text-decoration: none;
+  }
+
   .picture-placeholder {
     width: 50px;
   }

@@ -1,0 +1,10 @@
+.enrolled-class {
+    .content__sub-title {
+        &:hover {
+            color: $primary-color;
+        }
+    }
+    a {
+        text-decoration: none;
+    }
+}
