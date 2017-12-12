@@ -19,7 +19,7 @@ class ClassroomController extends Controller
     public function index(User $user, Classroom $classrooms)
     {
         //
-        if($classrooms->isOwner == true)  {
+        if(Auth::user()->prof == true)  {
             $classroom = Classroom::all()->where('user_id', Auth::id());
             return $classroom;
         } 
@@ -37,7 +37,7 @@ class ClassroomController extends Controller
      */
     public function create(User $user, Classroom $classroom)
     {
-       if($user->prof == true) 
+       if(Auth::user()->prof == true) 
         $classroom->create([
             'user_id' => Auth::id(),
             'name' => request('name'),
@@ -67,7 +67,7 @@ class ClassroomController extends Controller
     public function show(Classroom $classroom)
     {
         //
-        if($classroom->isMember || $classroom->isOwner) {
+        if($classroom->isMember || $classroom->user_id == Auth::id()) {
         $classroom->with('members');
         $classroom->members->load('user');
         return $classroom;

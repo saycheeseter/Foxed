@@ -1,8 +1,8 @@
-<template>
+<template v-cloak>
   <div class="classroom mt-5">
     <!-- <nav-list></nav-list> -->
     <div class="container-fluid">
-      <div class="row justify-content-sm-center mt-5">
+      <div class="row justify-content-sm-center mt-5"  v-cloak>
         <div class="col-10">
           <div v-if="isMember">
             <div class="row">
@@ -56,7 +56,7 @@
 
           </div>
           <div class="block-full-height d-flex" v-else>
-            <p class=" m-auto">You are not a member of this class.</p>
+            <p class=" m-auto">{{notMember}}</p>
           </div>
         </div>
 
@@ -78,7 +78,8 @@
 
         classDetails: {},
         isMember: false,
-        authenticatedUser: this.$auth.getAuthenticatedUser()
+        authenticatedUser: this.$auth.getAuthenticatedUser(),
+        notMember: 'You are not a member of this class.'
       }
     },
     components: {

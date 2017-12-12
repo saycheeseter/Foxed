@@ -34,7 +34,7 @@ class Classroom extends Model
     }
     public function getIsOwnerAttribute() {
         return $this
-            ->where('user_id', auth()->id())
+            ->where('user_id', Auth::id())
             ->exists();
     }
     public function owner() {
