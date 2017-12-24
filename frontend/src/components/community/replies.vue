@@ -1,5 +1,6 @@
 <script>
 import Wysiwyg from "./wysiwyg.vue";
+import moment from 'moment';
   export default {
     components: {
       'wysiwyg': Wysiwyg
@@ -8,6 +9,7 @@ import Wysiwyg from "./wysiwyg.vue";
     name: 'replies',
     data() {
       return {
+        
         editing: false,
         body: this.attributes.reply.body,
       }
@@ -32,7 +34,7 @@ import Wysiwyg from "./wysiwyg.vue";
         this.$http.delete(`api/replies/${this.attributes.reply.id}`, {
             body: this.body
           })
-          .then(data => {
+          .then(({data}) => {
             this.$router.push(`/community/${this.$route.params.slug}/${this.$route.params.id}`)
             this.attributes.reply.body = this.body;
             this.editing = false,
@@ -40,7 +42,6 @@ import Wysiwyg from "./wysiwyg.vue";
             swal("Reply Deleted!", {
               icon: "success",
             });
-
           });
       }
     },
@@ -50,6 +51,9 @@ import Wysiwyg from "./wysiwyg.vue";
     computed: {
         authenticatedUser() {
         return this.$auth.getAuthenticatedUser()
+        },
+        ago() {
+          return moment(this.attributes.reply.created_at).fromNow() + '...';
         }
     },
   }

@@ -14,9 +14,12 @@ class RepliesController extends Controller
         return Reply::all();
     }
     public function __construct() {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => 'index']);
     }
     
+    public function index($channelId, Thread $thread) {
+        return $thread->replies()->paginate(1);
+    }
     public function store($channelId, Thread $thread, Request $request) {
         $this->validate($request, ['body' => 'required']);
         $reply = $thread->addReply([

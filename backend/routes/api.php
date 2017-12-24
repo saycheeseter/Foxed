@@ -30,11 +30,12 @@ Route::get('/test', function() {
 
  Route::middleware('auth:api')->group(function () {
    // Route::resource('forums','ForumsController'); 
-   Route::post('/community/create', 'ChannelController@store');
-   Route::patch('/replies/{reply}', 'RepliesController@update');
+    Route::post('/community/create', 'ChannelController@store');
+    Route::patch('/replies/{reply}', 'RepliesController@update');
     Route::resource('replies','RepliesController');
     Route::get('/classroom', 'ClassroomController@index');
     
+    Route::get('/community/{channel}/{thread}/replies', 'RepliesController@index');
     Route::post('/community/{channel}/{thread}/replies', 'RepliesController@store');
     Route::delete('/replies/{reply}', 'RepliesController@destroy');
    // Route::post('/community', 'ThreadController@store');

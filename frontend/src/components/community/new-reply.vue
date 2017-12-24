@@ -42,32 +42,20 @@ import Wysiwyg from './wysiwyg.vue';
       addReply() {
         this.$http.post(`api/community/${this.$route.params.slug}/${this.$route.params.id}/replies`,
           this.reply
-        ).then(function (response) { 
-          
-          this.reply.body = '';// do something 
-          console.log("Success");
+        ).then(({data}) => { 
+          this.reply.body = '';
+          this.$emit('created', data);
           swal("Replied!", {
             icon: "success",
           });
-          //this.$emit('created', this.reply);
-          
-          
-
-          //this.fetchData();
+         
         }, function (response) { // do something t
           swal("Error!", {
             icon: "error",
           });
         });
       },
-      fetchData() {
-        //this.reply.push(this.reply)
-        this.$http.get(`api/community/${this.$route.params.slug}/${this.$route.params.id}`)
-          .then(data => {
-            this.reply = data.body 
-            console.log("push array");
-          });
-      }
+
     },
     created() {
 

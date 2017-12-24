@@ -4,6 +4,7 @@ import Router from './routes.js'
 import VeeValidate from 'vee-validate'
 import VueResource from 'vue-resource'
 import BootstrapVue from 'bootstrap-vue'
+import jquery from 'jquery';
 import Auth from './packages/auth/Auth.js'
 
 
