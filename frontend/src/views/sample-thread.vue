@@ -9,8 +9,8 @@
               <div class="forum-post">
                 <!-- <div v-for="thread in threads" v-bind:thread="thread" :key="thread.id"> -->
                 <!-- Editing Thread -->
-                <div v-bind:threads="threads" :key="threads.id" >
-                <thread :attriThread="threads" inline-template>
+                <div v-bind:threads="threads" :key="threads.id">
+                  <thread :attriThread="threads" inline-template>
                     <div v-if="editingThread">
                       <div class="forum-post__header full-block__post m-2 p-3">
                         <div>
@@ -25,11 +25,11 @@
                             <h5>Body</h5>
                             <wysiwyg v-model="editThread.body" :value="editThread.body"></wysiwyg>
                             <!-- <textarea class="form-control" name="" id="" cols="30" rows="10" v-model="editThread.body"></textarea> -->
-                            </div>
+                          </div>
                           <hr>
                         </div>
                         <div class="level d-flex">
-                          <button class=" btn btn-xs btn-primary mr-2"  @click="update" v-if="editingThread = true">Submit</button>
+                          <button class=" btn btn-xs btn-primary mr-2" @click="update" v-if="editingThread = true">Submit</button>
                           <button class=" btn btn-xs mr-2" @click="editingThread = false; editThread.body = attriThread.body" v-if="editingThread = true">Cancel</button>
                           <form @submit.prevent="deleteThread">
                             <button type="submit" class="btn btn-danger">Delete</button>
@@ -40,45 +40,48 @@
                     <!-- thread -->
                     <div v-else>
                       <div class="forum-post__header full-block__post m-2 p-3 pt-0">
-                      <h1>
-                        <a class="forum-post__title mb-5">{{attriThread.title}}</a>
-                      </h1>
-                      <div class="d-flex align-items-center mt-3">
-                        <img class="picture-placeholder mr-3" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
-                          alt="">
-                        <router-link class="" :to="`/${attriThread.owner.name}/threads`">
-                          <a class="m-0" href="">{{attriThread.owner.name}}</a>
-                        </router-link> {{attriThread.created_at}}
-                        <!-- <p5 class="mb-0 ml-1"> posted this 2 minutes ago</p> -->
+                        <h1>
+                          <a class="forum-post__title mb-5">{{attriThread.title}}</a>
+                        </h1>
+                        <div class="d-flex align-items-center mt-3">
+                          <img class="picture-placeholder mr-3" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
+                            alt="">
+                          <router-link class="" :to="`/${attriThread.owner.name}/threads`">
+                            <a class="m-0" href="">{{attriThread.owner.name}}</a>
+                          </router-link>
+                          <span v-text="threadAgo"></span> {{attriThread.create_at}}
+                          <!-- <p5 class="mb-0 ml-1"> posted this 2 minutes ago</p> -->
+                        </div>
+                        <hr>
+                        <div class="forum__topic-content" v-html="attriThread.body"></div>
+                        <hr>
+                        <div class="panel-footer level d-flex" v-if="authenticatedUser.id == attriThread.user_id">
+                          <button class=" btn btn-xs mr-2" @click="editingThread = true">Edit</button>
+                          <form @submit.prevent="deleteThread">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                          </form>
+                        </div>
                       </div>
-                      <hr> 
-                      <div class="forum__topic-content" v-html="attriThread.body"></div>
-                      <hr>
-                      <div class="panel-footer level d-flex" v-if="authenticatedUser.id == attriThread.user_id">
-                        <button class=" btn btn-xs mr-2" @click="editingThread = true">Edit</button>
-                        <form @submit.prevent="deleteThread">
-                          <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-                      </div>
-                    </div>
 
-                  </div>
-                </thread>
+                    </div>
+                  </thread>
                 </div>
                 <!-- </div> -->
               </div>
               <!-- reply -->
               <!-- <replies > -->
               <div>
-                <div v-for="reply in threads.replies" v-bind:reply="reply" :key="reply.id">
-                  <replies :attributes="{reply}" inline-template v-cloak>
+                <div v-for="reply in replies" :key="reply.id">
+                  <replies :attributes="{reply}" inline-template v-cloak @deleted="remove">
 
                     <div class="forum-post__header full-block__post m-2 p-3">
                       <div>
                         <p>
                           <img class="picture-placeholder mr-3" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
-                          alt="">
-                          <a class="nav-link" href="">{{reply.owner.name}}</a> said {{reply.created_at}}</p>
+                            alt="">
+                          <a class="nav-link" href="">{{reply.owner.name}}</a> said
+                          <span v-text="ago"></span>
+                        </p>
                         <div class=" d-flex flex-row justify-content-start  align-items-center mt-3">
                           <!-- <p class="mb-0 ml-1"> posted this 2 minutes ago</p> -->
                         </div>
@@ -132,7 +135,7 @@
   import Replies from '../components/community/replies.vue';
 
   // import forumReplies from '../components/forum-replies.vue';
-  
+
 
   export default {
     components: {
@@ -142,7 +145,7 @@
       'reply': Reply,
       'replies': Replies,
       'thread': Thread
- 
+
       // 'forum-replies': forumReplies
     },
     // props: [
@@ -151,44 +154,42 @@
     // ],
     data() {
       return {
-        threads: {}
+        threads: {},
+        replies: {}
       }
     },
     computed: {
       authenticatedUser() {
         return this.$auth.getAuthenticatedUser()
-      }
+      },
+
     },
     methods: {
       add(reply) {
-        //this.fetchData();
+        this.replies.push(reply);
       },
-     
-      // fetchData() {
-      //   this.$http.get(`api/community/${this.$route.params.slug}/${this.$route.params.id}`)
-      //     .then(data => {
-      //       this.threads = data.body
-      //       // console.log("Push array")
-      //       console.log(data);
-      //     });
-      // }
+      remove(index) {
+        this.replies.splice(index, 1);
+      },
+      fetch() {
+        this.$http.get(`api/community/${this.$route.params.slug}/${this.$route.params.id}`)
+          .then(data => {
+            this.threads = data.body
+            this.replies = data.body.replies
+            this.refresh;
+          });
+      },
+      refresh(response) {
+
+      }
     },
     created() {
-      this.$http.get(`api/community/${this.$route.params.slug}/${this.$route.params.id}`)
-        .then(data => {
-          this.threads = data.body
-          console.log(data);
-        });
-      // this.$http.get(`api/community/${this.$route.params.slug}/${this.$route.params.id}`)
-      //   .then(data => {
-      //     this.replies = data.body.replies
-      //     console.log(data.body.replies);
-      //   });
+      this.fetch()
     },
     computed: {
-        authenticatedUser() {
+      authenticatedUser() {
         return this.$auth.getAuthenticatedUser()
-        }
+      }
     },
     // },
     // authenticatedUser() {

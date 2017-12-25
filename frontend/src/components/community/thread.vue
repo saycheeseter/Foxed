@@ -61,6 +61,9 @@ import Wysiwyg from './wysiwyg.vue';
     computed: {
         authenticatedUser() {
         return this.$auth.getAuthenticatedUser()
+        },
+         threadAgo() {
+          return moment(this.attriThread.created_at).fromNow() + '...';
         }
     },
     
