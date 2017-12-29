@@ -6,7 +6,7 @@
         <div class="col-10">
           <div class="row mt-5">
             <div class="col-12">
-              <router-link :to="`/community/${endpoint}/create`">
+              <router-link :to="`/community/${endpoint}/create`" v-if="authenticatedUser.id">
                 <button class="btn form__button--positive-dark ml-2 mt-2" type="submit">Start Discussion</button>
               </router-link>
               <div v-for="thread in threads">
@@ -83,7 +83,12 @@
       //             data
       //         }) => then(data));
       // 
-    }
+    },
+    computed: {
+      authenticatedUser() {
+        return this.$auth.getAuthenticatedUser()
+      }
+    },
   }
 
 </script>

@@ -1,12 +1,10 @@
 <template>
   <div class="enrolled-class">
     <div v-if="classes">
-    <div class="forum-post__header text-left font--light" v-for="room in classes" v-bind:key="room">
-      
+    <div class="forum-post__header text-left font--light" v-for="room in classes" v-bind:key="room.id">
         <router-link class="nav-item" :to="`/class/${room.id}`">
           <a class="content__sub-title" href="">{{room.name}}</a>
         </router-link>
-     
       <hr>
     </div>
     </div>

@@ -5,20 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Thread;
 use App\Reply;
+use App\User;
 use Auth;
 
 
 class RepliesController extends Controller
 {
-    function index(){
-        return Reply::all();
-    }
+    // function index(){
+    //     return Reply::all();
+    // }
     public function __construct() {
         $this->middleware('auth', ['except' => 'index']);
     }
     
     public function index($channelId, Thread $thread) {
-        return $thread->replies()->paginate(1);
+        return $thread->replies()->with('owner')->paginate(5);
     }
     public function store($channelId, Thread $thread, Request $request) {
         $this->validate($request, ['body' => 'required']);
@@ -26,6 +27,17 @@ class RepliesController extends Controller
             'body' => request('body'),
             'user_id' => Auth::id()
         ]);
+
+        preg_match_all('/\@([^\s\.]+)/', $reply->body, $matches);
+        $names = $matches[0];
+
+        foreach($names as $name) {
+            $user = User::whereName($name)->first();
+
+            if($user) {
+                $user->notify(new YouWereMentioned($reply));
+            }
+        }
         if(request()->expectsJson()){
             return $reply->load('owner');
         }

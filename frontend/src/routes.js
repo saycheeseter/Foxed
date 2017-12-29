@@ -25,6 +25,7 @@ import CreateCategory from './views/create-category.vue'
 import Home from './views/home.vue'
 import MyThread from './views/myThread.vue'
 import Welcome from './views/welcome.vue'
+import ConfirmAccount from './views/confirm-account.vue'
 
 
 Vue.use(VueRouter)
@@ -40,6 +41,13 @@ const router = new VueRouter({
         {
             path: "/register",
             component: Register,
+            meta: {
+                forVisitors: true
+            }
+        },
+        {
+            path: "/register/confirm",
+            component: ConfirmAccount,
             meta: {
                 forVisitors: true
             }
@@ -175,6 +183,7 @@ const router = new VueRouter({
         //     meta: {
         //         forAuth: true
         //     }
+        // },
         // },
         {
             path: "/class/:id",

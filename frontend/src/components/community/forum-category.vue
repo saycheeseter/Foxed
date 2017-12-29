@@ -6,7 +6,6 @@
           <a class="nav-link forum__title" href="">{{category.name}}</a>
         </router-link>
       </a>
-
       <div class="forum__sub-title p-1 text-center">{{category.title}} Has {{category.threads.length}} Discussions!</div>
       
     </div>
@@ -45,7 +44,8 @@
       //             data
       //         }) => then(data));
       // 
-    }
+    },
+   
   }
 
 </script>

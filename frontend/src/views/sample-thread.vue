@@ -71,46 +71,12 @@
               <!-- reply -->
               <!-- <replies > -->
               <div>
-                <div v-for="reply in replies" :key="reply.id">
-                  <replies :attributes="{reply}" inline-template v-cloak @deleted="remove">
 
-                    <div class="forum-post__header full-block__post m-2 p-3">
-                      <div>
-                        <p>
-                          <img class="picture-placeholder mr-3" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
-                            alt="">
-                          <a class="nav-link" href="">{{reply.owner.name}}</a> said
-                          <span v-text="ago"></span>
-                        </p>
-                        <div class=" d-flex flex-row justify-content-start  align-items-center mt-3">
-                          <!-- <p class="mb-0 ml-1"> posted this 2 minutes ago</p> -->
-                        </div>
-                        <hr>
-                        <div v-if="editing">
-                          <div class="form-group">
-                            <wysiwyg v-model="body" :value="body"></wysiwyg>
-                            <!-- <textarea class="form-control" v-model="body"></textarea> -->
-                          </div>
-                          <button class="btn btn-xs btn-primary" @click="update">Update</button>
-                          <button class="btn btn-xs btn-link" @click="editing = false; body = attributes.reply.body">Cancel</button>
-                        </div>
-                        <div class="forum__topic-content" v-else v-html="body"></div>
-
-                        <hr>
-                        <div class="level d-flex panel-footer" v-if="authenticatedUser.id == reply.user_id">
-                          <button class=" btn btn-xs mr-2" @click="editing = true">Edit</button>
-                          <button class=" btn btn-xs btn-danger mr-2" @click="destroy">Delete</button>
-                        </div>
-                      </div>
-                    </div>
-
-                  </replies>
-
-                </div>
+                <replies></replies>
               </div>
 
               <!-- </replies> -->
-              <reply @created="add"></reply>
+              
 
 
             </div>
@@ -121,8 +87,6 @@
       </div>
     </div>
   </div>
-  </div>
-  </div>
 </template>
 
 <script>
@@ -130,9 +94,9 @@
   import classFeedBlock from '../components/community/class-feed-block.vue';
   import hotTopics from '../components/community/hot-topics.vue';
   import swal from 'sweetalert';
-  import Reply from '../components/community/new-reply.vue';
   import Thread from '../components/community/thread';
   import Replies from '../components/community/replies.vue';
+
 
   // import forumReplies from '../components/forum-replies.vue';
 
@@ -142,49 +106,36 @@
       //'nav-list': Navigation,
       'class-feed-block': classFeedBlock,
       'hot-topics': hotTopics,
-      'reply': Reply,
       'replies': Replies,
       'thread': Thread
-
       // 'forum-replies': forumReplies
     },
     // props: [
     //   'thread',
     //   'authenticatedUser'
     // ],
+    
     data() {
       return {
         threads: {},
-        replies: {}
+        pageQuery: this.$route.query.page,
+        endpoint: `api${this.$route.path}`
       }
-    },
-    computed: {
-      authenticatedUser() {
-        return this.$auth.getAuthenticatedUser()
-      },
-
     },
     methods: {
-      add(reply) {
-        this.replies.push(reply);
-      },
-      remove(index) {
-        this.replies.splice(index, 1);
-      },
       fetch() {
-        this.$http.get(`api/community/${this.$route.params.slug}/${this.$route.params.id}`)
+        
+        this.$http.get(this.endpoint)
           .then(data => {
             this.threads = data.body
-            this.replies = data.body.replies
-            this.refresh;
+            //this.replies = data.body.replies
           });
       },
-      refresh(response) {
-
-      }
     },
     created() {
       this.fetch()
+      console.log(this.$route.path);
+      console.log(this.pageQuery)
     },
     computed: {
       authenticatedUser() {

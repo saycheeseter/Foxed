@@ -18,15 +18,25 @@ class User extends Authenticatable
         'name', 'email', 'password','prof'
     ];
     protected $appends = ['isProf'];
+    protected $guarded = [];
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'email'
+        'password', 'remember_token', 'email', 'avatar_path'
     ];
-
+    protected $casts = [
+        'confirmed' => 'boolean'
+    ];
+    public function confirm() {
+        $this->confirmed = true;
+        $this->save();
+    }
+    public function avatar() {
+        return asset($this->avatar_path ?: 'images/avatars/default.jpg');
+    }
     public function getRouteKeyName() {
         return 'name';
     }
@@ -47,4 +57,5 @@ class User extends Authenticatable
             ->where('user_id', auth()->id())
             ->exists();
     }
+    
 }

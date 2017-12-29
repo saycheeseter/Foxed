@@ -1,5 +1,6 @@
 <script>
 import Wysiwyg from './wysiwyg.vue';
+import moment from 'moment';
   export default {
     components: {
       'wysiwyg': Wysiwyg

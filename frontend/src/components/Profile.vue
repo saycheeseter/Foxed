@@ -1,25 +1,29 @@
 <template>
-  <div class="home">
+  <div class="home mt-5">
     <div class="container-fluid">
       <div class="row d-flex justify-content-sm-center">
         <div class="col-xl-8 col-md-10">
           <div class="row">
-            <div class="col-12 d-flex justify-content-center ">
+            <div class="col-12 d-flex justify-content-center mt-5 pt-5">
               <img class="picture m-5" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg" alt="">
               <h1>{{authenticatedUser.name}}</h1>
               <br>
-              <router-link class="btn btn-default" :to="'/'+ authenticatedUser.name + '/editor'">new code</router-link>
+
+              <div v-if="authenticatedUser.id == profile.id">
+                <avatarForm :user="{profile}"></avatarForm>
+                <router-link class="btn btn-default" :to="'/'+ authenticatedUser.name + '/editor'">new code</router-link>
+              </div>
             </div>
             <div class="col-12 d-flex justify-content-center mb-5">
               <i class="fa fa-print" aria-hidden="true"></i>
               <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
             </div>
             <div class="col-12 d-flex justify-content-center mb-5">
-              
+
             </div>
             <code-works class="col-xl-3 col-lg-4 col-md-6 mb-4"></code-works>
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-              
+
             </div>
             <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
               <img src="https://news.siteintelgroup.com/blog/components/com_easyblog/themes/wireframe/images/placeholder-image.png" alt="">
@@ -62,24 +66,42 @@
 
 <script>
   import Works from '../components/editor/Codeworks.vue';
+  import avatarForm from './community/avatarForm.vue';
+
   export default {
-    
+    components: {
+      'code-works': Works,
+      'avatarForm': avatarForm
+    },
     data() {
       return {
-       // profile: {},
+        // profile: {},
+        profile: {},
         authenticatedUser: []
       }
     },
+    methods: {
+      fetch() {
+
+      },
+      
+    },
     created() {
-      this.authenticatedUser = this.$auth.getAuthenticatedUser()
+      this.authenticatedUser = this.$auth.getAuthenticatedUser();
+      this.fetch()
+      console.log("nan");
+      this.$http.get(`api/${this.$route.params.name}/user`)
+        .then(response => {
+          // location.reload()
+          console.log("nani")
+          this.profile = response.body;
+
+
+        })
       // this.$http.get(`api/${this.$route.params.name}/works`)
       //   .then(
       //     data => this.profile = data.body);
     },
-    components: {
-      'code-works': Works
-    }
-
   }
 
 </script>

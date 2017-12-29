@@ -13,6 +13,7 @@
                   <router-link class="nav-item" to="/profile">
                     <a class="" href="">Hi, User!</a>
                   </router-link>
+                  
                   <hr>
                   <div v-if="user.prof == 0">
                     <join-class></join-class>

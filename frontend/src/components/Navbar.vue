@@ -97,7 +97,7 @@
         
         this.$auth.destroyToken()
         this.$router.push("/")
-        // location.reload()
+        location.reload()
         
       }
 
