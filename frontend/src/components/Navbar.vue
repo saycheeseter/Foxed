@@ -1,10 +1,10 @@
 <template>
   <nav class="navbar navbar__logged-in fixed-top navbar-toggleable-md navbar-light bg-faded">
     <div class="container d-flex align-items-center mt-2 mb-2">
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+      <!-- <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
-      </button>
+      </button> -->
       <a class="navbar-brand" href="#">
         <span class="font--bold">Foxed</span>
         <span class="font--light">Folio</span>

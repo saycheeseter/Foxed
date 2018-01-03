@@ -26,13 +26,14 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'email'
+        'password', 'remember_token', 'email', 'confirmation_token', 'confirmed'
     ];
     protected $casts = [
         'confirmed' => 'boolean'
     ];
     public function confirm() {
         $this->confirmed = true;
+        $this->confirmation_token = null;
         $this->save();
     }
     public function getAvatarPathAttribute($avatar)
