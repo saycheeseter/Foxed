@@ -13,7 +13,7 @@ use Auth;
 class ThreadController extends Controller
 {
     public function __contruct() {
-        $this->middleware('auth')->except('index', 'show');
+        $this->middleware('auth')->except('index', 'show', 'showChannels');
     }
     /**
      * Display a listing of the resource.
@@ -80,6 +80,8 @@ class ThreadController extends Controller
       
     }
     public function storeThreadOnChannel(Request $request, Channel $channel) {
+
+        
         request()->validate([
             'title' => 'required',
             'body' => 'required',
@@ -91,6 +93,8 @@ class ThreadController extends Controller
             'channel_id' => request('channel_id') ,
             'body' => request('body')
         ]);
+        
+        
     }
     
     public function getThisChannel(Request $request, Channel $channel, Thread $thread) {
@@ -106,8 +110,7 @@ class ThreadController extends Controller
     public function show($channelId, Thread $thread)
     {
         
-        $thread->load('replies', 'owner');
-        $thread->replies->load('owner');
+        $thread->load('owner', 'subscriptions');
         return $thread;
         //
     }
@@ -149,7 +152,7 @@ class ThreadController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function destroy($channel,Thread $thread)
+    public function destroy($channel, Thread $thread)
     {
         $this->authorize('update', $thread);
         $thread->replies()->delete();

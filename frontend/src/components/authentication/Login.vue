@@ -29,7 +29,7 @@
       login() {
         var data = {
           client_id: 2,
-          client_secret: 'd5ofe197ZVdQ8TSUNvZZGQavfwI2DY5GMsz1y0JL',
+          client_secret: 'ldlIt1mmKDK2yShU14PVtlLnTNWhcqdcF6AUhjQe',
           grant_type: 'password',
           username: this.email,
           password: this.password
@@ -41,12 +41,18 @@
             this.$auth.setToken(response.body.access_token, response.body.expires_in + Date.now())
             location.reload();
             this.$router.push("/")
-            
+
             console.log(response)
+          })
+          .catch(error => {
+            console.log(error.body)
+            swal("Invalid e-mail or password.", {
+              icon: "error",
+            });
           })
       },
       fetchData() {
-        
+
       }
     }
   }

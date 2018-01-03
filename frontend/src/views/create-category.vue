@@ -14,8 +14,10 @@
                       <p class="mb-2 font--medium text-center">This is how we'll call you:
                         <div class="url pt-2 pb-2">
                           <span class="https font--light ssl  pl-2 pt-2 pb-2">
-                            <i class="fa fa-lock mr-2" aria-hidden="true"></i>FoxedFolio Devs<span class="font--light pl-1 divider">|</span></span>
-                          
+                            <i class="fa fa-lock mr-2" aria-hidden="true"></i>FoxedFolio Devs
+                            <span class="font--light pl-1 divider">|</span>
+                          </span>
+
                           <span class="https font--light"> https://</span>foxedfolio.com/community/
                           <span class="font--medium endpoint" v-bind:class="createCategory.slug | removespace">{{createCategory.slug | removespace}}</span>
                         </div>
@@ -97,13 +99,18 @@
       },
       addCategory() {
         this.removeSpace();
-        this.$http.post(`api/community/create`, this.createCategory).then(function (response) { // do something 
-          // console.log("Success");
-          swal("Discussion posted!", {
-            icon: "success",
-          });
-          this.$router.push(`/community/`);
-        });
+        this.$http.post(`api/community/create`, this.createCategory)
+          .then(function (response) { // do something 
+            swal("Discussion posted!", {
+              icon: "success",
+            });
+            this.$router.push(`/community/`);
+          })
+          .catch(function (error) {
+            swal("Please Confirm Email Address", {
+              icon: "error",
+            });
+          })
       }
     },
     created() {

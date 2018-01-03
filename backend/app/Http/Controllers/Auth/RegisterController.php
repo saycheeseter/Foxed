@@ -6,7 +6,9 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Auth\Events\Registered;
 use App\Http\Requests\RegisterRequest;
+
 class RegisterController extends Controller
 {
     /**
@@ -17,15 +19,20 @@ class RegisterController extends Controller
      */
     protected function create(RegisterRequest $request)
     {
-        User::create([
+        
+        event(new Registered($user = User::forceCreate([
             'name' => $request['name'],
             'email' => $request['email'],
             'password' => bcrypt($request['password']),
+            'username' => $request['username'],
             'prof' => $request['prof'],
-        ]);
-        return response()->json([
-            'success' => true,
-            'message' => 'succesfully registered',
-        ]);
+            'confirmation_token' => str_random(25)
+        ])));
+
+        // return response()->json([
+        //     'success' => true,
+        //     'message' => 'succesfully registered',
+        // ]);
+        
     }
 }

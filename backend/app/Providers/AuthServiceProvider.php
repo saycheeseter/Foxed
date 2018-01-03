@@ -30,9 +30,9 @@ class AuthServiceProvider extends ServiceProvider
 
         Passport::routes();
 
-        Gate::before(function ($user){
-            if($user->name === 'aloquindo') return true;
-        });
+        // Gate::before(function ($user){
+        //     if($user->name === 'aloquindo') return true;
+        // });
     }
 
     public function register() {

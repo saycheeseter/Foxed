@@ -78,16 +78,21 @@
     methods: {
       addThread() {
         this.$http.post(`api/community/${this.$route.params.slug}`,
-          this.createThread).then(function (response) { // do something 
-          // console.log("Success");
+          this.createThread)
+          .then(function (response) { // do something 
           this.$router.push(`/community/${this.$route.params.slug}`);
           swal("Discussion posted!", {
             icon: "success",
           });
-
-        });
+        })
+        .catch(function(error) {
+          swal("Please Confirm Email Address", {
+            icon: "error",
+          });
+        })
       }
     },
+
     created() {
       this.$http.get(`api/currentChannel/${this.$route.params.slug}`)
         .then(function (data) {

@@ -1,6 +1,6 @@
 <template>
   <div class="join-class">
-    <b-btn class="form__button--register-dark" v-b-modal.modalPrevent>Join A Class</b-btn>
+    <b-btn class="form__button--register-dark pl-2 pr-2" v-b-modal.modalPrevent>Join A Class</b-btn>
     <!-- Main UI -->
     <!-- Modal Component -->
     <b-modal id="modalPrevent" ref="modal" title="Enter class code" @ok="subscribe">

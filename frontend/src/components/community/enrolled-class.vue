@@ -1,14 +1,12 @@
 <template>
   <div class="enrolled-class">
     <div v-if="classes">
-    <div class="forum-post__header text-left font--light" v-for="room in classes" v-bind:key="room">
-      
+      <div class="forum-post__header text-left font--light" v-for="room in classes" v-bind:key="room.id">
         <router-link class="nav-item" :to="`/class/${room.id}`">
           <a class="content__sub-title" href="">{{room.name}}</a>
         </router-link>
-     
-      <hr>
-    </div>
+        <hr>
+      </div>
     </div>
     <div v-else>
       <p>You have 0 enrolled class.</p>
@@ -30,7 +28,7 @@
       this.$http.get('api/enrolledClass')
         .then(response => {
           this.classes = response.body
-          if(response.body.length > 0)
+          if (response.body.length > 0)
             this.hasClass = true;
           console.log(response.body)
         })
@@ -43,7 +41,7 @@
       // }
     },
     created() {
-      
+
 
 
       //   axios.get('/threads' )
@@ -57,9 +55,7 @@
 </script>
 
 <style lang="scss">
-  .picture-placeholder {
-    
-  }
+  .picture-placeholder {}
 
   .feed-block {
 

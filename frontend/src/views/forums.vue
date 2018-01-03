@@ -1,16 +1,15 @@
 <template>
   <div class="forums mt-5">
-    <nav-list></nav-list>
     <div class="container-fluid">
       <div class="row no-gutters justify-content-sm-center">
         <div class="col-10">
           <div class="row mt-5">
             <div class="col-12">
               <div class="forum-post">
-                <router-link to="/community/create">
+                <router-link to="/community/create" v-show="user">
                   <button class="btn form__button--positive-dark mt-2 ml-1 mr-1" type="submit">Create a room</button>
                 </router-link>
-                <router-link to="/community/create">
+                <router-link :to="`/${user.username}/threads`" v-show="user">
                   <button class="btn form__button--passive-dark mt-2" type="submit">View posted topics</button>
                 </router-link>
                 <forum-category></forum-category>
@@ -32,14 +31,31 @@
   import hotTopics from '../components/community/hot-topics.vue';
   import forumCategories from '../components/community/forum-category.vue';
   export default {
-
+    data() {
+      return {
+        isAuth: null,
+        user: this.$auth.getAuthenticatedUser()
+      }
+    },
     components: {
       //'nav-list': Navigation,
       'class-feed-block': classFeedBlock,
       'hot-topics': hotTopics,
       'forum-category': forumCategories
+    },
+    methods: {
+      authenticatedUser() {
+        this.$http.get('api/user')
+          .then(this.refresh)
+      },
+      refresh(data) {
+        this.isAuth = this.$auth.isAuthenticated();
+        this.user = data.body
+      }
+    },
+    mounted() {
+      this.authenticatedUser();
     }
-
   }
 
 </script>

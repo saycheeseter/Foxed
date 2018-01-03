@@ -15,9 +15,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','prof'
+        'name', 'email', 'password','prof',
+        'avatar_path'
     ];
     protected $appends = ['isProf'];
+    protected $guarded = [];
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -26,9 +28,19 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token', 'email'
     ];
-
+    protected $casts = [
+        'confirmed' => 'boolean'
+    ];
+    public function confirm() {
+        $this->confirmed = true;
+        $this->save();
+    }
+    public function getAvatarPathAttribute($avatar)
+    {
+        return asset('storage/' . $avatar ?: '/avatars/default.png');
+    }
     public function getRouteKeyName() {
-        return 'name';
+        return 'username';
     }
     public function threads() {
         return $this->hasMany(Thread::class)->latest();
@@ -47,4 +59,5 @@ class User extends Authenticatable
             ->where('user_id', auth()->id())
             ->exists();
     }
+    
 }

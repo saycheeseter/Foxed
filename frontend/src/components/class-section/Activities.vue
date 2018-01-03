@@ -22,7 +22,7 @@ import swal from 'sweetalert'
         components: {
             'activity' : Activity
         },
-        created () {
+        mounted() {
             this.$http.get(`api/activities/2/show`)
             .then(response => {
                 this.activities = response.body

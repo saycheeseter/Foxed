@@ -22,8 +22,13 @@ Vue.http.headers.common['Authorization'] = 'Bearer ' + Vue.auth.getToken();
 
 Vue.component('wysiwyg', require('./components/community/wysiwyg.vue'));
 Vue.component('replies', require('./components/community/replies.vue'));
+Vue.component('paginator', require('./components/community/paginator.vue'));
 
+Vue.prototype.authorize = function (handler) {
+    let user = window.App.user;
 
+    return user ? handler(user) : false;
+}
 
 
 Vue.http.interceptors.push((request, next) => {

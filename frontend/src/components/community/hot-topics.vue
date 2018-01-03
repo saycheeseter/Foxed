@@ -6,7 +6,7 @@
         <div class="col-10">
           <div class="row mt-5">
             <div class="col-12">
-              <router-link :to="`/community/${endpoint}/create`">
+              <router-link :to="`/community/${endpoint}/create`" v-if="authenticatedUser.id">
                 <button class="btn form__button--positive-dark ml-2 mt-2" type="submit">Start Discussion</button>
               </router-link>
               <div v-for="thread in threads">
@@ -19,7 +19,7 @@
                   <div class=" d-flex flex-row justify-content-start  align-items-center mt-3">
                     <img class="picture-placeholder mr-3" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
                       alt="">
-                    <router-link class="nav-item" :to="`/${thread.owner.name}/threads`">
+                    <router-link class="nav-item" :to="`/${thread.owner.username}/threads`">
                       <a class="mb-0" href="">{{thread.owner.name}} </a>
                     </router-link>
                     <span class="ml-1">said {{thread.created_at}}</span>
@@ -54,28 +54,23 @@
     data() {
       return {
         threads: [],
-        endpoint: this.$route.params.slug
+        endpoint: this.$route.params.slug,
+        isAuth: null
+      }
+    },
+
+    methods: {
+      fetch() {
+        this.$http.get(`api/community/${this.$route.params.slug}`)
+          .then(this.refresh);
+      },
+      refresh(data) {
+        this.threads = data.body
+        this.isAuth = this.$auth.isAuthenticated();
       }
     },
     mounted() {
-      // this.init()
-    },
-    methods: {
-      // init() {
-      //   console.log(this.$route); //should return object
-      //   console.log(this.$route.params); //should return object 
-      //   console.log(this.$route.params.id); //should return id of URL param 
-      // } 
-    },
-    created() {
-      if (this.$route.params.slug != null) {
-        this.$http.get(`api/community/${this.$route.params.slug}`)
-          .then(data => this.threads = data.body);
-      } else {
-        this.$http.get(`api/community`)
-          .then(data => this.threads = data.body);
-
-      }
+      this.fetch()
 
 
       //   axios.get('/threads' )
@@ -83,7 +78,12 @@
       //             data
       //         }) => then(data));
       // 
-    }
+    },
+    computed: {
+      authenticatedUser() {
+        return this.$auth.getAuthenticatedUser()
+      }
+    },
   }
 
 </script>

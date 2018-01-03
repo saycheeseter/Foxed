@@ -25,6 +25,8 @@ import CreateCategory from './views/create-category.vue'
 import Home from './views/home.vue'
 import MyThread from './views/myThread.vue'
 import Welcome from './views/welcome.vue'
+import ConfirmAccount from './views/confirm-account.vue'
+import SearchThreads from './views/search-threads.vue'
 
 
 Vue.use(VueRouter)
@@ -45,12 +47,19 @@ const router = new VueRouter({
             }
         },
         {
-            path: "/feed",
-            component: Feed,
+            path: "/register/confirm",
+            component: ConfirmAccount,
             meta: {
-                forAuth: true
+                forVisitors: false
             }
         },
+        // {
+        //     path: "/feed",
+        //     component: Feed,
+        //     meta: {
+        //         forAuth: true
+        //     }
+        // },
         {
             path: "/activity",
             component: Activity,
@@ -149,24 +158,31 @@ const router = new VueRouter({
             }
         },
         {
-            path: "/:name/codes",
+            path: "/:user/codes",
             component: Profile,
             meta: {
-                forAuth: true
+                forAuth: false
             }
         },
         {
-            path: "/:name/threads",
+            path: "/:user/threads",
             component: MyThread,
             meta: {
-                forAuth: true
+                forAuth: false
             }
         },
         {
-            path: "/:name/codes/:id",
+            path: "/:user/codes/:id",
             component: EditEditor,
             meta: {
                 forAuth: true
+            }
+        },
+        {
+            path: "/threads/search",
+            component: SearchThreads,
+            meta: {
+                forAuth: false
             }
         },
         // {
@@ -175,6 +191,7 @@ const router = new VueRouter({
         //     meta: {
         //         forAuth: true
         //     }
+        // },
         // },
         {
             path: "/class/:id",

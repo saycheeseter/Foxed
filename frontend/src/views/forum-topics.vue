@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <nav-list></nav-list>
     <div class="container-fluid">
       <div class="row no-gutters justify-content-sm-center">
         <div class="col-12">

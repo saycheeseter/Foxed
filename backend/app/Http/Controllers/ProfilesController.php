@@ -11,12 +11,11 @@ class ProfilesController extends Controller
 {
     //
     public function show(User $user) {
-       
-      
         return [$profileUser = $user, 'threads' => $user->threads()->latest()->get()];
     }
     public function showOwnThreads(User $user, Channel $channel) {
-        return [$profileUser = $user, 'threads' => $user->threads()->latest()->get()->load('channel', 'replies')];
+
+        return ['user' => $user, $user->threads()->latest()->get()->load('channel', 'replies')];
     }
    
 }

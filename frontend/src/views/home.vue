@@ -9,18 +9,13 @@
               <div class="block-full-height d-flex justify-content-center align-items-start ">
                 <div class="text-left">
                   <br>
-                  <div class="picture mb-2"></div>
-                  <router-link class="nav-item" to="/profile">
-                    <a class="" href="">Hi, User!</a>
-                  </router-link>
-                  <hr>
                   <div v-if="user.prof == 0">
                     <join-class></join-class>
                   </div>
                   <div v-else>
                     <create-class></create-class>
                   </div>
-                  <p class="text-left mt-2">Classes</p>
+                  <p class="text-left mt-2 pl-1 pr-1">Classes</p>
                   <classroom></classroom>
                 </div>
               </div>
@@ -67,9 +62,12 @@
     mounted() {
       this.user.prof = false;
       this.$http.get(`api/user`)
-        .then(response => {
-          this.user = response.body;
-        })
+        .then(this.refresh)
+    },
+    methods: {
+      refresh(data) {
+          this.user = data.body;
+      }
     }
   }
 

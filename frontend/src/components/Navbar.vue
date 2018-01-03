@@ -5,7 +5,10 @@
         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand" href="#"><span class="font--bold">Foxed</span><span class="font--light">Folio</span></a>
+      <a class="navbar-brand" href="#">
+        <span class="font--bold">Foxed</span>
+        <span class="font--light">Folio</span>
+      </a>
       <login v-if="! isAuth"></login>
       <!-- <router-link tag="li" to="/login" v-if="! isAuth">
         <a>login</a>
@@ -30,14 +33,19 @@
 
     </div> -->
       <div class="ml-2 mr-2 form-group m-auto d-flex align-items-center justify-content-around nav-links" v-if="isAuth">
-        <input type="text" class="form-control" placeholder="Search">
+        <form class="d-flex">
+          <input type="text" v-model="query" class="form-control">
+          
+              <button class="btn btn-primary" @click="search">Search</button>
+          
+        </form>
         <router-link class="ml-2 mr-2" tag="li" to="/">
           <a>Home</a>
         </router-link>
         <router-link class="ml-2 mr-2" tag="li" to="/community">
           <a>Community</a>
         </router-link>
-        <router-link class="ml-2 mr-2" tag="li" :to="'/'+user.name+'/codes'">
+        <router-link class="ml-2 mr-2" tag="li" :to="'/'+user.username+'/codes'">
           <a>Profile</a>
         </router-link>
         <span class="ml-2 mr-2 form__button--positive-dark btn" tag="li">
@@ -60,7 +68,8 @@
       return {
         isAuth: null,
         channels: {},
-        user: []
+        user: {},
+        query: ''
       }
     },
     // computed: {
@@ -68,7 +77,7 @@
     //     return this.$auth.getAuthenticatedUser()
     //     }
     // },
-    created() {
+    mounted() {
       this.isAuth = this.$auth.isAuthenticated()
       this.setAuthenticatedUser()
       this.$http.get('api/channels')
@@ -93,12 +102,16 @@
 
           })
       },
+      search() {
+        this.$router.replace(`/threads/search?q=${this.query}`)
+        this.$emit('searched', this.query);
+      },
       logout() {
-        
+
         this.$auth.destroyToken()
         this.$router.push("/")
-        // location.reload()
-        
+        location.reload()
+
       }
 
     }
@@ -107,31 +120,29 @@
 </script>
 
 <style scope lang="scss">
-.navbar {
-  color: #fcfcfc;
-  width: 100%;
-  .navlinks {
-    color: #fff;
-  }
-  .navbar-brand {
+  .navbar {
     color: #fcfcfc;
-    &:hover {
-      color: #fcfcfc;
-      &>.font--bold {
-      color: darken(#e76814, 4%);
+    width: 100%;
+    .navlinks {
+      color: #fff;
     }
-    } 
-    
+    .navbar-brand {
+      color: #fcfcfc;
+      &:hover {
+        color: #fcfcfc;
+        &>.font--bold {
+          color: darken(#e76814, 4%);
+        }
+      }
+    }
   }
-}
-.navbar__logged-in {
- background-color: lighten(#000, 8%);
-}
+
+  .navbar__logged-in {
+    background-color: lighten(#000, 8%);
+  }
+
   .router-link-active {
     color: red;
   }
 
-  
-
 </style>
-
