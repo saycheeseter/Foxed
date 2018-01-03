@@ -5,8 +5,12 @@
       <div class="card-body">
         <h5 class="text-center mt-2 mb-4 font--bold content__title">Create an account</h5>
         <div class="form-group" :class="{'has-error': theErrors.name }">
-          <input v-model="user.name" class="form-control content__input--dark" type="text" placeholder="Name">
+          <input v-model="user.name" class="form-control content__input--dark" type="text" placeholder="Full Name">
           <p class="help-block" v-for="error in theErrors.name"> {{error}}</p>
+        </div>
+        <div class="form-group" :class="{'has-error': theErrors.username }">
+          <input v-model="user.username" class="form-control content__input--dark" type="text" placeholder="Username">
+          <p class="help-block" v-for="error in theErrors.username"> {{error}}</p>
         </div>
         <div class="form-group" :class="{'has-error': theErrors.email }">
           <input v-model="user.email" class="form-control content__input--dark" type="email" placeholder="Email">
@@ -45,16 +49,20 @@
           name: null,
           email: null,
           password: null,
+          username: null,
           password_confirmation: null,
           prof: '0'
         },
         theErrors: {
           name: [],
           email: [],
+          username: [],
           password: [],
           password_confirmation: [],
           prof: []
-        }
+        },
+        email: '',
+        password: ''
       }
     },
     methods: {
@@ -62,9 +70,10 @@
       register() {
         this.$http.post('api/register/', this.user)
           .then(response => {
-            swal("Succesfully Registered!", {
-              icon: "success",
-            });
+            this.login();
+            // swal("Succesfully Registered!", {
+            //   icon: "success",
+            // });
           })
           .catch(error => {
             let data = error.body.errors
@@ -77,8 +86,24 @@
               }
             }
           })
-      }
-
+      },
+      login(user) {
+        var data = {
+          client_id: 2,
+          client_secret: 'ldlIt1mmKDK2yShU14PVtlLnTNWhcqdcF6AUhjQe',
+          grant_type: 'password',
+          username: this.user.email,
+          password: this.user.password
+        }
+        this.$http.post("oauth/token", data)
+          .then(response => {
+            // location.reload()
+            this.$auth.setToken(response.body.access_token, response.body.expires_in + Date.now())
+            location.reload();
+            this.$router.push("/")
+            console.log(response)
+          })
+      },
     }
   }
 

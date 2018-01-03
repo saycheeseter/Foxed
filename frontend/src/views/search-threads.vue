@@ -1,0 +1,114 @@
+<template>
+  <div class="search-thread mt-5 pt-5">
+    <!-- {{user.username}} -->
+    <div class="container-fluid">
+      <div class="row no-gutters justify-content-sm-center">
+        <div class="col-10">
+          <div class="row mt-5">
+            <div class="col-12  m-2 ml-0 p-3">
+                <form class="d-flex" @submit.prevent="searchQuery">
+                    <div class="form-group">
+                        <input type="text" v-model="query" class="form-control m-auto" >
+                    </div>
+                    <div class="form-group">
+                      <button type="submit" @>Submit</button>
+                    </div>
+                </form>
+              <h5>Query results:</h5>
+              <div v-for="result in results" :key="result.id">
+                <div class="forum-post__header">
+                  <router-link class="nav-item forum-post__title" :to="`/community/${result.channel.slug}/${result.id}`">
+                    <h1 class="content__title font--bold mb-5">{{result.title}} </h1>
+                  </router-link>
+
+                  {{result.title}}
+
+
+                  <div class=" d-flex flex-row justify-content-start  align-items-center mt-3">
+                    <img class="picture-placeholder mr-3" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
+                      alt="">
+                    <router-link class="nav-item" :to="`/${result.owner.username}/threads`">
+                      <a class="mb-0" href="">{{result.owner.name}} </a>
+                    </router-link>
+                    <span class="ml-1">said {{result.created_at}}</span>
+                    <!-- <p class="mb-0 ml-1"> posted this 2 minutes ago</p> -->
+                  </div>
+                  <hr>
+                  <div v-html="result.body"></div>
+                  <hr> Replies: {{result.replies.length}}
+                </div>
+              </div>
+              <div v-if="results.length == 0">
+                Sorry, No Query results for {{query}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  export default {
+    data() {
+      return {
+        endpoint: `api${this.$route.path}`,
+        query: '',
+        results: {}
+      }
+    },
+    mounted() {
+      this.fetchSearch()
+    },
+    methods: {
+      searchQuery() {
+        this.$http.get(this.endpoint + `?q=${this.query}`)
+          .then(this.refresh)
+          .catch()
+      },
+      fetchSearch(q) {
+        this.$http.get(this.url(q))
+          .then(this.refresh)
+          .catch()
+      },
+      url(q) {
+          if(!q) {
+              let query = this.$route.query.q;
+
+              q = query ? query[0] : '';
+          }
+          return `${this.endpoint}?q=${q}`
+      },
+      refresh(data) {
+        this.results = data.body;
+        console.log(data.body);
+        this.user = this.$auth.getAuthenticatedUser();
+      }
+    }
+  }
+
+</script>
+<style scoped lang="scss">
+  a {
+    text-decoration: none;
+  }
+
+  .picture-placeholder {
+    width: 50px;
+  }
+
+  .feed-block {
+
+    width: 100%;
+    .feed-block-inner {
+      //border: 1px solid #000;
+      .feed-block-inner__header {}
+      .feed-block-inner__post {
+        img {
+          width: 40px;
+        }
+      }
+    }
+  }
+
+</style>

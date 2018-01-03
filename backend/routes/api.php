@@ -31,14 +31,13 @@ Route::get('/test', function() {
 
  Route::middleware('auth:api')->group(function () {
    // Route::resource('forums','ForumsController'); 
-    Route::post('/community/create', 'ChannelController@store');
-    Route::patch('/replies/{reply}', 'RepliesController@update');
-    
+   Route::resource('replies','RepliesController');
+   
+   
+    Route::post('/community/create', 'ChannelController@store')->middleware('must-be-confirmed');
     Route::get('/classroom', 'ClassroomController@index');
     
-    
     Route::post('/community/{channel}/{thread}/replies', 'RepliesController@store');
-    Route::delete('/replies/{reply}', 'RepliesController@destroy');
    // Route::post('/community', 'ThreadController@store');
     Route::get('/currentChannel/{channel}', 'ThreadController@getThisChannel');
     Route::patch('/community/{channel}/{thread}', 'ThreadController@update');
@@ -49,16 +48,15 @@ Route::get('/test', function() {
     Route::post('/classroom/{classroom}/join', 'UserGroupController@membership');
     Route::post('/classroom/create/a','ClassroomController@create');
     Route::get('/classroom/{classroom}', 'ClassroomController@show');
-
-   
     Route::get('/enrolledClass', 'ClassroomController@index');
     Route::resource('activity','ActivityController');
     Route::get('/activities/{id}/show/', 'ActivityController@showActivities');
-    Route::post('/users/{user}/avatar', 'UserAvatarController@store');
+    Route::post('/{user}/avatar', 'UserAvatarController@store');
+    Route::resource('/community/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController');
 
 });
 Route::get('/community/{channel}/{thread}/replies', 'RepliesController@index');
-Route::resource('replies','RepliesController');
+
 // Route::middleware('auth:api')->get('/user', function () {
 //     Route::resource('forum','ForumsController'); 
 //     // restricted api sht Protected
@@ -67,8 +65,8 @@ Route::resource('replies','RepliesController');
 //Route::get('/community', 'ThreadController@index');
 //Route::get('/community/{thread}', 'ThreadController@show');
 Route::post('/register', 'Auth\RegisterController@create');
-
 Route::post('/register/confirm', 'Api\RegisterConfirmationController@index');
+Route::get('/threads/search', 'SearchController@show');
 Route::get('/community', 'ThreadController@index');
 Route::get('/{user}/threads', 'ProfilesController@showOwnThreads');
 Route::get('/community?by={name}', 'ThreadController@index');
@@ -79,5 +77,5 @@ Route::get('/community/{channel}', 'ThreadController@index');
 Route::get('/{user}/codes/', 'CodeController@showCodes');
 Route::get('/{user}/works/', 'ProfilesController@show');
 Route::get('/{user}/user', 'UserAvatarController@show');
-
+    
 //Route::resource('threads', 'ThreadsController');

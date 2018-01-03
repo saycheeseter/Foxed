@@ -24,6 +24,7 @@ class RegisterController extends Controller
             'name' => $request['name'],
             'email' => $request['email'],
             'password' => bcrypt($request['password']),
+            'username' => $request['username'],
             'prof' => $request['prof'],
             'confirmation_token' => str_random(25)
         ])));

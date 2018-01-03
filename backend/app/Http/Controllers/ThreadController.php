@@ -109,7 +109,8 @@ class ThreadController extends Controller
      */
     public function show($channelId, Thread $thread)
     {
-        $thread->load('owner');
+        
+        $thread->load('owner', 'subscriptions');
         return $thread;
         //
     }
@@ -151,7 +152,7 @@ class ThreadController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function destroy($channel,Thread $thread)
+    public function destroy($channel, Thread $thread)
     {
         $this->authorize('update', $thread);
         $thread->replies()->delete();

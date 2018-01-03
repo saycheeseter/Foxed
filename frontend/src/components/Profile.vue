@@ -4,57 +4,24 @@
       <div class="row d-flex justify-content-sm-center">
         <div class="col-xl-8 col-md-10">
           <div class="row">
-            <div class="col-12 d-flex justify-content-center mt-5 pt-5">
-              <img class="picture m-5" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg" alt="">
-              <h1>{{authenticatedUser.name}}</h1>
+            <div class="col-12 d-flex flex-column align-items-center justify-content-center mt-5 pt-5">
+              <avatarForm :user="user"></avatarForm>
+              {{user.name}}
               <br>
-
-              <div v-if="authenticatedUser.id == profile.id">
-                <avatarForm :user="{profile}"></avatarForm>
-                <router-link class="btn btn-default" :to="'/'+ authenticatedUser.name + '/editor'">new code</router-link>
+              <div v-if="authenticatedUser.id == user.id">
+                <router-link class="btn btn-default" :to="'/'+ authenticatedUser.name + '/editor'">
+                  <button class="btn btn-primary">Add Code</button>
+                </router-link>
               </div>
             </div>
             <div class="col-12 d-flex justify-content-center mb-5">
               <i class="fa fa-print" aria-hidden="true"></i>
               <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
             </div>
-            <div class="col-12 d-flex justify-content-center mb-5">
+            <div class="col-12">
+              <code-works></code-works>
+            </div>
 
-            </div>
-            <code-works class="col-xl-3 col-lg-4 col-md-6 mb-4"></code-works>
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-              <img src="https://news.siteintelgroup.com/blog/components/com_easyblog/themes/wireframe/images/placeholder-image.png" alt="">
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-              <img src="https://news.siteintelgroup.com/blog/components/com_easyblog/themes/wireframe/images/placeholder-image.png" alt="">
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-              <img src="https://news.siteintelgroup.com/blog/components/com_easyblog/themes/wireframe/images/placeholder-image.png" alt="">
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-              <img src="https://news.siteintelgroup.com/blog/components/com_easyblog/themes/wireframe/images/placeholder-image.png" alt="">
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-              <img src="https://news.siteintelgroup.com/blog/components/com_easyblog/themes/wireframe/images/placeholder-image.png" alt="">
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-              <img src="https://news.siteintelgroup.com/blog/components/com_easyblog/themes/wireframe/images/placeholder-image.png" alt="">
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-              <img src="https://news.siteintelgroup.com/blog/components/com_easyblog/themes/wireframe/images/placeholder-image.png" alt="">
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-              <img src="https://news.siteintelgroup.com/blog/components/com_easyblog/themes/wireframe/images/placeholder-image.png" alt="">
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-              <img src="https://news.siteintelgroup.com/blog/components/com_easyblog/themes/wireframe/images/placeholder-image.png" alt="">
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-              <img src="https://news.siteintelgroup.com/blog/components/com_easyblog/themes/wireframe/images/placeholder-image.png" alt="">
-            </div>
           </div>
 
         </div>
@@ -76,31 +43,23 @@
     data() {
       return {
         // profile: {},
-        profile: {},
-        authenticatedUser: []
+        user: {},
+        authenticatedUser: {}
       }
     },
     methods: {
       fetch() {
-
+        this.$http.get(`api/${this.$route.params.user}/user`)
+          .then(this.refresh)
       },
-      
+      refresh(data) {
+        this.authenticatedUser = this.$auth.getAuthenticatedUser();
+        this.user = data.body;
+      }
+
     },
-    created() {
-      this.authenticatedUser = this.$auth.getAuthenticatedUser();
+    mounted() {
       this.fetch()
-      console.log("nan");
-      this.$http.get(`api/${this.$route.params.name}/user`)
-        .then(response => {
-          // location.reload()
-          console.log("nani")
-          this.profile = response.body;
-
-
-        })
-      // this.$http.get(`api/${this.$route.params.name}/works`)
-      //   .then(
-      //     data => this.profile = data.body);
     },
   }
 
@@ -119,12 +78,7 @@
     width: 100%;
   }
 
-  .picture {
-    background-color: #efefef;
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-  }
+
 
   i {
     margin: 0 10px;

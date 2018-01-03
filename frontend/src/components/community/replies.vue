@@ -4,7 +4,7 @@
       <reply :attributes="{reply}" v-cloak @deleted="remove(index)"></reply>
     </div>
     <paginator :dataSet="dataSet" @changed="fetch"></paginator>
-    <div v-if="authenticatedUser.id">
+    <div v-if="user.id">
       <new-reply :dataSet="dataSet" @created="add" @changed="fetch"></new-reply>
     </div>
     <div v-else>
@@ -32,11 +32,12 @@
       return {
         dataSet: false,
         pageQuery: this.$route.query.page,
-        endpoint: `api${this.$route.path}/replies`
+        endpoint: `api${this.$route.path}/replies`,
+        user: null
       }
 
     },
-    created() {
+    mounted() {
       this.fetch()
     },
     methods: {
@@ -55,15 +56,16 @@
         console.log(data.body.data);
         this.dataSet = data.body;
         this.replies = data.body.data;
+        this.user = this.$auth.getAuthenticatedUser();
       }
 
     },
 
-    computed: {
-      authenticatedUser() {
-        return this.$auth.getAuthenticatedUser()
-      }
-    },
+    // computed: {
+    //   authenticatedUser() {
+    //     return this.$auth.getAuthenticatedUser()
+    //   }
+    // },
   }
 
 </script>

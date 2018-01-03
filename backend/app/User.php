@@ -15,7 +15,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','prof'
+        'name', 'email', 'password','prof',
+        'avatar_path'
     ];
     protected $appends = ['isProf'];
     protected $guarded = [];
@@ -25,7 +26,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'email', 'avatar_path'
+        'password', 'remember_token', 'email'
     ];
     protected $casts = [
         'confirmed' => 'boolean'
@@ -34,11 +35,12 @@ class User extends Authenticatable
         $this->confirmed = true;
         $this->save();
     }
-    public function avatar() {
-        return asset($this->avatar_path ?: 'images/avatars/default.jpg');
+    public function getAvatarPathAttribute($avatar)
+    {
+        return asset('storage/' . $avatar ?: '/avatars/default.png');
     }
     public function getRouteKeyName() {
-        return 'name';
+        return 'username';
     }
     public function threads() {
         return $this->hasMany(Thread::class)->latest();

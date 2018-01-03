@@ -1,15 +1,16 @@
 <script>
 import Wysiwyg from './wysiwyg.vue';
 import moment from 'moment';
+import SubscribeButton from './subscribe-button';
   export default {
     components: {
-      'wysiwyg': Wysiwyg
+      'wysiwyg': Wysiwyg,
+      'subscribe-button': SubscribeButton
     },  
     props: ['attriThread'],
     name: 'thread',
     data() {
       return {
-       
         editThread: {
           body: this.attriThread.body,
           title: this.attriThread.title

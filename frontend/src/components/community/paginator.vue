@@ -43,14 +43,21 @@
         return !!this.prevUrl || !!this.nextUrl;
       }
     },
-
+    mounted() {
+      this.dataSet();
+    },
     methods: {
       broadcast() {
         this.$emit('changed', this.page);
       },
       updateUrl() {
          this.$router.replace(`${this.currentState}?page=${this.page}`);
-      }
+      },
+      dataSet() {
+        this.page = this.dataSet.current_page;
+        this.prevUrl = this.dataSet.prev_page_url;
+        this.nextUrl = this.dataSet.next_page_url;
+      },
     }
   }
 

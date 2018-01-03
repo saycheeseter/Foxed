@@ -61,13 +61,11 @@
           });
       },
       destroy() {
-        this.$http.delete(`api/replies/${this.attributes.reply.id}`, {
-            body: this.body
-          })
+        this.$http.delete(`api/replies/${this.attributes.reply.id}`)
           .then(({
             data
           }) => {
-              this.$emit('deleted', data);
+            this.$emit('deleted', data);
             // this.$router.push(`/community/${this.$route.params.slug}/${this.$route.params.id}`)
             this.attributes.reply.body = this.body;
             this.editing = false,
@@ -79,7 +77,7 @@
       }
     },
     computed: {
-        authenticatedUser() {
+      authenticatedUser() {
         return this.$auth.getAuthenticatedUser()
       },
       ago() {
@@ -87,14 +85,15 @@
       }
     },
     created: {
-      
+
     }
   }
 
 </script>
 
 <style lang="scss">
-.picture-placeholder {
+  .picture-placeholder {
     width: 50px;
   }
+
 </style>

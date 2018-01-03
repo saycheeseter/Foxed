@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('username')->unique();
             $table->boolean('prof')->default(false);
             $table->boolean('confirmed')->default(false);
             $table->string('confirmation_token', 25)->nullable();

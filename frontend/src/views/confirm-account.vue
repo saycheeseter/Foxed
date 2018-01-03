@@ -1,6 +1,6 @@
 <template>
   <div>
-    Thank you!
+    <h1>Thank you!</h1>
   </div>
 </template>
 <script>
@@ -15,10 +15,13 @@
         this.$http.post(`api${this.$route.path}?token=${this.token}`, this.token)
         .then(function(response) {
             this.$router.push(`/community`);
-            location.reload();
+            
             swal("Account Confirmed!", {
             icon: "success",
           });
+        })
+        .catch(() => {
+          alert("error");
         })
       }
     },
