@@ -27,6 +27,7 @@ import MyThread from './views/myThread.vue'
 import Welcome from './views/welcome.vue'
 import ConfirmAccount from './views/confirm-account.vue'
 import SearchThreads from './views/search-threads.vue'
+import PasswordReset from './views/reset-password.vue'
 
 
 Vue.use(VueRouter)
@@ -219,6 +220,13 @@ const router = new VueRouter({
             component: Evaluation,
             meta: {
                 forAuth: true
+            }
+        },
+        {
+            path: "/account/forgot_password",
+            component: PasswordReset,
+            meta: {
+                forAuth: false
             }
         },
         {

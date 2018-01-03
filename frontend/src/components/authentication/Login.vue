@@ -9,7 +9,9 @@
       <button @click="login" class="btn pull-right form__button--submit font--light">
         Login
       </button>
-
+      <router-link to="/account/forgot_password">
+        <a class="btn">Forgot Password?</a>
+      </router-link>
 
     </div>
 

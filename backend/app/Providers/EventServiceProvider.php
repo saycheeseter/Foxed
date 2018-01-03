@@ -24,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
 
         Registered::class => [
             'App\Listeners\SendEmailConfirmationRequest'
+        ],
+        Reset::class => [
+            'App\Listeners\SendResetConfirmationRequest'
         ]
 
     ];
