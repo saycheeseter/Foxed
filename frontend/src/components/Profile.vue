@@ -8,25 +8,35 @@
               <avatarForm :user="user"></avatarForm>
               {{user.name}}
               <br>
-              <div v-if="authenticatedUser.id == user.id">
-                <router-link class="btn btn-default" :to="'/'+ authenticatedUser.name + '/editor'">
-                  <button class="btn btn-primary">Add Code</button>
-                </router-link>
-              </div>
             </div>
             <div class="col-12 d-flex justify-content-center mb-5">
+              <router-link class="btn btn-default" :to="'/'+ authenticatedUser.name + '/editor'">new code</router-link>
+              <router-link class="btn btn-default" :to="'/settings'">settings</router-link>
               <i class="fa fa-print" aria-hidden="true"></i>
               <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
             </div>
-            <div class="col-12">
-              <code-works></code-works>
+            <div class="col-12 d-flex justify-content-center mb-5">
+              
             </div>
-
+            
+            <div>
+              
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+              <img src="https://news.siteintelgroup.com/blog/components/com_easyblog/themes/wireframe/images/placeholder-image.png" alt="">
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+              <img src="https://news.siteintelgroup.com/blog/components/com_easyblog/themes/wireframe/images/placeholder-image.png" alt="">
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+              <img src="https://news.siteintelgroup.com/blog/components/com_easyblog/themes/wireframe/images/placeholder-image.png" alt="">
+            </div>
           </div>
-
+       
         </div>
 
       </div>
+        <code-works></code-works>
     </div>
   </div>
 </template>

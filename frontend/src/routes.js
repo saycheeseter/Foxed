@@ -8,6 +8,7 @@ import Profile from './components/Profile.vue'
 import Editor from './components/editor/Editor.vue'
 import EditEditor from './components/editor/CodeEdit.vue'
 import ViewEditor from './components/editor/CodeView.vue'
+import ActivityEditor from './components/editor/ActivityEditor.vue'
 import Thread from './components/forum/Thread.vue'
 import Create from './components/forum/Ask.vue'
 import Edit from './components/forum/EditThread.vue'
@@ -16,6 +17,7 @@ import Evaluation from './components/class-section/Evaluation.vue'
 import CreateActivity from './components/class-section/CreateActivity.vue'
 import ViewActivity from './components/class-section/ViewActivity.vue'
 import Activity from './components/class-section/Activities.vue'
+import SubmittedActivity from './components/class-section/SubmittedActivities.vue'
 import CreateClassroom from './components/class-section/CreateClassroom'
 import Forum from './views/forums.vue'
 import ForumCategory from './views/forum-topics.vue'
@@ -61,6 +63,13 @@ const router = new VueRouter({
         //         forAuth: true
         //     }
         // },
+        {
+            path: "/activity/:id/evaluate",
+            component: SubmittedActivity,
+            meta: {
+                forAuth: true
+            }
+        },
         {
             path: "/activity",
             component: Activity,
@@ -204,6 +213,13 @@ const router = new VueRouter({
         {
             path: "/:name/editor",
             component: Editor,
+            meta: {
+                forAuth: true
+            }
+        },
+        {
+            path: "/:id/activity",
+            component: ActivityEditor,
             meta: {
                 forAuth: true
             }

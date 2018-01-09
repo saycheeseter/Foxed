@@ -22,6 +22,12 @@
                 {{errors.first('question')}}
               </div>
             </div>
+            <div class="form-group mr-0 text-left">
+                <select v-model="activity.type">
+                  <option value="code" default>Code</option>
+                  <option value="image">Image</option>
+                </select>
+            </div>
             <input type="submit" class="btn btn-success" v-if="activity.title && activity.body" value="submit">
           </form>
         </div>
@@ -38,7 +44,8 @@
           title: "",
           body: "",
           image: "",
-          classroom_id: this.$route.params.id
+          classroom_id: JSON.parse(this.$route.params.id),
+          type: "code"
         }
       };
     },

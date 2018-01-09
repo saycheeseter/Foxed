@@ -10,8 +10,8 @@
                     </div>
                     <div class="form-group">
                         <p>{{activity.body}}</p>
-                        <span v-if="activity.image">
-        <img :src="'http://localhost:8000/' + activity.image">
+                        <span v-if="activity.image != 'none'">
+        <img  :src="'http://localhost:8000/' + activity.image">
     </span>
                         <!-- <textarea type="text" class="form-control" v-model="activity.body"></textarea> -->
                     </div>

@@ -4,12 +4,13 @@
   <div class="card-body">
       
     <h4 class="card-title"><router-link  :to="'/activity/' + activity.id">{{ activity.title }}</router-link></h4>
-    <span v-if="activity.image">
+    <span v-if="activity.image != 'none'">
         <img :src="'http://localhost:8000/' + activity.image">
     </span>
     
     <p class="card-text">{{ activity.body }}</p>
-    <a href="#!" class="btn btn-primary">comment {{ activity.user_id }}</a>
+    <router-link v-if="activity.type == 'code'" v-show="activity.user_id != authenticatedUser.id" class="btn btn-primary" :to="'/'+ activity.id + '/activity'">Start</router-link>
+    <button v-if="activity.type == 'image'" v-show="activity.user_id != authenticatedUser.id">Submit</button>
   </div>
   <hr>
   <p  v-if="activity.user_id == authenticatedUser.id">
@@ -27,3 +28,5 @@
         ]
     }
 </script>
+<style lang="scss">
+</style>

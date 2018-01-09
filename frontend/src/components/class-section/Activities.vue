@@ -22,8 +22,8 @@ import swal from 'sweetalert'
         components: {
             'activity' : Activity
         },
-        mounted() {
-            this.$http.get(`api/activities/2/show`)
+        created () {
+            this.$http.get(`api/activities/${this.$route.params.id}`)
             .then(response => {
                 this.activities = response.body
             })

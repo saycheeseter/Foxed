@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Filters\ThreadFilters;
 use App\Filters;
 use Auth;
+use App\Activity;
 
 class ClassroomController extends Controller
 {
@@ -30,6 +31,23 @@ class ClassroomController extends Controller
         //return ['classrooms' => $user->classes()->latest()->get()->load('owner')];
     }
 
+    public function showTimeline(Classroom $classrooms)
+    {
+        //
+        if(Auth::user()->prof == true)  {
+            $classroom = Classroom::all()->where('user_id', Auth::id())->load('classPosts');
+            // $class = Activity::all()->where('classroom_id',Auth::id());
+            // $classroom->classPosts->load('activities');
+            $classrooms->classPosts->load('owner');
+            return $classroom;
+        }
+            $classroom = Classroom::all()->where('isMember', true)->load('classPosts');
+            return $classroom;
+        
+        
+        //return ['classrooms' => $user->classes()->latest()->get()->load('owner')];
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -43,8 +61,6 @@ class ClassroomController extends Controller
             'name' => request('name'),
             'body' => request('body'),
         ]);
-        
-
     }
 
     /**
@@ -73,7 +89,12 @@ class ClassroomController extends Controller
         return $classroom;
     }
 }
-    
+
+    public function showActs($Actid)
+    {
+        $class = Classroom::find($Actid);
+        return $class->classPosts;
+    }
     
 
     /**

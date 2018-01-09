@@ -19,6 +19,7 @@ class CreateActivitiesTable extends Migration
             $table->unsignedInteger('classroom_id');
             $table->string('title');
             $table->text('body');
+            $table->string('type');
             $table->string('image')->nullable();
             $table->timestamps();
         });

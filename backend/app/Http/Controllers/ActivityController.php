@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Activity;
 use App\Classroom;
+use App\Code;
+use App\Score;
 use Auth;
 
 class ActivityController extends Controller
@@ -17,19 +19,24 @@ class ActivityController extends Controller
     }
 
     public function store(Request $request){
-        $exploded = explode(',', $request->image);
+        if($request->image){
+            $exploded = explode(',', $request->image);
 
-        $decoded = base64_decode($exploded[1]);
-        if(str_contains($exploded[0],'jpeg'))
-            $extension = 'jpg';
-        else
-            $extension ='png';
+            $decoded = base64_decode($exploded[1]);
+            if(str_contains($exploded[0],'jpeg'))
+                $extension = 'jpg';
+            else
+                $extension ='png';
 
-        $fileName = str_random().'.'.$extension;
-        $path = public_path().'/'.$fileName;
+            $fileName = str_random().'.'.$extension;
+            $path = public_path().'/'.$fileName;
 
-        file_put_contents($path, $decoded);
+            file_put_contents($path, $decoded);
 
+        }
+        else{
+            $fileName = 'none';
+        }
         // $forums = Activity::create($request->except('image') + [
         // 'user_id' => Auth::id(),
         // 'image' => $fileName
@@ -71,6 +78,17 @@ class ActivityController extends Controller
     }
 
     public function showActivities(Classroom $classroom){
-        return [$classroomPosts = $classroom, 'activities' => $classroom->classPosts()->latest()->get()->load('owner')];
+        return [$profileUser = $classroom, 'activities' => $classroom->classPosts()->latest()->get()];
     } 
+    public function evaluationCodes($Actid){
+        $codes = Activity::find($Actid);
+        // $codes->CodesSubmitted->load('scores');
+        // $scores->ScoresSubmitted->load('user');
+
+        // $codes->CodesSubmitted->load('user');
+        // $codes->ScoresSubmitted->load('user');
+        return ['userAct' => $codes->CodesSubmitted->load('user'), 'score' => $codes->ScoresSubmitted->load('user'),'class'=> $codes];
+        // return $codes->ScoresSubmitted->load('owner');
+        return $codes;
+    }
 }

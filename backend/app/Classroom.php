@@ -43,6 +43,9 @@ class Classroom extends Model
     public function members() {
         return $this->hasMany(UserGroup::class);
     }
+    public function ownCodes() {
+        return $this->hasMany(Code::class);
+    }
     public function announcements() {
         return $this->hasMany(UserGroup::class);
     }
@@ -52,7 +55,8 @@ class Classroom extends Model
     public function files() {
         return $this->hasMany(UserGroup::class);
     }
-    public function classPosts(){
+    public function classPosts() {
         return $this->hasMany(Activity::class);
     }
+    
 }

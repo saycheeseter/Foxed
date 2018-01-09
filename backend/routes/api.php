@@ -48,12 +48,17 @@ Route::get('/test', function() {
     Route::post('/classroom/{classroom}/join', 'UserGroupController@membership');
     Route::post('/classroom/create/a','ClassroomController@create');
     Route::get('/classroom/{classroom}', 'ClassroomController@show');
+
     Route::get('/enrolledClass', 'ClassroomController@index');
+    Route::get('/showTimeline', 'ClassroomController@showTimeline');
     Route::resource('activity','ActivityController');
     Route::get('/activities/{id}/show/', 'ActivityController@showActivities');
     Route::post('/{user}/avatar', 'UserAvatarController@store');
     Route::resource('/community/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController');
 
+    Route::get('/activities/{Actid}', 'ClassroomController@showActs');
+    Route::get('/activities/{Actid}/eval', 'ActivityController@evaluationCodes');
+    Route::post('/submitScore','ScoreController@create');
 });
 Route::get('/community/{channel}/{thread}/replies', 'RepliesController@index');
 

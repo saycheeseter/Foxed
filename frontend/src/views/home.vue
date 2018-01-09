@@ -22,7 +22,7 @@
             </div>
             <div class="col-6">
               <div class="block-full-height d-flex justify-content-center align-items-start">
-                <p>No posts yet.</p>
+                <timeline></timeline>
               </div>
             </div>
             <div class="col-4">
@@ -44,6 +44,7 @@
   import forumCategories from '../components/community/forum-category.vue';
   import JoinClass from '../components/community/join-class.vue';
   import CreateClass from '../components/community/create-class.vue';
+  import Timeline from '../components/community/Timeline.vue';
   export default {
 
     data() {
@@ -57,7 +58,8 @@
       'forum-category': forumCategories,
       'classroom': Classroom,
       'join-class': JoinClass,
-      'create-class': CreateClass
+      'create-class': CreateClass,
+      'timeline' : Timeline
     },
     mounted() {
       this.user.prof = false;

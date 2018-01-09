@@ -25,7 +25,8 @@ class CodeController extends Controller
             'title' => request('title'),
             'html' => request('html'),
             'js' => request('js'),
-            'css' => request('css')
+            'css' => request('css'),
+            'activity_id' => request('activity_id')
         ]);
         
     }

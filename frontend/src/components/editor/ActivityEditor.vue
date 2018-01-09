@@ -1,7 +1,5 @@
 <template>
 <section>
-	
-	<h1>{{codes.title}}</h1>
   <div id="wrap">
 
   <section id="code_editors" class="cm-s-twilight" >
@@ -21,31 +19,19 @@
   
   <section id="output">
     <iframe></iframe>
-		
   </section>
-	
-  <div v-show="authenticatedUser.id == id">
-		<input type="text" v-model="codes.title">
-		<button class="btn btn-info" @click="update">save</button>
-		<button class="btn btn-danger" @click="deleteCodes">thrash</button>
-		<div v-show="act_id">
-			<button>resubmit</button>
-	</div>
-	</div>
-		<div v-show="authenticatedUser.prof">
-			<input v-model="score.body" type="number" placeholder="Score">
-			<button @click="submitScore">save</button>
-	</div>
+  
 </div>
     <!-- <router-link class="nav-item" to="/evaluation"> <a class="nav-link" href="">Save and Submit</a> </router-link> -->
-	
+	<input type="text" v-model="codes.title">
+	<button class="btn btn-info" @click="submitCodes">Submit</button>
 	<!-- <input type="text" v-model="codes.html"> -->
 </section>
 </template>
 
 <script>
-import Split from 'split.js'
 		var x = {};
+		import Split from 'split.js'
 export default {
 	data () {
 		return {
@@ -53,15 +39,9 @@ export default {
 				title:"",
 				html:"",
 				css:"",
-				js: ""
-			},
-		id:"",
-		act_id:"",
-		score:{
-			body:"",
-			act_id:"",
-			user_id:""
-		}
+                js: "",
+                activity_id: JSON.parse(this.$route.params.id)
+			}
 		}
 	},
     created (){
@@ -71,57 +51,31 @@ export default {
     },
   
   methods: {
-		submitScore() {
-          this.$http.post("api/submitScore", this.score).then(response => {
-            console.log(response);
-            swal("Succesfully created!", {
-              icon: "success"
-            });
-          });
-      },
-		update () {
-			this.codes.html = x.html
-			this.codes.css = x.css
-			this.codes.js = x.js
-          this.$http.put('api/codes/' + this.$route.params.id, this.codes)
+      getCode (){
+          this.$http.get('api/forums/')
           .then(response => {
-              console.log(response)
-                    swal("Succesfully Updated!", {
-                icon: "success",
-                });
+            //   this.codes = response.body[0]
+            //   console.log(response.body[0])
           })
-      },
-        deleteCodes () {
-            swal({
-            title: "Are you sure?",
-            text: "Once deleted, you will not be able to recover this imaginary file!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-            })
-            .then((willDelete) => {
-            if (willDelete) {
-                this.$http.delete('api/codes/' + this.$route.params.id)
+	  },
+		submitCodes () {
+				// this.codes = x;
+					this.codes.html = x.html
+					this.codes.css = x.css
+					this.codes.js = x.js
+				  this.$http.post('api/codes/', this.codes)
                 .then(response => {
-                    swal("CodePlay deleted!", {
-                icon: "success",
-                });
+                    console.log(response)
+                            swal("Succesfully created!", {
+                        icon: "success",
+                        });   swal("Succesfully created!", {
+                        icon: "success",
+                        });
                 })
-                
-            } else {
-                swal("CodePlay not deleted");
-            }
-            });
-            
-        }
+		},
   },
-    computed: {
-        authenticatedUser() {
-        return this.$auth.getAuthenticatedUser()
-        }
-    },
   mounted: function() {
-		Split(['#html', '#css','#js'], {
+	Split(['#html', '#css','#js'], {
     sizes: [33.3, 33.3,33.4],
     minSize: 30
 });
@@ -175,19 +129,20 @@ Split(['#code_editors','#output'], {
 		iframe_doc.close();
 	};
 
-	
 	var cm_opt = {
 		mode: 'text/html',
 		gutter: true,
 		lineNumbers: true,
-		theme:"twilight",
-		
+        theme:"twilight",
+        extraKeys:{"Ctrl-Space":"autocomplete"},
+        autoCloseTags:true,
+        
 		onChange: function () {
 			console.log('1')
 			render();
 		}
 	};
-	
+
 	var html_box = document.querySelector('#html textarea');
 	var html_editor = CodeMirror.fromTextArea(html_box, cm_opt);
 	html_editor.on("change", function(html_editor, change) {
@@ -214,38 +169,10 @@ Split(['#code_editors','#output'], {
 	
 	
     // css_editor.setValue('body { color: red; }');
+		html_editor.setValue("");
+		css_editor.setValue("");
+		js_editor.setValue("");
 
-    this.$http.get('api/codes/'+ this.$route.params.id)
-          .then(response => {
-						console.log(response)
-						//   this.codes = response.body[10]
-					// this.codes=response.body[1];
-							response.body.html ? html_editor.setValue(response.body.html):html_editor.setValue("");
-							response.body.css ? css_editor.setValue(response.body.css):css_editor.setValue("");
-							response.body.js ? js_editor.setValue(response.body.js):js_editor.setValue("");
-
-              // html_editor.setValue(response.body.html);
-							// css_editor.setValue(response.body.css);
-							// js_editor.setValue(response.body.js);
-							
-							this.codes.title = response.body.title;
-							this.id = response.body.user_id;
-							if(response.body.activity_id){
-								this.act_id = response.body.user_id;
-								this.score.act_id = response.body.activity_id;
-								if(response.body.user_id){
-									this.score.user_id = response.body.user_id;
-								}
-							}
-							
-							// alert(response.body.user_id)
-							// console.log("this.codes.title")
-							// alert('asd')
-              // html_editor.setValue(" ");
-							// css_editor.setValue(" ");
-							// js_editor.setValue(" ");
-							// console.log(responses)
-          })
 
 
 
@@ -257,12 +184,15 @@ Split(['#code_editors','#output'], {
 	for (i = 0; i < cms.length; i++) {
 		cms[i].style.height = '100%';
 	}
-			
 }
 
 }
 </script>
-<style lang="scss"> 
+ <style lang="scss">
+
+* {
+}
+
 #wrap {
     display: flex;
     flex-direction: column;
