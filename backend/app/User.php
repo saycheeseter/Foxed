@@ -31,6 +31,9 @@ class User extends Authenticatable
     protected $casts = [
         'confirmed' => 'boolean'
     ];
+    public function getRouteKeyName() {
+        return 'username';
+    }
     public function confirm() {
         $this->confirmed = true;
         $this->confirmation_token = null;
@@ -39,9 +42,6 @@ class User extends Authenticatable
     public function getAvatarPathAttribute($avatar)
     {
         return asset('storage/' . $avatar ?: '/avatars/default.png');
-    }
-    public function getRouteKeyName() {
-        return 'username';
     }
     public function threads() {
         return $this->hasMany(Thread::class)->latest();

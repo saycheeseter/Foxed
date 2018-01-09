@@ -35,8 +35,9 @@ import swal from "sweetalert";
     methods: {
       create() {
         this.$validator.validateAll().then(() => {
-          this.$http.post("api/classroom/create/a", this.classroom).then(response => {
-            console.log(response);
+          this.$http.post("api/classroom/create/a", this.classroom).then(data => {
+            this.$router.push(`/class/${data.body.id}`)
+            this.$emit('enroll', data.body);
             swal("Succesfully created!", {
               icon: "success"
             });

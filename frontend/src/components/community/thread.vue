@@ -16,6 +16,7 @@ import SubscribeButton from './subscribe-button';
           title: this.attriThread.title
         },
          editingThread: false,
+         active: false
       }
     },
     methods: {
@@ -55,10 +56,13 @@ import SubscribeButton from './subscribe-button';
           });
          
           });
+      },
+      fetch() {
+        this.active =this.attriThread.isSubscribedTo
       }
     },
-    created() {
-
+    mounted() {
+      this.fetch()
     },
     computed: {
         authenticatedUser() {

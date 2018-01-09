@@ -35,10 +35,10 @@ class ClassroomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(User $user, Classroom $classroom)
+    public function create(User $user, Classroom $classroom, Request $request)
     {
        if(Auth::user()->prof == true) 
-        $classroom->create([
+       return $classroom->create([
             'user_id' => Auth::id(),
             'name' => request('name'),
             'body' => request('body'),
