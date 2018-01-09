@@ -1,5 +1,5 @@
 <template>
-  <div class="forum-post__header full-block__post m-2 p-3">
+  <div class="forum-post__header full-block__post m-2 p-3" :id="`reply-${reply.id}`">
     <div>
       <p>
         <img class="picture-placeholder mr-3" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"

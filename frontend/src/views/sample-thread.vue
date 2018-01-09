@@ -55,7 +55,8 @@
                         <hr>
                         <div class="forum__topic-content" v-html="attriThread.body"></div>
                         <hr>
-                        <subscribe-button :active="true"></subscribe-button>
+                        
+                          <subscribe-button :active="active"></subscribe-button>
                         <div class="panel-footer level d-flex" v-if="authenticatedUser.id == attriThread.user_id">
                           <button class=" btn btn-xs mr-2" @click="editingThread = true">Edit</button>
                           <form @submit.prevent="deleteThread">
@@ -122,7 +123,8 @@
       return {
         threads: {},
         pageQuery: this.$route.query.page,
-        endpoint: `api${this.$route.path}`
+        endpoint: `api${this.$route.path}`,
+        active: false
       }
     },
     methods: {
@@ -132,6 +134,7 @@
       },
       refresh(data) {
         this.threads = data.body
+        
       }
     },
     mounted() {

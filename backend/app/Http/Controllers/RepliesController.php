@@ -23,24 +23,24 @@ class RepliesController extends Controller
     }
     public function store($channelId, Thread $thread, Request $request) {
         $this->validate($request, ['body' => 'required']);
-        $reply = $thread->addReply([
+        return $thread->addReply([
             'body' => request('body'),
             'user_id' => Auth::id()
-        ]);
+        ])->load('owner');
 
-        preg_match_all('/\@([^\s\.]+)/', $reply->body, $matches);
-        $names = $matches[0];
+        // preg_match_all('/\@([^\s\.]+)/', $reply->body, $matches);
+        // $names = $matches[0];
 
-        foreach($names as $name) {
-            $user = User::whereName($name)->first();
+        // foreach($names as $name) {
+        //     $user = User::whereName($name)->first();
 
-            if($user) {
-                $user->notify(new YouWereMentioned($reply));
-            }
-        }
-        if(request()->expectsJson()){
-            return $reply->load('owner');
-        }
+        //     if($user) {
+        //         $user->notify(new YouWereMentioned($reply));
+        //     }
+        // }
+        // if(request()->expectsJson()){
+           // return $reply;
+        // }
     }
     public function update(Reply $reply) {
         $this->authorize('updateReply', $reply);
