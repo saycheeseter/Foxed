@@ -33,12 +33,7 @@
 
     </div> -->
       <div class="ml-2 mr-2 form-group m-auto d-flex align-items-center justify-content-around nav-links" v-if="isAuth">
-        <form class="d-flex">
-          <input type="text" v-model="query" class="form-control">
-          
-              <button class="btn btn-primary" @click="search">Search</button>
-          
-        </form>
+        
         <router-link class="ml-2 mr-2" tag="li" to="/">
           <a>Home</a>
         </router-link>
@@ -49,13 +44,18 @@
           <a>Profile</a>
         </router-link>
         <user-notifications :user="user"></user-notifications>
-        <span class="ml-2 mr-2 form__button--positive-dark btn" tag="li">
-          <a @click="logout">Logout</a>
-        </span>
+        <div class="dropdown ml-2">
+          <a href="#" class="" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-bars"></i>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li @click="logout">
+              <a href="#">Logout</a>
+            </li>
+          </ul>
+        </div>
       </div>
-
     </div>
-
   </nav>
 </template>
 
@@ -70,7 +70,6 @@
     data() {
       return {
         isAuth: null,
-        channels: {},
         user: {},
         query: ''
       }
@@ -82,39 +81,36 @@
     // },
     mounted() {
       this.isAuth = this.$auth.isAuthenticated()
-      this.setAuthenticatedUser()
-      this.$http.get('api/channels')
-        .then(response => {
-          this.channels = response.body
-        })
-
+      this.$nextTick(function () {
+        this.setAuthenticatedUser()
+      });
     },
     watch: {
       $route: function () {
         this.isAuth = this.$auth.isAuthenticated()
-        this.setAuthenticatedUser()
+        if (this.isAuth) {
+          this.setAuthenticatedUser()
+        }
       }
     },
     methods: {
       setAuthenticatedUser() {
         this.$http.get('api/user')
-          .then(response => {
-            this.$auth.setAuthenticatedUser(response.body)
-            this.user = this.$auth.getAuthenticatedUser()
-            console.log(this.$auth.getAuthenticatedUser())
-
-          })
+          .then(this.refresh)
       },
       search() {
         this.$router.replace(`/threads/search?q=${this.query}`)
         this.$emit('searched', this.query);
       },
+      refresh(data) {
+        this.$auth.setAuthenticatedUser(data.body)
+        this.user = this.$auth.getAuthenticatedUser()
+        console.log(this.$auth.getAuthenticatedUser())
+      },
       logout() {
-
         this.$auth.destroyToken()
         this.$router.push("/")
         location.reload()
-
       }
 
     }

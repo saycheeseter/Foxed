@@ -53,6 +53,8 @@
       this.user.prof = false;
       this.$http.get(`api/user`)
         .then(this.refresh)
+
+     
     },
     methods: {
       refresh(data) {

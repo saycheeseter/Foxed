@@ -31,7 +31,7 @@
       login() {
         var data = {
           client_id: 2,
-          client_secret: 'bkoC4nDOcHB6dHEy10VN3hZHHn80j1OfgG83uvxN',
+          client_secret: 'A7qpuzS53t5H7HSdd80JXdYxCCBgINfiOrQNeKF2',
           grant_type: 'password',
           username: this.email,
           password: this.password
@@ -39,7 +39,6 @@
 
         this.$http.post("oauth/token", data)
           .then(response => {
-            // location.reload()
             this.$auth.setToken(response.body.access_token, response.body.expires_in + Date.now())
             location.reload();
             this.$router.push("/")
