@@ -66,8 +66,13 @@
       }
     },
     methods: {
-
+      removeSpace() {
+        if (this.user.username) {
+          this.user.username = this.user.username.replace(/\s+/g, '');
+        }
+      },
       register() {
+        this.removeSpace();
         this.$http.post('api/register/', this.user)
           .then(response => {
             this.login();
@@ -90,7 +95,7 @@
       login(user) {
         var data = {
           client_id: 2,
-          client_secret: 'bkoC4nDOcHB6dHEy10VN3hZHHn80j1OfgG83uvxN',
+          client_secret: 'A7qpuzS53t5H7HSdd80JXdYxCCBgINfiOrQNeKF2',
           grant_type: 'password',
           username: this.user.email,
           password: this.user.password

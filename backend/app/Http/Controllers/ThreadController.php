@@ -7,6 +7,7 @@ use App\Thread;
 use App\Filters\ThreadFilters;
 use App\Filters;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 use Auth;
 
 
@@ -22,6 +23,7 @@ class ThreadController extends Controller
      */
     public function index(Channel $channel, Thread $threads, ThreadFilters $filters)
     {
+        
         //
     //    $threads = $this->getThreads($channel);
        //$threads = (new ThreadsQuery)->get();
@@ -35,9 +37,13 @@ class ThreadController extends Controller
         //$threads = Thread::latest()->filter($filters);  
     }
     //$threads = Thread::filter($filters);
-    
+
+    // $trending = array_map('json_decode', Redis::zrevrange('trending_threads', 0, 4));
     $threads = $threads->get()->load('channel', 'owner', 'replies');
-    return $threads;
+    return 
+        $threads
+        // $trending
+;
     }
     public function showChannels(Channel $channel) {
         $channel = Channel::latest()->get()->load('threads');
@@ -110,7 +116,13 @@ class ThreadController extends Controller
     public function show($channelId, Thread $thread)
     {
         
-        $thread->load('owner', 'subscriptions');
+        $thread->load('owner', 'subscriptions', 'channel');
+
+        // Redis::zincryby('threading_threads', 1, json_encode([
+        //     'title' => $thread->title,
+        //     'path' => $thread->path()
+        // ]));
+
         return $thread;
         //
     }

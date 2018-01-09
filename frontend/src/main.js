@@ -6,13 +6,14 @@ import VueResource from 'vue-resource'
 import BootstrapVue from 'bootstrap-vue'
 import jquery from 'jquery';
 import Auth from './packages/auth/Auth.js'
+import InstantSearch from 'vue-instantsearch'
 
 
 Vue.use(VueResource)
 Vue.use(Auth)
 Vue.use(VeeValidate)
 Vue.use(BootstrapVue)
-
+Vue.use(InstantSearch)
 
 
 
