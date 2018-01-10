@@ -181,6 +181,8 @@ Split(['#code_editors','#output'], {
 		gutter: true,
 		lineNumbers: true,
 		theme:"twilight",
+		extraKeys:{"Ctrl-Space":"autocomplete"},
+        autoCloseTags:true,
 		
 		onChange: function () {
 			console.log('1')

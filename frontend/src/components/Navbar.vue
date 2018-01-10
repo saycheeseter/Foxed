@@ -48,6 +48,7 @@
         <router-link class="ml-2 mr-2" tag="li" :to="'/'+user.username+'/codes'">
           <a>Profile</a>
         </router-link>
+        <user-notifications :user="user"></user-notifications>
         <span class="ml-2 mr-2 form__button--positive-dark btn" tag="li">
           <a @click="logout">Logout</a>
         </span>
@@ -60,9 +61,11 @@
 
 <script>
   import Login from './authentication/Login.vue';
+  import UserNotifications from './community/UserNotifications.vue'
   export default {
     components: {
-      'login': Login
+      'login': Login,
+      'user-notifications': UserNotifications
     },
     data() {
       return {

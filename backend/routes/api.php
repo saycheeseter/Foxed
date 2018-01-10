@@ -29,9 +29,11 @@ Route::get('/test', function() {
 });
 
 
- Route::middleware('auth:api')->group(function () {
-   // Route::resource('forums','ForumsController'); 
-   Route::resource('replies','RepliesController');
+Route::middleware('auth:api')->group(function () {
+    // Route::resource('forums','ForumsController'); 
+    Route::post('/community/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@store');
+    Route::delete('/community/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@destroy');
+    Route::resource('replies','RepliesController');
    
    
     Route::post('/community/create', 'ChannelController@store')->middleware('must-be-confirmed');
@@ -48,20 +50,24 @@ Route::get('/test', function() {
     Route::post('/classroom/{classroom}/join', 'UserGroupController@membership');
     Route::post('/classroom/create/a','ClassroomController@create');
     Route::get('/classroom/{classroom}', 'ClassroomController@show');
-
+ 
     Route::get('/enrolledClass', 'ClassroomController@index');
     Route::get('/showTimeline', 'ClassroomController@showTimeline');
     Route::resource('activity','ActivityController');
     Route::get('/activities/{id}/show/', 'ActivityController@showActivities');
+    Route::get('/profiles/{user}/notifications/', 'UserNotificationsController@index');
+    Route::delete('/profiles/{user}/notifications/{notification}', 'UserNotificationsController@destroy');
     Route::post('/{user}/avatar', 'UserAvatarController@store');
     Route::resource('/community/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController');
 
     Route::get('/activities/{Actid}', 'ClassroomController@showActs');
     Route::get('/activities/{Actid}/eval', 'ActivityController@evaluationCodes');
     Route::post('/submitScore','ScoreController@create');
+    
 });
 Route::get('/community/{channel}/{thread}/replies', 'RepliesController@index');
 
+Route::get('/community/{channel}/{thread}', 'ThreadController@show');
 // Route::middleware('auth:api')->get('/user', function () {
 //     Route::resource('forum','ForumsController'); 
 //     // restricted api sht Protected
@@ -76,7 +82,6 @@ Route::get('/community', 'ThreadController@index');
 Route::get('/{user}/threads', 'ProfilesController@showOwnThreads');
 Route::get('/community?by={name}', 'ThreadController@index');
 Route::get('/channels', 'ThreadController@showChannels');
-Route::get('/community/{channel}/{thread}', 'ThreadController@show');
 Route::get('/community/create', 'ThreadController@create');
 Route::get('/community/{channel}', 'ThreadController@index');
 Route::get('/{user}/codes/', 'CodeController@showCodes');

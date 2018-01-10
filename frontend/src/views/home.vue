@@ -9,14 +9,7 @@
               <div class="block-full-height d-flex justify-content-center align-items-start ">
                 <div class="text-left">
                   <br>
-                  <div v-if="user.prof == 0">
-                    <join-class></join-class>
-                  </div>
-                  <div v-else>
-                    <create-class></create-class>
-                  </div>
-                  <p class="text-left mt-2 pl-1 pr-1">Classes</p>
-                  <classroom></classroom>
+                  <classroom :user="user"></classroom>
                 </div>
               </div>
             </div>
@@ -45,6 +38,7 @@
   import JoinClass from '../components/community/join-class.vue';
   import CreateClass from '../components/community/create-class.vue';
   import Timeline from '../components/community/Timeline.vue';
+
   export default {
 
     data() {
@@ -59,7 +53,7 @@
       'classroom': Classroom,
       'join-class': JoinClass,
       'create-class': CreateClass,
-      'timeline' : Timeline
+      'timeline' : Timeline 
     },
     mounted() {
       this.user.prof = false;
@@ -68,7 +62,7 @@
     },
     methods: {
       refresh(data) {
-          this.user = data.body;
+        this.user = data.body;
       }
     }
   }

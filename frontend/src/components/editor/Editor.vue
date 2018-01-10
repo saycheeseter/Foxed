@@ -133,7 +133,7 @@ Split(['#code_editors','#output'], {
 		gutter: true,
 		lineNumbers: true,
         theme:"twilight",
-        extraKeys:{"Tab":"autocomplete"},
+        extraKeys:{"Ctrl-Space":"autocomplete"},
         autoCloseTags:true,
         
 		onChange: function () {
