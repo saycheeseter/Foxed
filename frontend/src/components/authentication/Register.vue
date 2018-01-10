@@ -66,8 +66,13 @@
       }
     },
     methods: {
-
+      removeSpace() {
+        if (this.user.username) {
+          this.user.username = this.user.username.replace(/\s+/g, '');
+        }
+      },
       register() {
+        this.removeSpace();
         this.$http.post('api/register/', this.user)
           .then(response => {
             this.login();

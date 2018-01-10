@@ -12,6 +12,9 @@
                 <router-link :to="`/${user.username}/threads`" v-show="user">
                   <button class="btn form__button--passive-dark mt-2" type="submit">View posted topics</button>
                 </router-link>
+                <router-link :to="`/threads/search`" v-show="user">
+                  <button class="btn form__button--passive-dark mt-2" type="submit">Search for a thread</button>
+                </router-link>
                 <forum-category></forum-category>
                 <!-- <hot-topics></hot-topics> -->
               </div>

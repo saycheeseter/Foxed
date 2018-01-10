@@ -1,12 +1,16 @@
 <template>
   <div>
-    <div class="dropdown">
-      <a href="#" class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="glyphicon glyphicon-bell"></span>
+    <div class="dropdown ml-2">
+      <a href="#" class="" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="far fa-bell"></i>
       </a>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <li v-for="notification in notifications">
-          <a :href="notification.data.link" v-text="notification.data.message" @click.prevent="markAsRead(notification)"></a>
+          <router-link 
+          :to="notification.data.link" 
+          @click.prevent="markAsRead(notification)"  
+          v-text="notification.data.message"> 
+          </router-link>
         </li>
       </ul>
     </div>
@@ -22,17 +26,23 @@
     },
     mounted() {
       this.fetch()
+
     },
     methods: {
       fetch() {
         this.$http.get(`api/profiles/${this.user.username}/notifications`)
-          .then(response => {
-            console.log(response)
-            this.notifications = response.data
-          })
+          .then(this.refresh)
+      },
+      refresh(data) {
+            console.log(data)
+            this.notifications = data.data
       },
       markAsRead(notification) {
-        
+        this.$http.delete(`api/profiles/${this.user.username}/notifications/${notification.id}`)
+          .then(() => {})
+          .catch(() => {
+            alert("failed");
+          })
       }
 
     }
