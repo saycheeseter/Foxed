@@ -1,21 +1,18 @@
 <template v-cloak>
   <div class="topics mt-2">
 
-    <div class="container-fluid" v-if="threads.length > 0">
-      <div class="row no-gutters justify-content-sm-center">
-        <div class="col-10">
-          <div class="row mt-5">
+    <div class="container" v-if="threads.length > 0">
+
+          <div class="row mt-4">
             <div class="col-12">
               <router-link :to="`/community/${endpoint}/create`" v-if="authenticatedUser.id">
                 <button class="btn form__button--positive-dark ml-2 mt-2" type="submit">Start Discussion</button>
               </router-link>
-              <div v-for="thread in threads">
+              <div class="section-block mt-2" v-for="thread in threads">
                 <div class="forum-post__header m-2 ml-0 p-3">
                   <router-link class="nav-item forum-post__title" :to="`/community/${thread.channel.slug}/${thread.id}`">
                     <h1 class="content__title font--bold mb-5">{{thread.title}} </h1>
                   </router-link>
-
-
                   <div class=" d-flex flex-row justify-content-start  align-items-center mt-3">
                     <img class="picture-placeholder mr-3" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
                       alt="">
@@ -31,8 +28,7 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+ 
       </div>
     </div>
 

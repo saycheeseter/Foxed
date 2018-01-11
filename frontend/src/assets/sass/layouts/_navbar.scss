@@ -1,8 +1,35 @@
 .navbar {
-    padding: 0;
-    a,
-    li {
-        color: #505050;
-        list-style: none;
+  padding: 0;
+  a,
+  li {
+    color: #505050;
+    list-style: none;
+  }
+  .dropdown {
+      img {
+         width: 30px;
+         height: 30px;
+         margin: 0;
+         border-radius: 50%;
+      }
+  }
+  .form-group {
+      width: 40%;
+  }
+  input, .form-control {
+    background-color: $black--light;
+    border: $black--light;
+    &:active {
+      background-color: $black--light;
+      border: $black--light;
     }
+    ::placeholder {
+        font-style: 90%;
+    }
+  }
+  .login {
+      .form-group {
+          width: 100%;
+      }
+  }
 }

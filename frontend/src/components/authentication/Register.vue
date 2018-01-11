@@ -1,6 +1,7 @@
 <template>
 
   <div class="">
+
     <div class="card pl-5 pr-5 pt-3 pb-3">
       <div class="card-body">
         <h5 class="text-center mt-2 mb-4 font--bold content__title">Create an account</h5>
@@ -32,10 +33,12 @@
         </div>
         <button @click="register()" class="btn mb-2 form__button--register-dark">
           Register
+          <div class="spinner p-1" v-if="loading">
+              <i class="animate__spin fas fa-circle-notch spinner m-auto"></i>
+          </div>
         </button>
       </div>
     </div>
-
   </div>
 
 </template>
@@ -45,6 +48,7 @@
   export default {
     data() {
       return {
+        loading: null,
         user: {
           name: null,
           email: null,
@@ -72,15 +76,22 @@
         }
       },
       register() {
+
+        this.loading = true;
+        console.log(this.loading)
         this.removeSpace();
         this.$http.post('api/register/', this.user)
           .then(response => {
             this.login();
+            this.loading = false;
+            console.log(this.loading)
             // swal("Succesfully Registered!", {
             //   icon: "success",
             // });
           })
           .catch(error => {
+            this.loading = false;
+            console.log(this.loading)
             let data = error.body.errors
             console.log("data", data)
             for (let key in this.theErrors) {
@@ -95,7 +106,7 @@
       login(user) {
         var data = {
           client_id: 2,
-          client_secret: 'Oan1rN8nT5SocH6B1mtPIWtQiAlfMg8lP9inRJV1',
+          client_secret: 'wnoRYqlGbW7puU8WhjSUY5XAIKz5PVAr9iDs5rX3',
           grant_type: 'password',
           username: this.user.email,
           password: this.user.password
@@ -121,6 +132,11 @@
     padding: 10px 25px;
     font-size: 18px;
     option {}
+  }
+
+  .fas,
+  i {
+    color: black !important;
   }
 
 </style>

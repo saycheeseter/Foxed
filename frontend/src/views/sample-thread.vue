@@ -1,95 +1,92 @@
 <template>
   <div class="specific-thread">
     <!-- <nav-list></nav-list> -->
-    <div class="container">
-      <div class="row no-gutters justify-content-sm-center ">
+    <div class="container pt-4">
+      <div class="row mt-2">
         <div class="col-12">
-          <div class="row mt-2">
-            <div class="col-12">
-              <div class="forum-post">
-                <!-- <div v-for="thread in threads" v-bind:thread="thread" :key="thread.id"> -->
-                <!-- Editing Thread -->
-                <div v-bind:threads="threads" :key="threads.id">
-                  <thread :attriThread="threads" inline-template>
-                    <div v-if="editingThread">
-                      <div class="forum-post__header full-block__post m-2 p-3">
-                        <div>
-                          <h1>
-                            <div class="form-group">
-                              <h5>Title</h5>
-                              <input class="form-control" type="text" v-model="editThread.title">
-                            </div>
-                          </h1>
-                          <hr>
-                          <div class="form-group">
-                            <h5>Body</h5>
-                            <wysiwyg v-model="editThread.body" :value="editThread.body"></wysiwyg>
-                            <!-- <textarea class="form-control" name="" id="" cols="30" rows="10" v-model="editThread.body"></textarea> -->
-                          </div>
-                          <hr>
+          <div class="forum-post">
+            <!-- <div v-for="thread in threads" v-bind:thread="thread" :key="thread.id"> -->
+            <!-- Editing Thread -->
+            <div v-bind:threads="threads" :key="threads.id">
+              <thread :attriThread="threads" inline-template>
+                <div v-if="editingThread">
+                  <div class="forum-post__header full-block__post m-2 p-3">
+                    <div>
+                      <h1>
+                        <div class="form-group">
+                          <h5>Title</h5>
+                          <input class="form-control" type="text" v-model="editThread.title">
                         </div>
-                        <div class="level d-flex">
-                          <button class=" btn btn-xs btn-primary mr-2" @click="update" v-if="editingThread = true">Submit</button>
-                          <button class=" btn btn-xs mr-2" @click="editingThread = false; editThread.body = attriThread.body" v-if="editingThread = true">Cancel</button>
-                          <form @submit.prevent="deleteThread">
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                          </form>
-                        </div>
+                      </h1>
+                      <hr>
+                      <div class="form-group">
+                        <h5>Body</h5>
+                        <wysiwyg v-model="editThread.body" :value="editThread.body"></wysiwyg>
+                        <!-- <textarea class="form-control" name="" id="" cols="30" rows="10" v-model="editThread.body"></textarea> -->
                       </div>
+                      <hr>
                     </div>
-                    <!-- thread -->
-                    <div v-else>
-                      <div class="forum-post__header full-block__post m-2 p-3 pt-0">
-                        <h1>
-                          <a class="forum-post__title mb-5">{{attriThread.title}}</a>
-                        </h1>
-                        <div class="d-flex align-items-center mt-3">
-                          <img class="picture-placeholder mr-3" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
-                            alt="">
-                          <router-link class="" :to="`/${attriThread.owner.username}/threads`">
-                            <a class="m-0" href="">{{attriThread.owner.name}}</a>
-                          </router-link>
-                          <span v-text="threadAgo"></span> {{attriThread.create_at}}
-                          <!-- <p5 class="mb-0 ml-1"> posted this 2 minutes ago</p> -->
-                        </div>
-                        <hr>
-                        <div class="forum__topic-content" v-html="attriThread.body"></div>
-                        <hr>
-                        
-                          <subscribe-button :active="active"></subscribe-button>
-                        <div class="panel-footer level d-flex" v-if="authenticatedUser.id == attriThread.user_id">
-                          <button class=" btn btn-xs mr-2" @click="editingThread = true">Edit</button>
-                          <form @submit.prevent="deleteThread">
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                          </form>
-                         
-
-                        </div>
-                      </div>
-
+                    <div class="level d-flex">
+                      <button class=" btn btn-xs btn-primary mr-2" @click="update" v-if="editingThread = true">Submit</button>
+                      <button class=" btn btn-xs mr-2" @click="editingThread = false; editThread.body = attriThread.body" v-if="editingThread = true">Cancel</button>
+                      <form @submit.prevent="deleteThread">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                      </form>
                     </div>
-                  </thread>
+                  </div>
                 </div>
-                <!-- </div> -->
-              </div>
-              <!-- reply -->
-              <!-- <replies > -->
-              <div>
+                <!-- thread -->
+                <div v-else>
+                  <div class="forum-post__header full-block__post m-2 p-3 pt-0">
+                    <h1>
+                      <a class="forum-post__title mb-5">{{attriThread.title}}</a>
+                    </h1>
+                    <div class="d-flex align-items-center mt-3">
+                      <img class="picture-placeholder mr-3" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
+                        alt="">
+                      <router-link class="" :to="`/${attriThread.owner.username}/threads`">
+                        <a class="m-0" href="">{{attriThread.owner.name}}</a>
+                      </router-link>
+                      <span v-text="threadAgo"></span> {{attriThread.create_at}}
+                      <!-- <p5 class="mb-0 ml-1"> posted this 2 minutes ago</p> -->
+                    </div>
+                    <hr>
+                    <div class="forum__topic-content" v-html="attriThread.body"></div>
+                    <hr>
 
-                <replies></replies>
-              </div>
+                    <subscribe-button :active="active"></subscribe-button>
+                    <div class="panel-footer level d-flex" v-if="authenticatedUser.id == attriThread.user_id">
+                      <button class=" btn btn-xs mr-2" @click="editingThread = true">Edit</button>
+                      <form @submit.prevent="deleteThread">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                      </form>
 
-              <!-- </replies> -->
-              
 
+                    </div>
+                  </div>
 
+                </div>
+              </thread>
             </div>
+            <!-- </div> -->
           </div>
-        </div>
-        <div class="col">
+          <!-- reply -->
+          <!-- <replies > -->
+          <div>
+
+            <replies></replies>
+          </div>
+
+          <!-- </replies> -->
+
+
+
         </div>
       </div>
     </div>
+    <div class="col">
+    </div>
+
   </div>
 </template>
 
@@ -118,7 +115,7 @@
     //   'thread',
     //   'authenticatedUser'
     // ],
-    
+
     data() {
       return {
         threads: {},
@@ -134,7 +131,7 @@
       },
       refresh(data) {
         this.threads = data.body
-        
+
       }
     },
     mounted() {

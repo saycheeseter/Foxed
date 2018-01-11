@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar navbar__logged-in fixed-top navbar-toggleable-md navbar-light bg-faded">
-    <div class="container d-flex align-items-center mt-2 mb-2">
+    <div class="container d-flex align-items-center justify-items-center mt-2 mb-2">
       <!-- <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -32,54 +32,56 @@
       </div>
 
     </div> -->
-      <div class="ml-2 mr-2 form-group m-auto d-flex align-items-center justify-content-around nav-links" v-if="isAuth">
+      <div class="form-group mt-auto mb-auto " v-if="isAuth">
         <div>
-          <div class="dropdown">
+          <div class="dropdown ">
             <ais-index app-id="TN5MR9QHP4" api-key="a933713f38f230be88643278a41c7281" index-name="threads">
-
-              <ais-search-box id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" >
+              <ais-search-box id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 <ais-input class="form-control" placeholder="Search for threads..." autofocus></ais-input>
               </ais-search-box>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <div class="dropdown-menu p-2" aria-labelledby="dropdownMenuButton">
                 <ais-results>
                   <template slot-scope="{ result }">
-                    <p>
-                      <router-link :to="result.path">
+                    <router-link :to="result.path">
+                      <li class="pt-1 pb-2">
                         <ais-highlight :result="result" attribute-name="title"></ais-highlight>
-                      </router-link>
-                    </p>
+                      </li>
+                    </router-link>
                   </template>
                 </ais-results>
               </div>
             </ais-index>
           </div>
-
-
-
-
         </div>
+      </div>
+      <div class="d-flex align-items-center justify-content-center nav-links" v-if="isAuth">
         <router-link class="ml-2 mr-2" tag="li" to="/">
           <a>Home</a>
         </router-link>
         <router-link class="ml-2 mr-2" tag="li" to="/community">
           <a>Community</a>
         </router-link>
-        <router-link class="ml-2 mr-2" tag="li" :to="'/'+user.username+'/codes'">
-          <a>Profile</a>
-        </router-link>
+
         <user-notifications :user="user"></user-notifications>
-        <div class="dropdown ml-2">
-          <a href="#" class="" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-bars"></i>
-          </a>
+        <div class="dropdown ml-1">
+          <div class="btn d-flex align-items-center" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img class="mr-2" :src="user.avatar_path" alt="">
+            <i class="fas fa-angle-down"></i>
+          </div>
+
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <li @click="logout">
               <a href="#">Logout</a>
             </li>
+            <router-link class="ml-2 mr-2" tag="li" :to="'/'+user.username+'/codes'">
+              <a>Profile</a>
+            </router-link>
           </ul>
+
         </div>
       </div>
     </div>
+
   </nav>
 </template>
 

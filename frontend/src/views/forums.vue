@@ -1,27 +1,23 @@
 <template>
-  <div class="forums mt-5">
-    <div class="container-fluid">
+  <div class="forums mt-4">
+    <div class="container">
       <div class="row no-gutters justify-content-sm-center">
-        <div class="col-10">
-          <div class="row mt-5">
-            <div class="col-12">
-              <div class="forum-post">
-                <router-link to="/community/create" v-show="user">
-                  <button class="btn form__button--positive-dark mt-2 ml-1 mr-1" type="submit">Create a room</button>
-                </router-link>
-                <router-link :to="`/${user.username}/threads`" v-show="user">
-                  <button class="btn form__button--passive-dark mt-2" type="submit">View posted topics</button>
-                </router-link>
-                <router-link :to="`/threads/search`" v-show="user">
-                  <button class="btn form__button--passive-dark mt-2" type="submit">Search for a thread</button>
-                </router-link>
-                <forum-category></forum-category>
-                <!-- <hot-topics></hot-topics> -->
-              </div>
-            </div>
-            <div class="col">
-            </div>
+        <div class="col-12 mt-4">
+          <div class="forum-post">
+            <router-link to="/community/create" v-show="user">
+              <button class="btn form__button--positive-dark mt-2 ml-1 mr-1" type="submit">Create a room</button>
+            </router-link>
+            <router-link :to="`/${user.username}/threads`" v-show="user">
+              <button class="btn form__button--passive-dark mt-2" type="submit">View posted topics</button>
+            </router-link>
+            <router-link :to="`/threads/search`" v-show="user">
+              <button class="btn form__button--passive-dark mt-2" type="submit">Search for a thread</button>
+            </router-link>
+            <forum-category></forum-category>
+            <!-- <hot-topics></hot-topics> -->
           </div>
+        </div>
+        <div class="col">
         </div>
       </div>
     </div>

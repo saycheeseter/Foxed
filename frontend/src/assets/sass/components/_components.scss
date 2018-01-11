@@ -40,7 +40,7 @@
     color: $text-white;
     background-color: transparent;
     border: 1px solid $text-white;
-    border-radius: 8px;
+    border-radius: 25px;
     transform: scale(.95);
     transition: all .1s ease-in-out;
     &:hover {
@@ -51,9 +51,10 @@
 
 .form__button--register {
     padding: 10px 45px;
-    font-size: 16px;
+    font-size: 14px;
     color: $white;
     border-color: $white;
+    font-weight: $font--bold;
     border-width: 1px;
     transform: scale(0.95) translateY(0px);
     animation-duration: 3s;
@@ -107,3 +108,10 @@
         border-color: darken($white, 10%);
     }
 }
+.section-block {
+    background-color:#fff;
+    padding: 20px 20px;
+    width: 100%;
+}
+
+@import './confirm-account';

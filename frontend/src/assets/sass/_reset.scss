@@ -1,0 +1,24 @@
+body {
+    background-color: $white-background;
+}
+
+span.ais-highlight em {
+  background-color: #fad9ba;
+  padding: 1px;
+  font-style: normal;
+  @extend .font--medium;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
+    margin: 0;
+}
+.enrolled-class {
+    li {
+        list-style: none;
+    }
+}

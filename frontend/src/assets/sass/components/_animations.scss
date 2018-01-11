@@ -27,3 +27,18 @@
         transform: translateY(0);
     }
 }
+@keyframes spin {
+    0% {
+        transform: rotate(0)
+    }
+    30% {
+        transform: rotate(300deg)
+    }
+
+    60% {
+        transform: translateY(360deg);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}

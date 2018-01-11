@@ -1,6 +1,6 @@
 @import 'variables';
 @import 'utilities';
-@import 'refresh';
+@import 'reset';
 @import 'layouts/layout';
 @import 'pages/pages';
 @import 'components/components';
@@ -43,6 +43,7 @@ body {
     color: #000;
     font-weight: bold;
     font-size: 40px;
+    margin: 0;
     a {
         font-size: 40px;
     }

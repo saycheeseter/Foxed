@@ -27,7 +27,7 @@
 }
 
 .content__sub-title {
-    font-size: 20px;
+    font-size: 16px;
     line-height: 35px;
     word-spacing: 1px;
     color: darken($white, 28%);
@@ -45,4 +45,23 @@
     width: 100%;
     background-color: $white;
     border: 1px solid darken($white, 10%);
+}
+.spinner {
+    position: absolute;
+    right: 10px;
+    top: 0;
+    bottom: 0;
+    font-size: 19px;
+        i {
+            background-color: transparent !important;
+        }
+        .animate__spin {
+            animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-name: spin;
+        }
+    
+}
+.content {
+    width: 600px;
 }

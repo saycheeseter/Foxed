@@ -1,27 +1,29 @@
 <template v-cloak>
-  <div class="home mt-5">
+  <div class="home pt-1">
     <!-- <nav-list></nav-list> -->
-    <div class="container-fluid">
-      <div class="row justify-content-sm-center">
-        <div class="col-10">
-          <div class="row no-gutters mt-5">
-            <div class="col-2">
-              <div class="block-full-height d-flex justify-content-center align-items-start ">
-                <div class="text-left">
-                  <br>
-                  <classroom :user="user"></classroom>
-                </div>
-              </div>
+    <div class="container">
+      <div class="row mt-4">
+        <div class="col-12 mb-4" v-if="!user.confirmed">
+          <confirm-account :user="user"></confirm-account>
+        </div>
+        <div class="col-3">
+          <div class="block-full-height d-flex  align-items-start text-left">
+            <div class="section-block">
+              <classroom :user="user"></classroom>
             </div>
-            <div class="col-6">
-              <div class="block-full-height d-flex justify-content-center align-items-start">
-                <timeline></timeline>
-              </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="block-full-height d-flex justify-content-center align-items-start">
+            <div class="section-block">
+              <timeline></timeline>
             </div>
-            <div class="col-4">
-              <div class="block-full-height d-flex justify-content-center align-items-start">
-                <forum-category></forum-category>
-              </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="block-full-height d-flex justify-content-center align-items-start">
+            <div class="section-block">
+              <forum-category></forum-category>
             </div>
           </div>
         </div>
@@ -38,6 +40,7 @@
   import JoinClass from '../components/community/join-class.vue';
   import CreateClass from '../components/community/create-class.vue';
   import Timeline from '../components/community/Timeline.vue';
+  import ConfirmAccount from '../components/community/confirm-account.vue';
 
   export default {
 
@@ -53,14 +56,14 @@
       'classroom': Classroom,
       'join-class': JoinClass,
       'create-class': CreateClass,
-      'timeline' : Timeline 
+      'timeline': Timeline,
+      'confirm-account': ConfirmAccount
     },
     mounted() {
       this.user.prof = false;
       this.$http.get(`api/user`)
         .then(this.refresh)
-
-     
+        .catch()
     },
     methods: {
       refresh(data) {

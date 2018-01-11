@@ -1,20 +1,15 @@
 <template>
   <div class="home">
-    <div class="container-fluid">
-      <div class="row no-gutters justify-content-sm-center">
-        <div class="col-12">
+    <div class="container">
           <div class="row">
             <div class="col-12">
               <div class="forum-post">
-
                 <!-- <forum-category></forum-category> -->
                 <hot-topics></hot-topics>
               </div>
             </div>
             <div class="col">
             </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
