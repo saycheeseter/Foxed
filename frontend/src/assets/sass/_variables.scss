@@ -1,6 +1,6 @@
 $white: darken(#FFF, 4%);
 $white-background: darken($white, 4%);
-$text-white: rgba($white, 0.7);
+$text-white: darken($white, 6%);
 $btn-positive: #2743e4;
 $primary-color: #f1862f;
 $black: #000;

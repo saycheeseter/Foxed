@@ -63,25 +63,41 @@
         </router-link>
 
         <user-notifications :user="user"></user-notifications>
-        <div class="dropdown ml-1">
-          <div class="btn d-flex align-items-center" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img class="mr-2" :src="user.avatar_path" alt="">
-            <i class="fas fa-angle-down"></i>
+        <li>
+          <div class="dropdown ml-1 d-flex flex-column align-items-end justify-content-end">
+            <div class="btn d-flex align-items-center" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <div class="round-block mr-2 ">
+                <img class="" :src="user.avatar_path" alt="">
+              </div>
+              <!-- <i class="fas fa-angle-down"></i> -->
+            </div>
+            <ul class="dropdown-menu font--light  mr-auto" aria-labelledby="dropdownMenuButton">
+              <router-link class="" :to="'/'+user.username+'/codes'">
+                <li class="p-2">
+                  <p class="font--bold" v-text="user.name"></p>
+                  <p class="content__helper font--light">@{{user.username}}</p>
+                </li>
+              </router-link>
+              <div class="dropdown-divider"></div>
+              <router-link class="" :to="'/'+user.username+'/codes'">
+                <li class="p-2">
+                  <p>Profile</p>
+                </li>
+              </router-link>
+              <router-link class="" :to="'/'+user.username+'/threads'">
+                <li class="p-2">
+                  <p>My Threads</p>
+                </li>
+              </router-link>
+              <div class="dropdown-divider"></div>
+              <li class="p-2" @click="logout">
+                <p class="" href="#">Logout</p>
+              </li>
+            </ul>
           </div>
-
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li @click="logout">
-              <a href="#">Logout</a>
-            </li>
-            <router-link class="ml-2 mr-2" tag="li" :to="'/'+user.username+'/codes'">
-              <a>Profile</a>
-            </router-link>
-          </ul>
-
-        </div>
+        </li>
       </div>
     </div>
-
   </nav>
 </template>
 

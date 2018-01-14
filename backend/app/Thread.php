@@ -56,7 +56,7 @@ class Thread extends Model
         return $this->channel;
     }
     public function replies() {
-        return $this->hasMany(Reply::class);
+        return $this->hasMany(Reply::class)->withCount('favorites');
     }
     public function addReply($reply) {
         $reply = $this->replies()->create($reply);

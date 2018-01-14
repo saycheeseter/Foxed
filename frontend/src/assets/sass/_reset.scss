@@ -1,5 +1,5 @@
 body {
-    background-color: $white-background;
+  background-color: $white-background;
 }
 
 span.ais-highlight em {
@@ -15,10 +15,37 @@ h3,
 h4,
 h5,
 p {
-    margin: 0;
+  margin: 0;
 }
+
 .enrolled-class {
-    li {
-        list-style: none;
+  li {
+    list-style: none;
+  }
+}
+
+.navbar {
+  a,
+  li {
+    color: $text-white;
+    list-style: none;
+    text-decoration: none;
+    &:hover {
+        color: $primary-color;
     }
+  }
+}
+.dropdown-menu {
+    right: 0;
+    left: auto;
+}
+.dropdown-menu li,
+.dropdown-menu a {
+  font-size: 14px;
+  cursor: pointer;
+  color: $black;
+  &:hover {
+    background-color: darken($primary-color, 2%);
+    color: $white !important;
+  }
 }

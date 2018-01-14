@@ -63,6 +63,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/activities/{Actid}', 'ClassroomController@showActs');
     Route::get('/activities/{Actid}/eval', 'ActivityController@evaluationCodes');
     Route::post('/submitScore','ScoreController@create');
+    Route::post('/replies/{reply}/favorites','FavoritesController@store');
     
 });
 Route::get('/community/{channel}/{thread}/replies', 'RepliesController@index');

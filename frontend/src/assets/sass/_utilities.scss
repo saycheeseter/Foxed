@@ -32,6 +32,10 @@
     word-spacing: 1px;
     color: darken($white, 28%);
 }
+.content__helper {
+    color: darken($white, 28%);
+    font-size: 12px;
+}
 
 .block-full-height {
     min-height: 100vh;
