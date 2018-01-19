@@ -14,7 +14,7 @@
         </div>
         <div v-else>
           <li>
-            <p>No current notifications.</p>
+            <p class="p-2">No current notifications.</p>
           </li>
         </div>
       </ul>

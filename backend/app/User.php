@@ -57,6 +57,9 @@ class User extends Authenticatable
     public function prof() {
         return $this->hasMany(Classroom::class)->latest();
     }
+    public function channel() {
+        return $this->hasMany(Channel::class);
+    }
     public function classes() {
         return $this->hasMany(Classroom::class)->latest();
     }

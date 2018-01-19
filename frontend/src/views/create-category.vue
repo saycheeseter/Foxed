@@ -28,11 +28,19 @@
                         <div class="form-group mt-2 ">
                           <input class="form-control content__input--dark mb-2" name="title" id="title" cols="100" rows="1" width="100%" v-model="createCategory.name"
                             placeholder="Category name">
+                          <p class="help-block mb-2 mt-2" v-for="error in errorHandling.name">{{error}}</p>
                           <input class="form-control content__input--dark mb-2" name="body" id="body" cols="100" rows="1" width="100%" v-model="createCategory.slug"
                             placeholder="Assign unique key to your new category. (Can only be assigned once.)">
+                          <p class="help-block mb-2 mt-2" v-for="error in errorHandling.slug">{{error}}</p>
                           <textarea class="form-control content__input--dark mb-2" name="body" id="body" cols="100" rows="3" width="100%" v-model="createCategory.description"
                             placeholder="A brief description about your topic."></textarea>
-                          <button type="submit" class="btn form__button--register-dark">Publish</button>
+                          <p class="help-block mb-2 mt-2" v-for="error in errorHandling.description">{{error}}</p>
+                          <button type="submit" class="btn form__button--register-dark">
+                            Publish
+                            <div class="spinner p-1 d-flex align-items-center" v-if="loading">
+                              <i class="animate__spin fas fa-circle-notch m-auto"></i>
+                            </div>
+                          </button>
                         </div>
                       </form>
                     </div>
@@ -76,7 +84,9 @@
     // ],
     data() {
       return {
-        createCategory: {}
+        createCategory: {},
+        errorHandling: {},
+        loading: false
       }
     },
     computed: {
@@ -99,17 +109,20 @@
       },
       addCategory() {
         this.removeSpace();
+        this.errorHandling = "";
+        this.loading = true;
         this.$http.post(`api/community/create`, this.createCategory)
           .then(function (response) { // do something 
+            this.loading = false;
             swal("Discussion posted!", {
               icon: "success",
             });
             this.$router.push(`/community/`);
           })
-          .catch(function (error) {
-            swal("Please Confirm Email Address", {
-              icon: "error",
-            });
+          .catch(response => {
+            this.loading = false;
+            console.log(response.body.errors)
+            this.errorHandling = response.body.errors;
           })
       }
     },

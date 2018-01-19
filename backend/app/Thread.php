@@ -52,8 +52,12 @@ class Thread extends Model
     public function path() {
         return "/community/{$this->channel->slug}/{$this->id}";
     }
+
     public function channelVal() {
         return $this->channel;
+    }
+    public function ownerVal() {
+        return $this->owner;
     }
     public function replies() {
         return $this->hasMany(Reply::class)->withCount('favorites');
@@ -100,6 +104,6 @@ class Thread extends Model
        return "threads.{$this->id}.visits";
    }
    public function toSearchableArray() {
-       return $this->toArray() + ['path' => $this->path()] + ['channel' => $this->channelVal()]; 
+       return $this->toArray() + ['path' => $this->path()] + ['channel' => $this->channelVal()] + ['owner' => $this->ownerVal()]; 
    }
 }

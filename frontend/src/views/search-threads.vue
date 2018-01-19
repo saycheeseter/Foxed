@@ -43,11 +43,18 @@
               </div> -->
             </div>
             <div class="col-12 m-2 ml-0 p-3">
-              <ais-index app-id="TN5MR9QHP4" api-key="a933713f38f230be88643278a41c7281" index-name="threads">
-                <ais-search-box></ais-search-box>
-                <ais-refinement-list attribute-name="channel.name"></ais-refinement-list>
-                <ais-results>
-                  <template slot-scope="{ result }">
+              <ais-index 
+                app-id="TN5MR9QHP4" 
+                api-key="a933713f38f230be88643278a41c7281" 
+                :query="q"
+                
+                index-name="threads">
+                <ais-search-box @change="fetchSearch" ></ais-search-box>
+                <ais-refinement-list attribute-name="channel.name">
+                  
+                </ais-refinement-list>
+                <ais-results :results-per-page="1">
+                  <template slot-scope="{ result }" >
                     <p>
                       <router-link :to="result.path">
                         <ais-highlight :result="result" attribute-name="title"></ais-highlight>
@@ -69,36 +76,19 @@
       return {
         endpoint: `api${this.$route.path}`,
         query: '',
-        results: {}
+        results: {},
+        q: this.$route.query.q
       }
+    },
+    computed: {
+    
     },
     mounted() {
-      this.fetchSearch()
+      
     },
     methods: {
-      searchQuery() {
-        this.$http.get(this.endpoint + `?q=${this.query}`)
-          .then(this.refresh)
-          .catch()
-      },
-      fetchSearch(q) {
-        this.$http.get(this.url(q))
-          .then(this.refresh)
-          .catch()
-      },
-      url(q) {
-        if (!q) {
-          let query = this.$route.query.q;
+     
 
-          q = query ? query[0] : '';
-        }
-        return `${this.endpoint}?q=${q}`
-      },
-      refresh(data) {
-        this.results = data.body;
-        console.log(data.body);
-        this.user = this.$auth.getAuthenticatedUser();
-      }
     }
   }
 

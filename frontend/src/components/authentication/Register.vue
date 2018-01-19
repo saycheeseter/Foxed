@@ -33,8 +33,8 @@
         </div>
         <button @click="register()" class="btn mb-2 form__button--register-dark">
           Register
-          <div class="spinner p-1" v-if="loading">
-              <i class="animate__spin fas fa-circle-notch spinner m-auto"></i>
+          <div class="spinner p-1 d-flex align-items-center" v-if="loading">
+              <i class="animate__spin fas fa-circle-notch m-auto"></i>
           </div>
         </button>
       </div>
@@ -106,7 +106,7 @@
       login(user) {
         var data = {
           client_id: 2,
-          client_secret: 'wnoRYqlGbW7puU8WhjSUY5XAIKz5PVAr9iDs5rX3',
+          client_secret: '8PuZ0uJChX65ooTybcoKVU1OU6tx5kaUQoNjDAQC',
           grant_type: 'password',
           username: this.user.email,
           password: this.user.password

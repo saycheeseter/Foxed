@@ -10,7 +10,7 @@
           alt="">
         <a class="nav-link" href="">{{reply.owner.name}}</a> said
         <span v-text="ago"></span>
-        <button class="btn btn-default ml-auto" @click="favorite">{{reply.favorites_count}} <i class="fas fa-star"></i></button>
+        <button class="btn btn-default ml-auto" @click="favorite" :disabled="reply.isFavorited" v-if="isAuthenticated">{{reply.favorites_count}} <i class="far fa-star"></i></button>
       </div>
       <hr>
       <div v-if="editing">
@@ -60,7 +60,7 @@
           .then(data => {
             this.attributes.reply.body = this.body;
             this.editing = false,
-              this.threads = data.body
+            this.threads = data.body
             swal("Edited!", {
               icon: "success",
             });
@@ -84,17 +84,22 @@
       },
       favorite() {
         this.$http.post(`api/replies/${this.attributes.reply.id}/favorites`)
-          .then(() => {
-            alert('favorited.')
-          }) 
+          .then(this.pushFavorite) 
           .catch(response => {
             alert(response.body.message)
           })
+      },
+      pushFavorite() {
+        this.reply.favorites_count++;
+        this.reply.isFavorited = true;
       }
     },
     computed: {
       authenticatedUser() {
         return this.$auth.getAuthenticatedUser()
+      },
+      isAuthenticated() {
+        return this.$auth.isAuthenticated()
       },
       ago() {
         return moment(this.attributes.reply.created_at).fromNow() + '...';

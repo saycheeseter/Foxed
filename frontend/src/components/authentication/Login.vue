@@ -7,7 +7,7 @@
       <input v-model="password" class="form-control mr-2 content__input" type="password" placeholder="Password">
 
       <button @click="login" class="btn pull-right form__button--submit font--light">
-        Login
+        &nbsp;<span class="ml-1">Login</span>
       </button>
       <router-link to="/account/forgot_password">
         <a class="btn">Forgot Password?</a>
@@ -31,7 +31,7 @@
       login() {
         var data = {
           client_id: 2,
-          client_secret: 'wnoRYqlGbW7puU8WhjSUY5XAIKz5PVAr9iDs5rX3',
+          client_secret: '8PuZ0uJChX65ooTybcoKVU1OU6tx5kaUQoNjDAQC',
           grant_type: 'password',
           username: this.email,
           password: this.password

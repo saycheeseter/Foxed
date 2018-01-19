@@ -1,43 +1,78 @@
 <template v-cloak>
   <div class="topics mt-2">
-
     <div class="container" v-if="threads.length > 0">
+      <div class="row mt-4">
+        <div class="col-12">
 
-          <div class="row mt-4">
-            <div class="col-12">
-              <router-link :to="`/community/${endpoint}/create`" v-if="authenticatedUser.id">
-                <button class="btn form__button--positive-dark ml-2 mt-2" type="submit">Start Discussion</button>
-              </router-link>
-              <div class="section-block mt-2" v-for="thread in threads">
-                <div class="forum-post__header m-2 ml-0 p-3">
-                  <router-link class="nav-item forum-post__title" :to="`/community/${thread.channel.slug}/${thread.id}`">
-                    <h1 class="content__title font--bold mb-5">{{thread.title}} </h1>
-                  </router-link>
-                  <div class=" d-flex flex-row justify-content-start  align-items-center mt-3">
-                    <img class="picture-placeholder mr-3" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
-                      alt="">
-                    <router-link class="nav-item" :to="`/${thread.owner.username}/threads`">
-                      <a class="mb-0" href="">{{thread.owner.name}} </a>
-                    </router-link>
-                    <span class="ml-1">said {{thread.created_at}}</span>
-                    <!-- <p class="mb-0 ml-1"> posted this 2 minutes ago</p> -->
-                  </div>
-                  <hr>
-                  <div v-html="thread.body"></div>
-                  <hr> Replies: {{thread.replies.length}}
-                </div>
+          <ais-index app-id="TN5MR9QHP4" api-key="a933713f38f230be88643278a41c7281" :query="q" :query-parameters="{'filters': `(channel.slug: ${endpoint})`,'page': 1}"
+            index-name="threads">
+            <div class="section-block mb-3 d-flex align-items-center">
+              <div>
+                <p class="content__helper">Search</p>
+                <ais-search-box autofocus v-on:click="resetPage">
+                  <ais-input class="" placeholder="I can help!" autofocus v-on:click="resetPage"></ais-input>
+                </ais-search-box>
+              </div>
+              <div class="ml-auto">
+                <ais-powered-by></ais-powered-by>
               </div>
             </div>
- 
+            <div class="section-block mb-3" v-if="isAuth">
+              <router-link :to="`/community/${endpoint}/create`">
+                <button class="btn form__button--positive-dark ml-2 mt-2" type="submit">Start Discussion</button>
+              </router-link>
+            </div>
+            <ais-results class="section-block mb-5" :results-per-page="5" :stack="true">
+              <template slot-scope="{ result }">
+                <div>
+                  <router-link class="no-decoration" :to="`/community/${endpoint}/${result.id}`">
+                    <div class="d-flex align-items-center">
+                      <div>
+                        <div class="forum__title">
+                          <ais-highlight :result="result" attribute-name="title">
+                          </ais-highlight>
+                        </div>
+                        <p class="content__helper">{{result.created_at | formatDateFormal}}</p>
+                        <!-- <p class="content__helper text-uppercase">Content:</p> -->
+                        <p v-html="result.body"></p>
+                      </div>
+                      <div class="ml-auto  category__owner">
+                        <p class="content__helper">Posted {{result.created_at | formatDate}} by</p>
+                        <p class="content__helper"></p>
+                        <p class="ml-auto font--light">{{result.owner.name}}</p>
+                        <p class="content__helper">@{{result.owner.username}}</p>
+                      </div>
+                    </div>
+                  </router-link>
+                  <hr>
+                </div>
+              </template>
+            </ais-results>
+            <ais-no-results class="text-center"></ais-no-results>
+          </ais-index>
+
+        </div>
+
       </div>
     </div>
 
-    <div class="d-flex flex-column block-full-height" v-else>
+    <div class="d-flex flex-column block-half-height" v-else>
       <div class="m-auto text-center">
+        <h2 v-cloak class="content m-3 font--bold ">There are no current discussions in this category.
+          <br>Start a new one.</h2>
         <router-link class="" :to="`/community/${endpoint}/create`">
-          <a class="btn mt-2" type="submit">Start Discussion</a>
+          <button class="btn form__button--positive-dark">
+            <i class="fab fa-wpforms"></i>
+            <span class="ml-2">Start Discussion</span>
+          </button>
         </router-link>
-        <p v-cloak class="m-3">There are no current discussions in this category. Start a new one.</p>
+        <p class="text-uppercase m-2 content__helper font--bold">or</p>
+        <router-link class="" :to="`/community`">
+          <button class="btn form__button--positive-dark">
+            <i class="fas fa-chevron-circle-left"></i>
+            <span class="ml-2">Go back</span>
+          </button>
+        </router-link>
       </div>
     </div>
   </div>
@@ -78,6 +113,9 @@
     computed: {
       authenticatedUser() {
         return this.$auth.getAuthenticatedUser()
+      },
+      threadAgo() {
+        return moment(this.threads.created_at).fromNow() + '...';
       }
     },
   }

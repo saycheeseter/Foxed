@@ -33,22 +33,27 @@
 
     </div> -->
       <div class="form-group mt-auto mb-auto " v-if="isAuth">
-        <div>
+        <div class="algolia-search">
           <div class="dropdown ">
             <ais-index app-id="TN5MR9QHP4" api-key="a933713f38f230be88643278a41c7281" index-name="threads">
               <ais-search-box id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 <ais-input class="form-control" placeholder="Search for threads..." autofocus></ais-input>
               </ais-search-box>
-              <div class="dropdown-menu p-2" aria-labelledby="dropdownMenuButton">
-                <ais-results>
+              <div class="dropdown-menu box-shadow p-2" aria-labelledby="dropdownMenuButton">
+                <ais-results class="">
+                  <div class="ais-results__header p-2" slot="header">
+                    <p class="font--bold text-uppercase">Threads searched:</p>
+                  </div>
                   <template slot-scope="{ result }">
                     <router-link :to="result.path">
-                      <li class="pt-1 pb-2">
+                      <li class="p-2 d-flex ">
                         <ais-highlight :result="result" attribute-name="title"></ais-highlight>
+                        <p class="content__helper ml-auto align-self-center">@{{result.channel.slug}}</p>
                       </li>
                     </router-link>
                   </template>
                 </ais-results>
+                <ais-no-results></ais-no-results>
               </div>
             </ais-index>
           </div>
