@@ -6,7 +6,7 @@
           <form @submit.prevent="create">
             <div class="form-group">
               <label>Image</label>
-              <input type="file" class="form-control" @change="imageChanged">
+              <input type="file" accept="image/*" class="form-control" @change="imageChanged">
             </div>
             <div class="form-group">
               <label>Title</label>

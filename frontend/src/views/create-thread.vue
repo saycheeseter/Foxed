@@ -7,25 +7,22 @@
           <div class="row mt-2">
             <div class="col-12 ">
               <div class="forum-post ">
-                <div class="forum-post__form block-full-height d-flex flex-column align-items-around justify-content-around">
-                  <div>
+                <div class="forum-post__form block-half-height d-flex flex-column align-items-around justify-content-center">
+                  <div class="m-5">
                     <h2 class="content__title text-center font--bold">Create a Discussion</h2>
                     <p class="content__sub-title text-center">Explore and learn from other developers around you.</p>
                   </div>
-                  <form @submit.prevent="addThread">
-
+                  <form class="content ml-auto mr-auto section-block" @submit.prevent="addThread">
                     <div class="form-group mt-2 full-block__post p-3">
-                      <h5>Title</h5>
-
+                      <h5 class="content__helper mb-2 text-uppercase">Title</h5>
                       <input class="form-control mb-2" name="title" id="title" cols="100" rows="1" width="100%" v-model="createThread.title" placeholder="Awesome title"
                         required>
                       <hr>
-                      <h5>Body</h5>
-
+                      <h5 class="content__helper mb-2 text-uppercase">Body</h5>
                       <wysiwyg name="body" v-model="createThread.body"></wysiwyg>
 
                       <!-- <textarea class="form-control mb-2" name="body" id="body" cols="100" rows="5" width="100%" v-model="createThread.body" placeholder="Have something to say?" required></textarea> -->
-                      <button type="submit" class="btn form__button--positive-dark">Publish</button>
+                      <button type="submit" class="btn form__button--positive-dark mt-3 form-control"><i class="fas fa-align-left"></i><span class="ml-2">Publish</span></button>
                     </div>
                   </form>
                 </div>

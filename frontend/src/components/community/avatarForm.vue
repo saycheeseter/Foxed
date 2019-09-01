@@ -1,13 +1,40 @@
 <template>
   <div>
     <form action="POST" enctype="multipart/form-data">
-      <div class="d-flex flex-column">
-        <img :src="avatar" class="picture m-5" alt="">
-        <input type="file" name="avatar" accept="image/*" @change="onChange" v-if="isAuth">
-        <!-- <button type="submit" class="btn">Add Avatar</button> -->
-
+      <div class="d-flex mt-5">
+        <img :src="avatar" class="picture mr-4" alt="">
+        <div class="d-flex flex-column justify-content-start">
+          <h1 class="font--bold">{{user.name}}</h1>
+          <div>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+              Edit Profile
+            </button>
+            
+          </div>
+          <!-- <button type="submit" class="btn">Add Avatar</button> -->
+        </div>
       </div>
     </form>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Upload Image</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <img :src="avatar" class="picture mr-4" alt="">
+            <input type="file" name="avatar" accept="image/*" @change="onChange" v-if="isAuth">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -62,7 +89,7 @@
         this.user = data.body.user
         this.avatar = data.body.user.avatar_path
       },
-      
+
     },
     mounted() {
       this.fetchAuth();
@@ -74,15 +101,15 @@
 
       }
     }
-   
+
   }
 
 </script>
 <style scoped lang="scss">
   .picture {
     background-color: #efefef;
-    width: 200px;
-    height: 200px;
+    width: 160px;
+    height: 160px;
     border-radius: 100%;
   }
 

@@ -33,22 +33,27 @@
 
     </div> -->
       <div class="form-group mt-auto mb-auto " v-if="isAuth">
-        <div>
+        <div class="algolia-search">
           <div class="dropdown ">
             <ais-index app-id="TN5MR9QHP4" api-key="a933713f38f230be88643278a41c7281" index-name="threads">
               <ais-search-box id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 <ais-input class="form-control" placeholder="Search for threads..." autofocus></ais-input>
               </ais-search-box>
-              <div class="dropdown-menu p-2" aria-labelledby="dropdownMenuButton">
-                <ais-results>
+              <div class="dropdown-menu box-shadow p-2" aria-labelledby="dropdownMenuButton">
+                <ais-results class="">
+                  <div class="ais-results__header p-2" slot="header">
+                    <p class="font--bold text-uppercase">Threads searched:</p>
+                  </div>
                   <template slot-scope="{ result }">
                     <router-link :to="result.path">
-                      <li class="pt-1 pb-2">
+                      <li class="p-2 d-flex ">
                         <ais-highlight :result="result" attribute-name="title"></ais-highlight>
+                        <p class="content__helper ml-auto align-self-center">@{{result.channel.slug}}</p>
                       </li>
                     </router-link>
                   </template>
                 </ais-results>
+                <ais-no-results></ais-no-results>
               </div>
             </ais-index>
           </div>
@@ -63,25 +68,41 @@
         </router-link>
 
         <user-notifications :user="user"></user-notifications>
-        <div class="dropdown ml-1">
-          <div class="btn d-flex align-items-center" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img class="mr-2" :src="user.avatar_path" alt="">
-            <i class="fas fa-angle-down"></i>
+        <li>
+          <div class="dropdown ml-1 d-flex flex-column align-items-end justify-content-end">
+            <div class="btn d-flex align-items-center" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <div class="round-block mr-2 ">
+                <img class="" :src="user.avatar_path" alt="">
+              </div>
+              <!-- <i class="fas fa-angle-down"></i> -->
+            </div>
+            <ul class="dropdown-menu font--light  mr-auto" aria-labelledby="dropdownMenuButton">
+              <router-link class="" :to="'/'+user.username+'/codes'">
+                <li class="p-2">
+                  <p class="font--bold" v-text="user.name"></p>
+                  <p class="content__helper font--light">@{{user.username}}</p>
+                </li>
+              </router-link>
+              <div class="dropdown-divider"></div>
+              <router-link class="" :to="'/'+user.username+'/codes'">
+                <li class="p-2">
+                  <p>Profile</p>
+                </li>
+              </router-link>
+              <router-link class="" :to="'/'+user.username+'/threads'">
+                <li class="p-2">
+                  <p>My Threads</p>
+                </li>
+              </router-link>
+              <div class="dropdown-divider"></div>
+              <li class="p-2" @click="logout">
+                <p class="" href="#">Logout</p>
+              </li>
+            </ul>
           </div>
-
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li @click="logout">
-              <a href="#">Logout</a>
-            </li>
-            <router-link class="ml-2 mr-2" tag="li" :to="'/'+user.username+'/codes'">
-              <a>Profile</a>
-            </router-link>
-          </ul>
-
-        </div>
+        </li>
       </div>
     </div>
-
   </nav>
 </template>
 

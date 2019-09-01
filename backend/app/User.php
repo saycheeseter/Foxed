@@ -31,6 +31,14 @@ class User extends Authenticatable
     protected $casts = [
         'confirmed' => 'boolean'
     ];
+    protected static function boot() {
+        parent::boot();
+
+        static::addGlobalScope('classCount', function ($builder) {
+            $builder->withCount('classes');
+        });
+    
+    }
     public function getRouteKeyName() {
         return 'username';
     }
@@ -48,6 +56,9 @@ class User extends Authenticatable
     }
     public function prof() {
         return $this->hasMany(Classroom::class)->latest();
+    }
+    public function channel() {
+        return $this->hasMany(Channel::class);
     }
     public function classes() {
         return $this->hasMany(Classroom::class)->latest();

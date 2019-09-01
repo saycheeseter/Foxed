@@ -5,13 +5,18 @@
         <i class="far fa-bell"></i>
       </a>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <li v-for="notification in notifications">
-          <router-link 
-          :to="notification.data.link" 
-          @click.prevent="markAsRead(notification)"  
-          v-text="notification.data.message"> 
-          </router-link>
-        </li>
+        <div v-if="notifications.length">
+        <router-link :to="notification.data.link" @click.prevent="markAsRead(notification)" v-for="notification in notifications">
+          <li class="p-2">
+            <p>{{notification.data.message}}</p>
+          </li>
+        </router-link>
+        </div>
+        <div v-else>
+          <li>
+            <p class="p-2">No current notifications.</p>
+          </li>
+        </div>
       </ul>
     </div>
   </div>
@@ -34,8 +39,8 @@
           .then(this.refresh)
       },
       refresh(data) {
-            console.log(data)
-            this.notifications = data.data
+        console.log(data)
+        this.notifications = data.data
       },
       markAsRead(notification) {
         this.$http.delete(`api/profiles/${this.user.username}/notifications/${notification.id}`)

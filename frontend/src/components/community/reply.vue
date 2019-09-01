@@ -2,13 +2,15 @@
   <div class="forum-post__header full-block__post m-2 p-3" :id="`reply-${reply.id}`">
     <div>
       <p>
+        
+      </p>
+      <div class=" d-flex flex-row justify-content-start  align-items-center mt-3">
+        <!-- <p class="mb-0 ml-1"> posted this 2 minutes ago</p> -->
         <img class="picture-placeholder mr-3" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
           alt="">
         <a class="nav-link" href="">{{reply.owner.name}}</a> said
         <span v-text="ago"></span>
-      </p>
-      <div class=" d-flex flex-row justify-content-start  align-items-center mt-3">
-        <!-- <p class="mb-0 ml-1"> posted this 2 minutes ago</p> -->
+        <button class="btn btn-default ml-auto" @click="favorite" :disabled="reply.isFavorited" v-if="isAuthenticated">{{reply.favorites_count}} <i class="far fa-star"></i></button>
       </div>
       <hr>
       <div v-if="editing">
@@ -45,6 +47,11 @@
         body: this.attributes.reply.body,
       }
     },
+    computed: {
+      favoriteClasses() {
+        return ['btn']
+      }
+    },
     methods: {
       update() {
         this.$http.patch(`api/replies/${this.attributes.reply.id}`, {
@@ -53,7 +60,7 @@
           .then(data => {
             this.attributes.reply.body = this.body;
             this.editing = false,
-              this.threads = data.body
+            this.threads = data.body
             swal("Edited!", {
               icon: "success",
             });
@@ -74,11 +81,25 @@
               icon: "success",
             });
           });
+      },
+      favorite() {
+        this.$http.post(`api/replies/${this.attributes.reply.id}/favorites`)
+          .then(this.pushFavorite) 
+          .catch(response => {
+            alert(response.body.message)
+          })
+      },
+      pushFavorite() {
+        this.reply.favorites_count++;
+        this.reply.isFavorited = true;
       }
     },
     computed: {
       authenticatedUser() {
         return this.$auth.getAuthenticatedUser()
+      },
+      isAuthenticated() {
+        return this.$auth.isAuthenticated()
       },
       ago() {
         return moment(this.attributes.reply.created_at).fromNow() + '...';

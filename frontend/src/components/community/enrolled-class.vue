@@ -6,9 +6,9 @@
     <div v-else>
       <create-class @enroll="enroll"></create-class>
     </div>
-    <p class="text-left font--bold text-uppercase mt-3 pl-1 pr-1">Classes</p>
-    <div v-if="classes">
-
+    <p class="text-left font--bold text-uppercase mt-3">Classes</p>
+    <div v-if="user.classes_count">
+        {{user.classroom_count}}
       <div class="forum-post__header text-left font--light ml-1" v-for="room in classes" v-bind:key="room.id">
         <router-link class="nav-item content__sub-title" :to="`/class/${room.id}`">
           <li>
@@ -18,7 +18,7 @@
       </div>
     </div>
     <div v-else>
-      <p>You have 0 enrolled class.</p>
+      <p class="content__helper">You have 0 enrolled class.</p>
     </div>
   </div>
 </template>
@@ -86,3 +86,4 @@
   }
 
 </style>
+ 

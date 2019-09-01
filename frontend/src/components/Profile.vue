@@ -4,10 +4,8 @@
       <div class="row d-flex justify-content-sm-center">
         <div class="col-xl-8 col-md-10">
           <div class="row">
-            <div class="col-12 d-flex flex-column align-items-center justify-content-center mt-5 pt-5">
+            <div class="col-12 ">
               <avatarForm :user="user"></avatarForm>
-              {{user.name}}
-              <br>
             </div>
             <div class="col-12 d-flex justify-content-center mb-5">
               <router-link class="btn btn-default" :to="'/'+ authenticatedUser.name + '/editor'">new code</router-link>
@@ -15,28 +13,12 @@
               <i class="fa fa-print" aria-hidden="true"></i>
               <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
             </div>
-            <div class="col-12 d-flex justify-content-center mb-5">
-              
-            </div>
-            
-            <div>
-              
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-              <img src="https://news.siteintelgroup.com/blog/components/com_easyblog/themes/wireframe/images/placeholder-image.png" alt="">
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-              <img src="https://news.siteintelgroup.com/blog/components/com_easyblog/themes/wireframe/images/placeholder-image.png" alt="">
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-              <img src="https://news.siteintelgroup.com/blog/components/com_easyblog/themes/wireframe/images/placeholder-image.png" alt="">
+            <div class="col-12">
+              <code-works></code-works>
             </div>
           </div>
-       
         </div>
-
       </div>
-        <code-works></code-works>
     </div>
   </div>
 </template>

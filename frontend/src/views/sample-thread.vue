@@ -47,7 +47,7 @@
                       <router-link class="" :to="`/${attriThread.owner.username}/threads`">
                         <a class="m-0" href="">{{attriThread.owner.name}}</a>
                       </router-link>
-                      <span v-text="threadAgo"></span> {{attriThread.create_at}}
+                      {{attriThread.created_at | formatDate}}
                       <!-- <p5 class="mb-0 ml-1"> posted this 2 minutes ago</p> -->
                     </div>
                     <hr>
@@ -131,7 +131,6 @@
       },
       refresh(data) {
         this.threads = data.body
-
       }
     },
     mounted() {

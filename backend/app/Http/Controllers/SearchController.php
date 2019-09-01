@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Channel;
 use App\Thread;
 use Illuminate\Http\Request;
 
@@ -15,6 +16,17 @@ class SearchController extends Controller
 
         
         return $threads->load('channel', 'owner', 'replies');
+        
+
+        // return something
+    }
+    public function showChannel() {
+        $search = request('q');
+
+        $channels = Channel::search($search)->paginate(5);
+
+        
+        return $channels;
         
 
         // return something

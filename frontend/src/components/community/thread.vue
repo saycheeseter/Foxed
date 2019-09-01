@@ -1,6 +1,5 @@
 <script>
 import Wysiwyg from './wysiwyg.vue';
-import moment from 'moment';
 import SubscribeButton from './subscribe-button';
   export default {
     components: {
@@ -67,9 +66,6 @@ import SubscribeButton from './subscribe-button';
     computed: {
         authenticatedUser() {
         return this.$auth.getAuthenticatedUser()
-        },
-         threadAgo() {
-          return moment(this.attriThread.created_at).fromNow() + '...';
         }
     },
     
